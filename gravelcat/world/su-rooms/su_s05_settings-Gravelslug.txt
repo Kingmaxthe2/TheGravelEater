@@ -1,0 +1,6 @@
+Template: SU_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0
+Effects: DayNight-0.9-43-70, 
+PlacedObjects: DayNightSettings><82.84982><409.6321><5~8.660254~4~10, 
+FadePalette: 4, 0.3152174

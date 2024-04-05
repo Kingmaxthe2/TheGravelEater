@@ -1,0 +1,15 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0.01086957
+Clouds: 0.7717391
+Grime: 0.2282609
+Palette: 3
+EffectColorA: 10
+EffectColorB: 13
+Effects: SkyAndLightBloom-0-20-20, DayNight-0.05434782-19-72, HeatWave-0.1847826-301-24, Dustpuffs-0-284-75, FairyParticles-1-262-134, 
+PlacedObjects: DataPearl><679.5629><1359.747><0~0~0~0~Misc~0, UniqueDataPearl><576.9341><337.172><0~0~0~0~SI_chat5~0, DayNightSettings><314.6442><364.8614><5~8.660254~10~3, FairyParticleSettings><181.0559><979.7983><5~8.660254~0~1~1~0~1~1.448696~60~495.2173~40~100~5~30~0~360~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_ENV-LightWind.ogg><692.589><518.3814><0.5><1><728.2316><1487.866><-75.35535><-71.35535><0><0.1434784, SPOT><AM_ENV-LightWind.ogg><410.4228><333.1007><0.5><1><119.6655><988.8055><183.6447><-22.35535><0><0.1760871, 
+FadePalette: 8, 0.2934783, 0.08695652
+WetTerrain: OFF

@@ -1,0 +1,95 @@
+[MERGE]
+
+CONDITIONAL LINKS
+
+//Unlink Rooms
+Gravelslug : DS_D02 : GATE_DS_SB : DISCONNECTED
+Gravelslug : DS_C02 : DS_A26 : DISCONNECTED
+Gravelslug : DS_C02 : DS_A27 : DISCONNECTED
+Gravelslug : DS_A05 : DS_D03 : DISCONNECTED
+Gravelslug : DS_A05 : DS_D01 : DISCONNECTED
+
+//connections
+Gravelslug : GATE_DS_SB : DS_D02 : DS_D02GRAVEL
+Gravelslug : DS_D02GRAVEL : 1 : GATE_DS_SB
+Gravelslug : DS_A26 : DS_C02 : DS_C02GRAVEL
+Gravelslug : DS_A27 : DS_C02 : DS_C02GRAVEL
+Gravelslug : DS_C02GRAVEL : 1 : DS_A26
+Gravelslug : DS_C02GRAVEL : 3 : DS_A27
+Gravelslug : DS_D01 : DS_A05 : DS_A05GRAVEL
+Gravelslug : DS_D03 : DS_A05 : DS_A05GRAVEL
+Gravelslug : DS_A05GRAVEL : 1 : DS_D03
+Gravelslug : DS_A05GRAVEL : 2 : DS_D01
+
+// gravel exclusive
+Gravelslug : EXCLUSIVEROOM : DS_C02GRAVEL
+Gravelslug : EXCLUSIVEROOM : DS_D02GRAVEL
+Gravelslug : EXCLUSIVEROOM : DS_A05GRAVEL
+Gravelslug : EXCLUSIVEROOM : DS_DARK01
+Gravelslug : EXCLUSIVEROOM : DS_DARK02
+Gravelslug : EXCLUSIVEROOM : DS_DARK03
+
+// hidden on gravel
+Gravelslug : HIDEROOM : DS_A05
+Gravelslug : HIDEROOM : DS_C02
+Gravelslug : HIDEROOM : DS_D02
+
+END CONDITIONAL LINKS
+
+ROOMS
+
+DS_D02GRAVEL : DISCONNECTED, DS_DARK01
+DS_DARK01 : DS_DARK02, DS_D02GRAVEL
+DS_DARK02 : DS_DARK03, DS_DARK01
+DS_DARK03 : DS_A05GRAVEL, DS_DARK02
+DS_A05GRAVEL : DISCONNECTED, DISCONNECTED, DS_DARK03 : SWARMROOM
+DS_C02GRAVEL : DISCONNECTED, DISCONNECTED, DISCONNECTED
+DS_A05 : DS_D03, DS_D01 : SWARMROOM
+DS_D03 : DS_A27, DISCONNECTED, DS_A05
+DS_A27 : DS_C02, DS_D03
+DS_C02 : DS_A26, DS_D02, DS_A27
+DS_D02 : DS_C02, GATE_DS_SB
+DS_A26 : DS_B06, DS_C02
+DS_D01 : DS_B01, DS_C01, DS_A05
+GATE_DS_SB : DS_D02, DISCONNECTED, DS_S03 : GATE
+
+END ROOMS
+
+CREATURES
+
+(X-Gravelslug)DS_A07 : 2-Snail, 2-Leech-5
+(X-Gravelslug)DS_A17 : 2-Snail, 2-Eel-{PreCycle}
+(X-Gravelslug)DS_GUTTER03 : 8-Snail-3, 9-Snail-1, 9-Eel-{PreCycle}
+(X-Gravelslug)DS_GUTTER01 : 2-Snail-3, 4-Leech-12
+(X-Gravelslug)DS_GUTTER04 : 4-Snail-1
+(X-Gravelslug)DS_C01 : 6-Leech-15, 7-Leech-10, 6-Eel-{PreCycle}
+(X-Gravelslug)DS_A25 : 3-Leech-5, 4-Leech-7, 5-Snail-2, 3-TentaclePlant-{PreCycle}, 4-TentaclePlant-{PreCycle}
+(X-Gravelslug)DS_A14 : 2-Leech-5, 3-Leech-5
+(X-Gravelslug)DS_B01 : 3-Leech-5, 4-Leech-5, 5-Snail-3
+(X-Gravelslug)DS_A13 : 2-Leech-5, 3-Leech-5, 3-TentaclePlant-{PreCycle}
+
+(Gravelslug)LINEAGE : DS_A22 : 3 : Green-0.2, Caramel-0.2, Salamander-0.2, White-0
+(Gravelslug)LINEAGE : DS_A06 : 3 : Blue-0.2, Salamander-0.5, Eel-0.3, Red-0
+(Gravelslug)DS_A02 : 4-Blue-{Ignorecycle}, 3-Eel-{Night}
+(Gravelslug)DS_A19 : 2-Centipede-4-{Ignorecycle}, 2-Small Centipede-5-{Ignorecycle}
+(Gravelslug)LINEAGE : UG_A19 : 2 : Small Centipede-0.10, Centipede-0.20, Red Centipede-0
+(Gravelslug)DS_A07 : 2-Snail-2-{Ignorecycle}, 2-JungleLeech-6-{Ignorecycle}
+(Gravelslug)DS_A17 : 2-Mimic-{18}
+(Gravelslug)DS_A11 : 2-Salamander-{Ignorecycle}
+(Gravelslug)DS_GUTTER03 : 7-DropBug-{Ignorecycle}, 8-Snail-1-{Ignorecycle}, 9-Snail-2-{Ignorecycle}
+(Gravelslug)DS_GUTTER04 : 4-Snail-2-{Ignorecycle}
+(Gravelslug)DS_GUTTER02 : 2-SpitterSpider-{Ignorecycle}
+(Gravelslug)DS_A21 : 3-Blue-{Ignorecycle}, 4-Snail-2-{Ignorecycle}, 2-Mimic-{16}
+(Gravelslug)DS_C01 : 6-JungleLeech-15-{Ignorecycle}, 7-JungleLeech-10-{Ignorecycle}, 6-Salamander-{Night}, 6-Eel-{Night}
+(Gravelslug)DS_GUTTER01 : 2-Snail-1-{Ignorecycle}, 4-JungleLeech-12-{Ignorecycle}
+(Gravelslug)DS_A25 : 3-JungleLeech-5-{Ignorecycle}, 4-JungleLeech-7-{Ignorecycle}, 5-Snail-2-{Ignorecycle}, 3-TentaclePlant-{Night}, 4-TentaclePlant-{Night}
+(Gravelslug)DS_A14 : 2-JungleLeech-5-{Ignorecycle}, 3-JungleLeech-5-{Ignorecycle}
+(Gravelslug)DS_B01 : 3-JungleLeech-5-{Ignorecycle}, 4-JungleLeech-5-{Ignorecycle}, 5-Snail-3-{Ignorecycle}, 4-Salamander-{Night}
+(Gravelslug)DS_A13 : 2-JungleLeech-5-{Ignorecycle}, 3-JungleLeech-5-{Ignorecycle}, 3-TentaclePlant-{Night}
+
+(Gravelslug)DS_A05 : 2-Snail-3-{Ignorecycle}, 4-TentaclePlant-{Night}
+
+(Gravelslug)DS_DARK01 : 4-TentaclePlant-{Ignorecycle}
+(Gravelslug)DS_D02GRAVEL : 2-Small Centipede-2-{Ignorecycle}
+END CREATURES
+[ENDMERGE]

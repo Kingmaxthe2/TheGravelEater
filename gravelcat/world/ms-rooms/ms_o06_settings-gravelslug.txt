@@ -1,0 +1,15 @@
+Template: MS_SettingsTemplate_Vents
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Effects: ElectricDeath-0.1956522-283-17, WaterDepth-1-282-71, Darkness-0-26-18, 
+PlacedObjects: LightFixture><2059.929><523.9371><RedLight~17.32051~-10~0, LightFixture><1858.19><63.68811><RedLight~17.32051~-10~0, LightFixture><1659.903><590.9247><RedLight~17.32051~-10~38, LightFixture><2559.519><276.801><RedLight~17.32051~-10~15, 
+AmbientSounds: OMNI><SO_SFX-Drowning.ogg><815.8673><644.3503><0.5><1, 
+FadePalette: 27, 0.2391304, 0.1304348, 0
+WetTerrain: OFF

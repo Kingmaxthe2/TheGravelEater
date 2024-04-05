@@ -1,0 +1,9 @@
+Template: SL_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Clouds: 1
+Palette: 35
+Effects: DayNight-0.07608695-20-20, Coldness-0-30-30, 
+PlacedObjects: LightFixture><108.9332><574.4197><RedSubmersible~17.32051~-10~2, LightFixture><786.6558><603.6763><RedSubmersible~17.32051~-10~52, DayNightSettings><202.4476><1805.969><5~8.660254~10~35, 
+FadePalette: 10, 0.4673913, 0.4021739, 0.3369565

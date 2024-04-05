@@ -1,0 +1,10 @@
+DenGroup - TOPDENS - 5,6
+DenGroup - BDENS - 8,9
+DenGroup - LEFT - 4,7
+
+Creature - Daddy - dens:TOPDENS - chance:0.05 - amount:1 - RARE
+
+Creature - FireBug - dens:TOPDENS - chance:0.15 - amount:2
+Creature - Cyan - dens:BDENS - chance:0.2 - amount:3
+
+Creature - Daddy - dens:LEFT - chance:0.15 - amount:1

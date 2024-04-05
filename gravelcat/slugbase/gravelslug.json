@@ -1,0 +1,60 @@
+{
+	"id": "Gravelslug",
+	"name": "The Gravel-Eater",
+	"description": "Awoken from a deep slumber, and tragically stuck in a delicate equilibrium. <LINE> Given a chance at life, will you ever find normalcy? ",
+	"features": {
+		
+		"diet": {
+  "base": "SlugcatStats.Artificer",
+  "corpses": 0.33,
+  "meat": 0.125,
+  "plants": 0.125,
+  "overrides": {
+				"Centipede": 0.33,
+				"RedCentipede": 0.33,
+				"Centiwing": 0.33,
+				"AquaCenti": 0.33,
+				"FireEgg": 1,
+				"BrotherLongLegs": 1,
+				"DaddyLongLegs": 1,
+				"HunterDaddy": -1,
+				"TerrorLongLegs": 1,
+			}
+},
+		
+		"weight": [2.0, 1.3],
+		"auto_grab_batflies": false,
+		"tunnel_speed": [0.85, 1.05],
+		"climb_speed": [0.75, 1.1],
+		"walk_speed": [0.85, 1.1],
+		"throw_skill": [1, 1],
+		"loudness": [1.8, 1.35],
+		"lung_capacity": [1.3, 0.8],
+		"can_maul": true,
+		"maul_blacklist": [ "TubeWorm" ],
+		
+		"alignments": {
+  "Lizards": { "like": -0.1, "strength": 0.2 },
+  "Scavengers": { "like": -0.4, "strength": 0.2 }
+},
+		
+		"gravelslug/gravel_gut": true,
+		
+		"karma": 2,
+		"karma_cap": 3,
+		
+		"the_mark": true,
+		"select_menu_scene": "Slugcat_Gravelslug",
+		"select_menu_scene_ascended": "Ghost_Gravelslug",
+		"sleep_scene": "Sleep_Gravelslug",
+		"timeline_before": "Saint",
+		"title_card": "intro_roll_gravel",
+		"timeline_after": "Rivulet",
+		"world_state": [ "Gravelslug" ],
+		"has_dreams": true,
+		"use_default_dreams": false,
+		"expedition_enabled": true,
+		"expedition_description": "Seeking refuge from their delacate balance, The Gravel-Eater<LINE>strides foreward through the constant pain",
+		"start_room": [ "CL_GRAVEL", "CL_S02" ]
+	}
+}

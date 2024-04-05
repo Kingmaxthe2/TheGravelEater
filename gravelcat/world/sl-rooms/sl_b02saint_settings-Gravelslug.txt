@@ -1,0 +1,18 @@
+DangerType: Rain
+CeilingDrips: 0.5
+RainIntensity: 0.1956522
+RumbleIntensity: 0.0326087
+WaveSpeed: 0.5065584
+WaveLength: 0.7467208
+WaveAmplitude: 0.04909468
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.4565217
+Grime: 0.326087
+Palette: 15
+Effects: DayNight-0.08695652-269-198, DirtyWater-1-259-83, 
+PlacedObjects: Corruption><701.6387><684.8942><58~-24, Corruption><1007.425><638.6527><-6~109, CorruptionTube><268.1711><637.0662><482~14, Corruption><2244.525><572.5228><0~100, CorruptionTube><412.4737><268.8017><266~452, CorruptionTube><1070.087><606.3197><-385~68, DayNightSettings><3499.622><430.1908><5~8.660254~10~13, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><831.1455><642.5795><0><1, OMNI><AM_ENV-NatWind.ogg><830.0612><568.9341><0.2934783><1, SPOT><AM_WAT-Sea03.ogg><473.4418><603.0568><0.5><1><477.4418><190.0568><-251.3553><-0.3553467><0><0.4260871, SPOT><AM_WAT-Sea03.ogg><649.3017><511.7242><0.4021739><1><1870.302><240.7242><-246.3553><7.644653><0><0.3608697, SPOT><AM_WIN-SubWnd.ogg><831.5441><450.4451><0.5><1><3900.544><514.4451><-666.3553><-61.35535><0><1, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_89 - Vast Unlife<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>0<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>739.0136<tB>405.0505<tA>fireChance<tB>1<tA>entrance<tB>0<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>693.0136<tB>513.0505<tA>handlePos<tB>-363.3553<tB>-358.3553, 
+FadePalette: 10, 0.05434782, 0.326087, 0.6630435, 0.8260869
+WetTerrain: OFF

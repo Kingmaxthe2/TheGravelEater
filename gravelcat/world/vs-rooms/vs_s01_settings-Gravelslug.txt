@@ -1,0 +1,11 @@
+DangerType: Thunder
+RumbleIntensity: 0
+WaveSpeed: 0.5016205
+WaveLength: 0.9991897
+WaveAmplitude: 0.04781343
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+EffectColorB: 6
+Effects: Darkness-0.2717391-17-90, DayNight-0.06521739-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><712.3084><245.5574><, DayNightSettings><238.552><339.5284><5~8.660254~10~3, 
+FadePalette: 20, 0.2717391

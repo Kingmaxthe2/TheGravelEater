@@ -1,0 +1,18 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: FloodAndRain
+CeilingDrips: 0.5326087
+RainIntensity: 0.1956522
+RumbleIntensity: 1
+WaveSpeed: 0.5016831
+WaveLength: 0.9658663
+WaveAmplitude: 0.006884961
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.3043478
+Grime: 0.1086956
+BkgDroneVolume: 0
+Effects: RockFlea-0.4891304-20-20, LightBurn-0-28-76, 
+PlacedObjects: LightSource><658.9033><269.8716><0.3985224~Environment~249~356~-744~246.6025~1~0~None~0~0, LightSource><576.9232><499.85><0.4456522~Environment~3~160~50~86.60254~1~0~None~0~0, DangleFruit><666.05><341.9987><-488~193~2~3, DangleFruit><730.804><317.4605><-819~91~2~3, DangleFruit><932.0527><528.7828><2~-86~2~3, SnowSource><139.8789><470.4092><Radial~636~-470~55~-366.3975~0.1521739~1, 
+AmbientSounds: SPOT><AM_ENV-CityTone.ogg><720.5479><564.0558><0.3804348><0.7065217><584.548><564.0558><-189.3553><-36.35535><0><0.3934784, OMNI><AM_ENV-CityTone.ogg><835.8067><646.0582><0.3913043><0.8434783, 
+FadePalette: 5, 0.2934783
+WetTerrain: OFF

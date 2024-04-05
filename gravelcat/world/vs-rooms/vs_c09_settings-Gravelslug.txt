@@ -1,0 +1,8 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Grime: 0.25
+Palette: 21
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DayNightSettings><39.75024><1858.301><5~8.660254~10~21, 
+FadePalette: 8, 0.4673913, 0.4782609, 0.5

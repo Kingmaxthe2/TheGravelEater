@@ -1,0 +1,15 @@
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+Clouds: 0.8695652
+Grime: 0.3043478
+BkgDroneVolume: 0.2608696
+Palette: 42
+EffectColorA: 10
+EffectColorB: 13
+Effects: DustWave-1-20-20, DayNight-0.07608695-27-101, Fog-1-298-129, HeatWave-0.1956522-316-77, Dustpuffs-0-305-19, FairyParticles-1-270-185, 
+PlacedObjects: DevToken><119.3032><218.4644><67~-72~0~0~0~~~0~0~0~1, FairyParticleSettings><2223.949><159.0181><5~8.660254~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, DayNightSettings><712.1239><402.9052><5~8.660254~10~42, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><751.0504><521.5117><0.6086956><0.7652174, 
+FadePalette: 8, 0.4456522, 0.4565217, 0.4347826
+WetTerrain: OFF

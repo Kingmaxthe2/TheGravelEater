@@ -1,0 +1,10 @@
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0.08695652
+Clouds: 0.75
+Palette: 2
+Effects: DayNight-0.1086956-26-72, Fog-0.7934783-34-126, HeatWave-0.2065217-283-25, Dustpuffs-0-302-83, FairyParticles-1-328-141, 
+PlacedObjects: DandelionPatch><279.5109><1103.45><-3~160, DandelionPatch><347.1329><160.6511><1~101, DandelionPeach><332.733><1124.551><0~0~2~3, DandelionPeach><289.7158><1117.947><0~0~2~3, DayNightSettings><252.3982><2611.078><-111~77.66025~10~42, FairyParticleSettings><546.812><2669.182><5~8.660254~0~1~1~0~1~1~16.52195~54.99997~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_ENV-LightWind.ogg><774.6546><522.1232><0.6956522><1><231.6546><3053.124><276.6447><-1012.355><0><1, 
+FadePalette: 8, 0.5326087, 0.4347826, 0.3043478, 0.1521739
+WetTerrain: OFF

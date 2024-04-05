@@ -1,0 +1,17 @@
+DenGroup - OUTER - 5,6
+DenGroup - INNER - 4,7
+
+Creature - Scavenger - dens:OUTER - chance:0.5 - amount:4
+Creature - Centipede - dens:INNER - chance:0.4 - amount:2
+
+Creature - Green - dens:INNER - chance:0.31 - amount:3
+
+Creature - LanternMouse - dens:OUTER - chance:0.23 - amount:2
+Creature - LanternMouse - dens:OUTER - chance:0.34 - amount:1
+
+Creature - Scavenger - dens:OUTER - chance:0.25 - amount:2
+Creature - Blue - dens:INNER - chance:0.35 - amount:2
+
+Creature - Vulture - dens:-1 - chance:0.15 - RARE
+Creature - Vulture - dens:-1 - chance:0.15 - RARE
+Creature - Miros Vulture - dens:-1 - chance:0.05 - RARE

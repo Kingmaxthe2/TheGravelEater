@@ -1,0 +1,6 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DangleFruit><669.2874><444.6965><0~0~2~3, DangleFruit><710.0965><485.3718><0~0~2~3, DangleFruit><753.1346><386.6634><0~0~2~3, DayNightSettings><126.8923><331.8314><5~8.660254~10~3, 
+FadePalette: 8, 0.4891304

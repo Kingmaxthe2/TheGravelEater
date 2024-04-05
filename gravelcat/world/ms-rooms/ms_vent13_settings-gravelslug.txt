@@ -1,0 +1,14 @@
+Template: MS_SettingsTemplate_Vents
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Effects: ElectricDeath-0.1195652-24-140, HeatWave-0.3913043-280-22, 
+PlacedObjects: LightSource><608.1359><29.41039><0.3261122~EffectColor2~732~660~-17~167.6025~0~0~None~0~0, LightSource><294.0891><478.1274><0.1309038~EffectColor2~302~-126~50~86.60254~0~0~None~0~0, LightFixture><66.67792><334.6588><RedLight~17.32051~-10~17, 
+FadePalette: 5, 0.2717391
+WetTerrain: OFF

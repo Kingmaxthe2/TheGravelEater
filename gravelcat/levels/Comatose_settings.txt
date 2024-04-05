@@ -1,0 +1,19 @@
+Template: NONE
+DangerType: Flood
+CeilingDrips: 0
+RainIntensity: 0
+WaveSpeed: 0.4
+WaveLength: 1
+WaveAmplitude: 0.63
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 1
+BkgDroneVolume: 0.4891304
+RandomItemDensity: 0.6086956
+Palette: 33
+EffectColorA: 11
+EffectColorB: 11
+Effects: ZeroG-0.8695652-20-20, CorruptionSpores-0.2065217-287-88, SilenceWater-0.4891304-23-79, WaterViscosity-0.2065217-360-347, FairyParticles-0.4021739-24-124, HeatWave-0.4021739-288-24, LethalWater-1-309-71, SSSwarmers-0.2065217-281-148, BrokenZeroG-1-18-29, VoidMelt-0.1956522-280-209, LavaSurface-1-516-315, ZeroGSpecks-0.8043478-459.5771-460.0667, 
+PlacedObjects: FairyParticleSettings><66.07497><476.8658><5~8.660254~1~7.065217~37.5~0~1~4.458576~190.4347~326.7391~40~100~0~19.56522~0~23.47826~0.4893042~0.5611871~1~1~0.4347826~0.5217391~0.7065217~0.2717391~9.123243~Bubble_Thin~SIN_IO~SIN_IO~156.4355~0.2229548~0.6521739, CoralCircuit><824.5822><742.7534><2.845825~55.91113, CoralStem><614.4625><594.8572><-2.134399~-114.7555, 
+AmbientSounds: OMNI><SO_SFX-Drowning.ogg><831.1999><649.4939><0.5><1, OMNI><SO_SFX-Doomsday.ogg><716.0696><428.6875><0.1086956><1, OMNI><SO_SFX-UnderWaterSub.ogg><506.0446><324.195><0.3586957><0.7652174, OMNI><Weird Deep Hole.wav><738.3003><338.3064><0.04347826><0.8826087, OMNI><AM_SUB-MysticCave1.ogg><489.6217><229.9087><0.326087><0.823913, 
+FadePalette: 187, 0.5077785

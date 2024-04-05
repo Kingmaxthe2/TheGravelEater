@@ -1,0 +1,8 @@
+Template: VS_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DayNightSettings><107.1354><420.0861><5~8.660254~10~35, 
+AmbientSounds: SPOT><SO_WAT-OpenFlow.ogg><727.7><524.7451><0.5><1><779.7><418.7451><-151.3553><-318.3553><0><0.2739132, 
+FadePalette: 10, 0.5978261

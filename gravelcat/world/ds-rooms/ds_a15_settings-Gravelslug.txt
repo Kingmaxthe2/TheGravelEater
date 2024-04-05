@@ -1,0 +1,9 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Grime: 0.1521739
+BkgDroneVolume: 0
+Effects: RockFlea-0.173913-20-20, DayNight-0.07608695-23-81, 
+PlacedObjects: Mushroom><247.115><498.4136><0~0~2~3, Mushroom><225.371><494.3407><0~0~2~3, Mushroom><547.5831><472.3603><0~0~2~3, Mushroom><531.1278><479.4039><0~0~2~3, Mushroom><247.4683><175.1975><0~0~2~3, LightSource><203.6855><479.3107><0.5869565~Environment~-85~-108~-276~-227.3975~1~0~None~0~0, SteamPipe><142.9152><133.1373><21~40, SteamPipe><363.552><371.2216><-20~-20, SteamPipe><366.7668><268.0507><-39~18, SteamPipe><782.6688><302.0672><16~40, SteamPipe><534.9314><294.1657><24~78, SteamPipe><653.6396><308.0832><-24~53, SteamPipe><205.6075><607.8597><6~-36, SteamPipe><129.7582><563.8002><31~-10, SteamPipe><738.3851><419.0862><-24~-27, Filter><717.0834><311.6393><0~129~-183~-316~White|Yellow|Red|Rivulet|Saint|Gourmand, Filter><452.0822><315.6412><-90~110~82~-320~White|Yellow|Red|Rivulet|Saint|Gourmand, Filter><138.422><122.6479><6~43~397.0147~-127~White|Yellow|Red|Rivulet|Saint|Gourmand, Filter><178.5507><570.9794><-1~62~355~-576~White|Yellow|Red|Rivulet|Saint|Gourmand, DayNightSettings><229.2318><271.4492><5~8.660254~10~11, 
+AmbientSounds: SPOT><Basic Mech.wav><572.8531><590.6143><0.173913><1><775.8531><523.6143><-63.35535><-26.35535><0><0.2630436, OMNI><SO_WAT-DripTap.ogg><835.8024><572.7805><0.2282609><1, OMNI><SO_WAT-LilDrips.ogg><835.3528><494.6716><0.3804348><1, 
+FadePalette: 8, 0.1630435

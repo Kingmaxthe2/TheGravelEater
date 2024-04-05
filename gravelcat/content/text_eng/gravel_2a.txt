@@ -1,0 +1,14 @@
+sm4
+Gvl3
+
+"are you a rock, cuz you rock my world~"
+The slugcat seems unimpressed at your sad attempt at romance.
+"That sure is an interesting first impression..." they claim
+They wince and clutch their stomach as a sizzling sound is heard.
+"Well, now that you're here, would you mind helping me find some rocks?"
+"I have what some would say to be a 'serious tummy problem.'"
+
+Give some rocks
+gravel_2b.txt
+Search for biggest stone
+gravel_3.txt

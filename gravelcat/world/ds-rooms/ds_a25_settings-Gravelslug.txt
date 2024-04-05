@@ -1,0 +1,15 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04764494
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+BkgDroneVolume: 0
+Palette: 4
+EffectColorB: 6
+Effects: DayNight-0.1086956-30-81, 
+PlacedObjects: BlueToken><896.95><529.2543><4~56~-402~83~1~BubbleGrass~Yellow~0~0~0~0, DeadTokenStalk><722.326><527.185><0~48, LillyPuck><482.1455><356.1372><0~0~2~3, LillyPuck><905.1366><349.8539><0~0~2~3, LillyPuck><635.1565><356.8232><0~0~2~3, DayNightSettings><280.9527><304.3057><5~8.660254~10~11, 
+AmbientSounds: OMNI><SO_WAT-OpenFlow.ogg><833.4536><647.0555><0.4347826><1, SPOT><SO_WAT-LightFlow.ogg><67.19324><497.9485><0.5><1><252.1932><599.9485><-80.35535><-68.35535><0><0.1108697, SPOT><SO_WAT-RunningWater.ogg><69.32062><372.4116><0.4456522><1><260.3206><332.4116><-74.35535><-76.35535><0><0.1869567, SPOT><SO_WAT-RunningWater.ogg><77.30792><247.4443><0.4456522><1><559.3079><333.4443><-65.35535><-83.35535><0><0.2195653, SPOT><SO_WAT-LightFlow.ogg><83.89532><129.1704><0.5><1><573.8953><607.1704><-87.35535><-46.35535><0><0.1326088, SPOT><SO_WAT-RunningWater.ogg><770.8588><185.3322><0.4456522><1><851.8588><340.3322><-85.35535><-78.35535><0><0.2304349, 
+FadePalette: 8, 0.1630435

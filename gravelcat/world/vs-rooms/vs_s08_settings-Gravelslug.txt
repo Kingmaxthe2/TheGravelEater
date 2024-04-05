@@ -1,0 +1,7 @@
+Template: VS_SettingsTemplate_Filter
+DangerType: Thunder
+RumbleIntensity: 0
+Palette: 21
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: DayNightSettings><623.6997><399.7611><5~8.660254~10~21, 
+FadePalette: 8, 0.08695652

@@ -1,0 +1,19 @@
+Template: NONE
+DangerType: Blizzard
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 9.275675E-27
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.4565217
+Grime: 0.578261
+Palette: 13
+Effects: Darkness-0.5652174-4-139, Fog-0-7-86, Contrast-0-20-20, Moth-0.1413043-271-14, RockFlea-0.05434782-276-72, BrokenZeroG-0.8043478-258-128, ElectricDeath-0.01086957-256-183, Coldness-1-257-238, 
+PlacedObjects: SuperStructureFuses><112.6304><550.1603><135~102, SuperStructureFuses><630.5594><269.9394><95~176, LightFixture><765.4657><1001.447><RedLight~17.32051~-10~0, LightFixture><154.694><1369.299><RedLight~17.32051~-10~0, LightFixture><354.3925><427.0813><RedLight~17.32051~-10~92, LightSource><477.6628><814.6339><0.2717391~White~157~-278~47~-178.3975~1~0~None~0~0, LightFixture><321.6897><3850.187><RedLight~-320.6795~277~97, LightFixture><596.6512><4334.119><RedLight~17.32051~-10~72, LightSource><464.8026><3794.307><0.1413043~White~356~493~50~86.60254~1~0~None~0~0, LightSource><404.3032><1983.036><0.2065217~White~-397~128~50~86.60254~1~0~None~0~0, LightSource><589.5189><2660.301><0.2717391~White~-340~8~-193~-304.3975~1~0~None~0~0, SuperStructureFuses><71.06689><2390.812><94~196, SuperStructureFuses><831.6982><2387.973><76~130, 
+AmbientSounds: OMNI><SO_SFX-DeepLake.ogg><842.4474><470.782><0.1956522><1, OMNI><AM_IND-SuperStructure.ogg><841.1833><396.4199><0.2282609><1, OMNI><AM_SUB-MysticCave2.ogg><849.7843><320.697><0.2065217><1, SPOT><AM_WIN-NiceWnd.ogg><843.3399><152.8801><0.3586957><1><457.3399><112.8801><31.64465><496.6447><0><1, 
+FadePalette: 35, 1, 0.9347826, 0.8695652, 0.8043478, 0.7391304, 0.6739131
+RoomSpecificScriptActive: ON
+WetTerrain: OFF

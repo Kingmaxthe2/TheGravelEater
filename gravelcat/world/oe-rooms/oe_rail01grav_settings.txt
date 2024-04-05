@@ -1,0 +1,20 @@
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0.01086957
+RumbleIntensity: 0
+WaveSpeed: 0.5000479
+WaveLength: 0.9981744
+WaveAmplitude: 2.407448E-05
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.75
+Grime: 0.1956522
+Palette: 19
+EffectColorA: 13
+EffectColorB: 15
+Effects: PixelShift-0.5-14-127, SunBlock-0.6521739-333-75, FairyParticles-1-308-23, VoidMelt-0.1847826-261-126, DirtyWater-1-248-240, LethalWater-1-249-301, 
+PlacedObjects: DayNightSettings><922.4199><1219.606><5~8.660254~17~10, CustomDecal><380.1859><96.67606><-68~237~477~277~417~-10~-126~193~0.2065217~0.5~0.4673913~Rust2~0.7173913~1~0.7173913~1~0.7173913~1~0.7173913~1, NoSpearStickZone><374.6898><854.813><0~100, InsectGroup><6093.872><1342.097><197~-9~-42~49~FireFly~0.6304348, GooieDuck><6527.801><1281.285><0~0~2~3, GooieDuck><6456.805><1309.301><0~0~2~3, FairyParticleSettings><629.1997><489.989><5~8.660254~1~7.065217~37.5~0~3.264346~3.535007~60~180~40~100~0~19.56522~0~23.47826~0.1086956~0.1413043~0.5217391~0.7717391~0.4347826~0.5217391~0.7065217~0.2717391~9.51087~Leaf~SIN_IO~SIN_IO~64.78259~0.3369565~0.6521739, LightSource><2129.898><65.82806><0.3043478~EffectColor2~224~613~50~86.60254~0~0~None~0~0, LightSource><2990.92><63.98846><0.3369565~EffectColor2~-169~711~50~86.60254~0~0~None~0~0, LightSource><4113.582><58.0311><0.5~EffectColor2~612~669~50~86.60254~0~0~None~0~0, LightSource><4991.074><66.09421><0.3586957~EffectColor2~-117~550~50~86.60254~0~0~None~0~0, 
+AmbientSounds: OMNI><AM_ENV-NatWind.ogg><69.81915><439.6646><0.4673913><0.6478261, OMNI><SO_WAT-Splashes.ogg><78.15137><353.6193><0.2608696><0.3543478, OMNI><AM_RAIN-Rumbles.ogg><71.65735><518.8228><0.4021739><0.3543478, SPOT><MSC-StructureStrain.ogg><800.1646><233.6136><0.1630435><0.4521739><492.1646><1570.614><69.64465><-152.3553><0><0.4152175, 
+Triggers: RegionBump<tA>event<tB>MusicEvent<eA>songName<eB>na_39 - cracked earth<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>0<eA>fadeIn<eB>97.82609<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>573<tA>panPos<tB>795.0696<tB>446.1875<tA>fireChance<tB>1<tA>entrance<tB>1<tA>karma<tB>0<tA>slugcats<tB>, 
+FadePalette: 31, 0.5543478, 0.5652174, 0.5760869, 0.5978261, 0.6086956, 0.6195652, 0.5108696, 0.5326087, 0.5652174, 0.5869565, 0.5978261, 0.6086956
+WetTerrain: OFF

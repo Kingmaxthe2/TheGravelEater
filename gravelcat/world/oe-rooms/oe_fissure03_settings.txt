@@ -1,0 +1,10 @@
+Template: OE_SettingsTemplate_Cave
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+EffectColorA: 13
+EffectColorB: 15
+Effects: LethalWater-1-284-12, VoidMelt-0.05434782-20-20, FairyParticles-1-296-77, LightRain-0-28-75, 
+PlacedObjects: ReliableSpear><2732.062><452.8198><, DangleFruit><2560.34><431.8217><-241~83~2~3, DangleFruit><2661.787><482.5535><-48~48~2~3, DangleFruit><2824.559><487.8101><0~0~2~3, DangleFruit><2868.062><430.3189><0~0~2~3, FairyParticleSettings><2250.16><39.10836><5~8.660254~0~7.065217~35.32609~0~1~2.828388~288.2608~396.7391~32.6087~100.0001~0~19.56522~0~23.47826~0.1086956~0.1413043~0.5217391~0.7717391~0.4347826~0.5217391~0.7065217~0.2717391~9.430216~Leaf~SIN_IO~SIN_IO~27.82606~0.1956522~0.6521739, 
+AmbientSounds: SPOT><so_wat-splashes.ogg><734.9329><336.9189><0.2065217><0.3152174><3032.933><266.9189><-143.3553><-35.35535><0><0.2630436, 
+FadePalette: 31, 0.5543478, 0.5108696, 0.5

@@ -1,0 +1,18 @@
+Template: SU_SettingsTemplate_Inside
+DangerType: Rain
+RainIntensity: 0.02173913
+RumbleIntensity: 0
+WaveSpeed: 0.4757101
+WaveLength: 0.7378551
+WaveAmplitude: 0.001508167
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.1521739
+Grime: 0.3913043
+BkgDroneVolume: 0.2769565
+EffectColorA: 8
+EffectColorB: 8
+Effects: Flies-0.1521739-20-20, FastFloodPullDown-0.48-22-63, FastFloodDrain-0-0.375-114, DayNight-0.9500003-284-35, 
+PlacedObjects: LightSource><524.0766><774.1503><1~White~-3~-103~88~-92.39746~1~0~None~0~0, NeedleEgg><956.6171><1087.342><0~0~4~9, NeedleEgg><965.6578><1175.377><0~0~4~9, Filter><908.9435><1141.301><-20~142~-112~-200~White|Yellow|Rivulet|Saint|Gravelslug, LightSource><518.7199><911.7007><0.1847813~EffectColor1~-211~492~50~86.60254~0~0~None~0~1, DayNightSettings><226.1325><1201.6><5~8.660254~4~10, Vine><400.4751><632.1984><-280~-62, Vine><429.8148><633.5908><224~4, Vine><925.5505><572.9849><-385~64, Vine><619.3091><1390.559><317~41, Vine><361.1707><1401.566><-263~-6, Vine><57.19904><1053.599><215~456, Vine><692.2122><1425.054><252~-79, 
+AmbientSounds: OMNI><AM_IND-Utility02.ogg><738.4164><391.111><0.3586957><1, SPOT><AM_IND-ElectricHum02.ogg><782.9419><281.4436><0.2282609><1><521.9419><852.4436><-186.3553><189.6447><0><0.4152175, SPOT><SO_IND-Fridge.ogg><814.6729><595.8506><0.2391304><1><517.6729><1479.851><-35.35534><-35.35534><0><0.4260871, 
+FadePalette: 4, 0.6086956, 0.6086956

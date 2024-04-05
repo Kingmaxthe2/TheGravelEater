@@ -1,0 +1,13 @@
+sm10
+Gvl3
+
+You decided to whip out the egg you have been carrying around.
+The slugcat is immediatly interested in what you're holding.
+"Whats that?"
+"eg"
+"Can I try it?"
+
+"ye"
+gravel_9a.txt
+"neh"
+gravel_9b.txt

@@ -1,0 +1,11 @@
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+Clouds: 1
+Palette: 42
+Effects: PixelShift-0.5-32-65, AboveCloudsView-0-20-20, LightBurn-0.04347826-20-77, SkyDandelions-0.2282609-30-30, DustWave-1-299-22, DayNight-0.1086956-289-75, Fog-0.5978261-109-127, HeatWave-0.2065217-364-123, Dustpuffs-0-244-188, FairyParticles-1-269-261, 
+PlacedObjects: DangleFruit><463.8067><816.0511><0~0~2~3, DangleFruit><478.8087><862.9413><0~0~2~3, DangleFruit><454.8906><915.1671><0~0~2~3, DandelionPatch><491.1093><1085.832><0~100, DeadTokenStalk><417.8667><1081.399><29~-36, DeadTokenStalk><486.1271><1079.404><-14~-36, BlueToken><462.0782><1133.648><-4~-89~58~106~1~VultureMask~~0~0~0~0, DayNightSettings><234.4353><308.8108><-99~61.66025~10~42, FairyParticleSettings><926.8><225.5036><5~8.660254~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_WIN-StrongWnd2.ogg><859.412><471.0704><0.1847826><1><459.412><1328.07><308.6447><-459.3553><0><1, OMNI><AM_ENV-LightWind.ogg><430.8><312.2554><0.6413044><1.215217, 
+FadePalette: 8, 0.3478261, 0.4673913
+WetTerrain: OFF

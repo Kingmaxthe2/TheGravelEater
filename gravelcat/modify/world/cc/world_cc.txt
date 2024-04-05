@@ -1,0 +1,64 @@
+[MERGE]
+CONDITIONAL LINKS
+//Requires swaps on both sides!
+Gravelslug : CC_A06 : CC_H01 : CC_H01SAINT
+Gravelslug : CC_H01 : CC_A06 : DISCONNECTED
+Gravelslug : CC_H01SAINT : 1 : CC_A06
+//Only show on gravelslug
+Gravelslug : EXCLUSIVEROOM : CC_H01SAINT
+//Hidden on gravelslug
+Gravelslug : HIDEROOM : CC_H01
+Gravelslug : HIDEROOM : GATE_CC_UW
+END CONDITIONAL LINKS
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Vulture-4, 0-Scavenger-6
+(X-Gravelslug)CC_C07 : 2-Snail-3-{Night}
+(X-Gravelslug)CC_B04 : 3-White, 3-Snail-2-{PreCycle}
+(X-Gravelslug)CC_B14 : 3-Tube Worm, 4-Tube Worm
+(X-Gravelslug)CC_F01 : 4-Pink-2, 4-Snail-3-{PreCycle}
+(X-Gravelslug)CC_B11 : 3-Caramel
+(X-Gravelslug)CC_B08 : 3-White, 2-Pink, 3-Cyan-2-{PreCycle}
+(X-Gravelslug)CC_B05 : 2-Pink, 3-White, 4-TentaclePlant-{PreCycle}
+(X-Gravelslug)CC_B01 : 2-Blue, 3-White, 3-Snail-3-{PreCycle}
+(X-Gravelslug)LINEAGE : CC_C11 : 3 : Blue-0.2, White-0.2, NONE-0.2, Red-0
+(X-Gravelslug)CC_A07 : 3-Mimic-{18}
+(X-Gravelslug)LINEAGE : CC_C08 : 3 : Pink-0.2, Blue-0.3, NONE-0.3, Cyan-0
+(X-Gravelslug)LINEAGE : CC_C08 : 4 : Pink-0.2, Blue-0.3, NONE-0.3, Cyan-0
+(X-Gravelslug)CC_SHAFT02 : 5-BigSpider-2
+(X-Gravelslug)CC_SUMP01 : 5-MotherSpider, 6-TentaclePlant, 7-Eel
+(X-Gravelslug)CC_STRAINER01 : 2-Small Centipede-5, 3-Centipede-2
+(X-Gravelslug)CC_SUMP03 : 4-Mimic-{18}, 7-MotherSpider-1, 8-Mimic-{14}, 12-Snail-5, 13-Eel
+(X-Gravelslug)CC_SUMP04 : 3-Eel, 4-Snail-2
+(X-Gravelslug)CC_STRAINER03 : 2-Snail-3
+(X-Gravelslug)CC_SHAFT01x : 9-Garbage Worm-3, 2-Eel-{PreCycle}
+
+(Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Scavenger-5-{Ignorecycle}, 0-MirosVulture-{Night}
+(Gravelslug)CC_C07 : 3-Centiwing, 2-Snail-3-{Night}
+(Gravelslug)CC_B04 : 3-Blue-{Ignorecycle}, 3-Centiwing, 4-Centiwing, 3-Snail-2-{Night}
+(Gravelslug)CC_C04 : 3-Centiwing-2, 3-TentaclePlant-{Night}
+(Gravelslug)CC_B14 : 3-Tube Worm, 4-Tube Worm, 2-Cyan-2-{Ignorecycle}, 3-Centiwing
+(Gravelslug)CC_F01 : 3-Centiwing, 4-White-{Ignorecycle}, 4-Snail-3-{Night}
+(Gravelslug)CC_B11 : 3-Caramel-2
+(Gravelslug)CC_A15 : 3-Centiwing
+(Gravelslug)CC_B08 : 3-Strawberry-{Ignorecycle}, 3-Cyan-2-{Night}
+(Gravelslug)LINEAGE : CC_B08 : 2 : NONE-0.3, Pink-0.2, White-0
+(Gravelslug)CC_B05 : 3-White-{Ignorecycle}, 4-TentaclePlant-{Night}
+(Gravelslug)CC_B01 : 2-Cyan-2-{Ignorecycle}, 3-Centiwing, 3-Snail-3-{Night}
+(Gravelslug)CC_C11 : 4-Strawberry-{Ignorecycle}
+(Gravelslug)CC_A07 : 3-Red-{Night}
+(Gravelslug)CC_C08 : 3-Yellow-3-{Ignorecycle}, 4-Yellow-2-{Ignorecycle}, 5-Centiwing-2
+(Gravelslug)LINEAGE : CC_SHAFT01x : 4 : Bro-0.5, BigSpider-0
+(Gravelslug)CC_SHAFT01x : 9-Garbage Worm-2, 2-Eel-{Night}
+(Gravelslug)CC_SHAFT02 : 5-BigSpider-1-{Ignorecycle}
+(Gravelslug)CC_SUMP01 : 5-BigSpider-{Ignorecycle}, 6-TentaclePlant-{Ignorecycle}, 7-Eel-{Ignorecycle}
+(Gravelslug)CC_STRAINER01 : 2-Small Centipede-3-{Ignorecycle}, 3-Centipede-3-{Ignorecycle}
+(Gravelslug)CC_SUMP03 : 4-Mimic-{18}, 7-MotherSpider-1-{Ignorecycle}, 8-Mimic-{14}, 12-Snail-3-{Ignorecycle}, 13-Eel-{Ignorecycle}
+(Gravelslug)CC_SUMP04 : 3-Eel-1-{Ignorecycle}
+(Gravelslug)CC_STRAINER03 : 2-Snail-2-{Ignorecycle}
+(Gravelslug)CC_OUTPUT : 10-Small Centipede-3-{Ignorecycle}, 11-Snail-2-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]

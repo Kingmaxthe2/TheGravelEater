@@ -1,0 +1,6 @@
+DangerType: Flood
+Grime: 0.1195652
+Palette: 34
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DayNightSettings><240.6119><335.6054><5~8.660254~10~34, 
+FadePalette: 8, 0.3152174

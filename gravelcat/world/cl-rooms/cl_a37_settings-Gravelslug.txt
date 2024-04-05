@@ -1,0 +1,17 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: FloodAndRain
+CeilingDrips: 0.5108696
+RainIntensity: 0.4891304
+RumbleIntensity: 1
+WaveSpeed: 0.4947754
+WaveLength: 0.9973877
+WaveAmplitude: 0.009731025
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.5217391
+EffectColorB: 13
+Effects: SilenceWater-0.4891304-16-76, WaterDepth-0.06521739-18-131, LightBurn-0-30-30, Fog-0.75-20-20, 
+PlacedObjects: LightSource><579.1535><210.8248><0.09782602~Environment~-746~451~273~-211.3974~1~1~None~0~0, LightBeam><569.7761><317.3017><-184~382~-86~393~38~144~-667~-180~0.4652174~0~0~1~Fade~0.5978261~0, LightBeam><420.5502><210.4905><-292~509~-146~512~66~151~-512~92~0.4217392~0~0~1~Fade~0.6630435~0, LightSource><242.3024><675.031><0.195652~Environment~337~-160~93.99997~-677.3975~1~0~None~0~0, SteamPipe><770.3021><267.0293><-27~-27, SteamPipe><773.6761><273.9052><-62~13, Corruption><649.8985><30.86604><14~121, Corruption><785.273><156.5513><-27~74, Corruption><201.1142><528.6642><0~100, Corruption><380.1989><614.0566><47~-101, Corruption><585.1337><598.6487><-30~-108, CorruptionTube><573.8158><596.5779><-378~-94, CorruptionTube><322.4109><595.6188><284~-233, 
+AmbientSounds: OMNI><AM_ENV-NatWind.ogg><852.2994><642.8062><0.2717391><1, OMNI><MSC-Subtundra.ogg><853.6959><566.21><0.3586957><1, SPOT><AM_WIN-HowlingWnd.ogg><862.4717><449.948><0.4782609><0.4913043><355.4717><670.948><161.6447><-193.3553><0><0.2304349, 
+FadePalette: 15, 0.2826087
+WetTerrain: OFF

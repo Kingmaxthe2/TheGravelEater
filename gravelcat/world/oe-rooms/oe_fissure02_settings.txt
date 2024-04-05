@@ -1,0 +1,9 @@
+Template: OE_SettingsTemplate_Cave
+CeilingDrips: 0.3043478
+Palette: 19
+EffectColorA: 13
+EffectColorB: 15
+Effects: VoidMelt-0.25-271-124, LethalWater-1-285-72, FairyParticles-1-30-30, DirtyWater-1-345-19, SilenceWater-0.5543478-40-40, LightRain-0-374-292, 
+PlacedObjects: FairyParticleSettings><2008.171><253.3538><5~8.660254~1~7.065217~37.5~0~3.264346~3.535007~60~180~40~100~0~19.56522~0~23.47826~0.1086956~0.1413043~0.5217391~0.7717391~0.4347826~0.5217391~0.7065217~0.2717391~9.51087~Leaf~SIN_IO~SIN_IO~64.78259~0.3369565~0.6521739, LightSource><1678.81><-43.69092><0.25~EffectColor2~66~614~50~86.60254~0~0~None~0~0, LightSource><971.3381><-41.32047><0.3586957~EffectColor2~80~548~50~86.60254~0~0~None~0~0, LightSource><382.9102><-49.38026><0.2826087~EffectColor2~-134~585~50~86.60254~0~0~None~0~0, 
+AmbientSounds: OMNI><so_wat-splashes.ogg><148.8065><385.3006><0.2608696><0.4521739, 
+FadePalette: 31, 0.7717391, 0.7826087

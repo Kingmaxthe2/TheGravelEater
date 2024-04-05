@@ -1,0 +1,46 @@
+[MERGE]
+
+CREATURES
+(X-Gravelslug)OFFSCREEN : 0-Vulture-4, 0-Scavenger-6
+(X-Gravelslug)SI_A30 : 3-TentaclePlant-{PreCycle}
+(X-Gravelslug)SI_B09 : 7-CicadaA
+(X-Gravelslug)SI_F01 : 3-CicadaA-3, 4-CicadaB-2, 11-Centiwing, 3-Snail-4-{PreCycle}, 7-Snail-2-{PreCycle}, 11-Snail-2-{PreCycle}
+(X-Gravelslug)SI_D05 : 4-Eggbug, 3-Small Centipede-2-{AlternateForm}, 5-CicadaA, 6-CicadaA
+(X-Gravelslug)SI_C08 : 6-Centiwing, 4-Centiwing
+(X-Gravelslug)SI_A17 : 3-White
+(X-Gravelslug)SI_C02 : 6-Eggbug, 5-BigNeedleWorm, 5-SmallNeedleWorm-3, 8-Mimic-{24}, 9-Mimic-{18}
+(X-Gravelslug)SI_C01 : 3-Blue, 3-Yellow, 4-Yellow-2, 2-Snail-3-{PreCycle}, 5-Snail-2-{PreCycle}
+(X-Gravelslug)SI_C07 : 1-Centiwing, 2-Blue, 3-Blue, 3-Snail-4-{PreCycle}
+(X-Gravelslug)SI_D01 : 5-White, 7-CicadaA-2, 8-CicadaB-2, 9-CicadaB, 10-CicadaB, 6-Blue
+(X-Gravelslug)LINEAGE : SI_B01 : 4 : Pink-0.5, Blue-0.5, White-0.3, Red-0
+(X-Gravelslug)SI_B01 : 4-Snail-2-{PreCycle}, 5-Snail-3-{PreCycle}
+(X-Gravelslug)SI_A03x : 3-Yellow-3
+(X-Gravelslug)LINEAGE : SI_C01 : 2 : NONE-0.05, Mimic-{12}-0.5, Mimic-{16}-0.5, TentaclePlant-0
+(X-Gravelslug)LINEAGE : SI_C01 : 5 : NONE-0.07, TentaclePlant-0
+(X-Gravelslug)SI_A18 : 3-Eggbug
+(X-Gravelslug)SI_A02 : 2-Blue, 2-Cyan-{PreCycle}
+(X-Gravelslug)SI_B12 : 2-BigNeedleWorm, 2-SmallNeedleWorm-3, 1-Small Centipede-3-{AlternateForm}, 1-TentaclePlant-{PreCycle}
+
+(Gravelslug)SI_A27 : 4-Yellow
+(Gravelslug)SI_B02x : 3-Yellow-3, 3-Cyan-{Night}-2
+
+(Gravelslug)LINEAGE : SI_B09 : 6 : Yellow-0.5, Cyan-0.5, White-0.3, Red-0
+
+(Gravelslug)OFFSCREEN : 0-Vulture-5, 0-Scavenger-3
+(Gravelslug)SI_A30 : 3-Yellow-2-{Ignorecycle}, 3-TentaclePlant-{Night}
+(Gravelslug)SI_F01 : 3-CicadaA-3, 4-CicadaB-2, 11-Small Centipede-{AlternateForm}-{Ignorecycle}-2
+(Gravelslug)SI_D05 : 3-Yellow-2-{Ignorecycle}, 6-Centiwing-{Ignorecycle}, 6-Small Centipede-{AlternateForm}-{Ignorecycle}-3
+(Gravelslug)SI_C08 : 4-Centiwing
+(Gravelslug)SI_A17 : 3-Yellow-1
+(Gravelslug)SI_C02 : 8-Mimic-{24}, 9-Mimic-{18}
+(Gravelslug)SI_C01 : 3-Yellow, 4-Yellow-2, 5-TentaclePlant-{Ignorecycle}
+(Gravelslug)SI_C07 : 2-Yellow-2
+(Gravelslug)SI_D01 : 5-Eggbug, 6-Small Centipede-{AlternateForm}-2
+(Gravelslug)SI_B01 : 5-Cyan
+(Gravelslug)SI_A03x : 3-Yellow-3
+(Gravelslug)SI_A18 : 3-Eggbug
+
+
+END CREATURES
+
+[ENDMERGE]

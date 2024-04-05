@@ -1,0 +1,14 @@
+DangerType: Blizzard
+CeilingDrips: 0
+RainIntensity: 0.0326087
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Grime: 0.1304348
+Effects: Fog-0.6521739-261-181, BrokenZeroG-0.3913043-268-120, ElectricDeath-0-267-58, Coldness-1-265-238, 
+PlacedObjects: LightFixture><751.2971><267.7748><RedLight~-186.6795~-260~78, LightFixture><687.4372><550.4913><RedLight~17.32051~-10~76, LightFixture><209.3748><553.6736><RedLight~17.32051~-10~0, SuperStructureFuses><767.0022><425.5423><60~67, SuperStructureFuses><768.8353><188.3865><61~93, 
+FadePalette: 13, 0.09782609
+WetTerrain: OFF

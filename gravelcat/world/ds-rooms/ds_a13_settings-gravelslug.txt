@@ -1,0 +1,7 @@
+Template: NONE
+RainIntensity: 0.0326087
+RumbleIntensity: 0
+Palette: 4
+Effects: DayNight-0.1086956-20-20, 
+PlacedObjects: CustomDecal><9.974487><236.1984><-16~129~733~155~716~-24~-170~104~0.0326087~1~0~DirtyWaterLine~0.5~1~1~1~0.04347826~1~0~1, DayNightSettings><218.5503><269.7389><5~8.660254~10~11, 
+FadePalette: 10, 0.2826087

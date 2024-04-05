@@ -1,0 +1,13 @@
+redeye_anim_1.0
+Gvl11
+
+Handing over the egg, the slugcat carefully holds it and looks over the egg.
+"Mind if i give it a try? I may not be able to taste, but i can appreciate the texture"
+"sure...?"
+They take a generous bite of the egg and it reacts to the bite.
+The egg hovers in the air and begins to warp your vision.
+
+uh oh
+gravel_10.txt
+
+NA_03 - Wormpad

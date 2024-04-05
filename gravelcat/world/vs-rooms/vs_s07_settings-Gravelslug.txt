@@ -1,0 +1,11 @@
+Template: VS_SettingsTemplate_Filter
+DangerType: Thunder
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04676946
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Effects: DayNight-0.9565217-20-20, 
+PlacedObjects: DayNightSettings><111.0586><314.442><5~8.660254~21~10, 
+FadePalette: 21, 0.5

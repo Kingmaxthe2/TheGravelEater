@@ -1,0 +1,8 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0.05434782
+Palette: 42
+Effects: DayNight-0.08695652-13-69, 
+PlacedObjects: BrokenShelterWaterLevel><568.3526><472.6149><, DayNightSettings><222.5513><414.5229><5~8.660254~10~42, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><692.8223><459.0635><0.423913><1><573.8223><377.0635><-64.35535><-58.35535><0><0.1760871, 
+FadePalette: 8, 0.6521739

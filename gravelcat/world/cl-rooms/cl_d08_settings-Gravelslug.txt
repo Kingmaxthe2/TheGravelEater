@@ -1,0 +1,16 @@
+Template: NONE
+CeilingDrips: 0.5108696
+WaveSpeed: 0.51104
+WaveLength: 0.9416932
+WaveAmplitude: 0.007704981
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.2391304
+Grime: 0.25
+WaterReflectionAlpha: 0
+Palette: 15
+EffectColorB: 12
+Effects: Darkness-0.4130435-51-88, ZeroG-0.07608695-579-18, WaterDepth-0.07608695-273-26, SilenceWater-0.6304348-300-88, LightRain-0.07608695-243-145, Fog-0.2826087-20-20, DirtyWater-1-30-30, 
+PlacedObjects: DevToken><829.8176><259.4382><27~-102~-354~-6~0~~~0~0~0~1~0~0~0~1, Corruption><1268.686><568.4495><-51~97, CorruptionTube><1200.262><528.6996><-189~-542, Corruption><988.1299><19.33992><42~50, Corruption><2611.492><407.0501><-18~72, CorruptionTube><2612.101><435.9224><-224~0, CorruptionTube><2613.329><387.1837><-215~201, Corruption><3729.619><358.3486><-35~66, 
+AmbientSounds: OMNI><AM_ENV-WallHum.ogg><730.4456><358.7916><0.2608696><0.3934783, OMNI><MSC-Subtundra.ogg><726.3051><444.2051><0.2717391><0.7652174, OMNI><AM_IND-SuperStructure.ogg><746.9155><516.6813><0.1521739><0.4326087, SPOT><AM_ENV-NatWind.ogg><757.295><595.4448><0.4021739><1><911.295><700.4448><183.6447><-251.3553><0><0.8826088, SPOT><AM_WIN-SubWnd.ogg><731.1204><245.6523><0.3478261><1><2606.12><728.6523><-85.35535><-202.3553><0><0.6869566, SPOT><SO_WAT-MoreDrips.ogg><585.1901><593.0621><0.5><1><1713.19><244.0621><-329.3553><-57.35535><0><0.328261, SPOT><SO_WAT-ProperDrips.ogg><564.1151><479.1636><0.423913><1><3611.115><336.1636><-235.3553><-51.35535><0><0.4369566, 
+FadePalette: 10, 0.1521739, 0.2282609, 0.3478261, 0.4891304

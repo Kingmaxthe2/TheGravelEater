@@ -1,0 +1,15 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0.01086957
+WaveSpeed: 0.5678771
+WaveLength: 0.9660614
+WaveAmplitude: 0.001866353
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0.1304348
+Palette: 3
+EffectColorA: 10
+Effects: DayNight-0.8369565-20-20, HeatWave-0.1195652-34-65, FairyParticles-1-313-14, 
+PlacedObjects: ExitSymbolShelter><734.1403><119.4172><, NoSpearStickZone><478.1835><239.8296><-235~155, FairyParticleSettings><130.0818><22.4325><5~8.660254~0~1~1~0~1~1.448696~60~495.2173~40~100~5~30~0~360~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_IND-DeepHum.ogg><401.179><54.06305><0.3586958><1><478.179><-18.93695><-195.3553><59.64465><0><0.3608697, SPOT><AM_IND-Utility02.ogg><833.9063><617.8233><0.423913><1><858.9063><438.8233><-117.3553><-1.355347><0><0.4586958, SPOT><AM_IND-ElectricHum01.ogg><818.78><297.4477><0.1847826><1><809.78><271.4477><-35.35534><-35.35534><0><0.2739132, SPOT><AM_IND-Utility02.ogg><45.65375><383.628><0.423913><1><67.65369><437.628><-105.3553><-23.35535><0><0.4369566, 
+FadePalette: 8, 0.1956522

@@ -1,0 +1,49 @@
+[MERGE]
+
+CREATURES
+
+(X-Gravelslug)LINEAGE : HI_C02 : 5 : Pink-0.2, Blue-0.5, Cyan-0.1, Strawberry-0.6, Red-0
+(X-Gravelslug)LINEAGE : HI_C02 : 6 : Green-0.2, Blue-0.5, Strawberry-0
+(X-Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Scavenger-6
+(X-Gravelslug)HI_D01 : 2-Cyan-2-{PreCycle}
+(X-Gravelslug)HI_B09 : 3-Green, 2-White
+(X-Gravelslug)HI_B07 : 3-Pink, 2-Pink, 3-TentaclePlant-{PreCycle}
+(X-Gravelslug)HI_C11 : 3-Blue
+(X-Gravelslug)LINEAGE : HI_B03 : 3 : NONE-0.05, Blue-0.2, Red-0
+(X-Gravelslug)HI_C04 : 5-Blue, 6-Snail, 7-Snail-2, 7-TentaclePlant-{PreCycle}, 5-Cyan-{PreCycle}
+(X-Gravelslug)HI_B12 : 2-Blue
+(X-Gravelslug)HI_B15 : 2-Small Centipede-3, 3-Centipede-{0.5}
+(X-Gravelslug)HI_A18 : 2-Green, 2-TentaclePlant-{PreCycle}
+(X-Gravelslug)HI_C05 : 3-Pink, 4-Pink
+(X-Gravelslug)LINEAGE : HI_C01 : 5 : Pink-0.2, Blue-0.5, White-0.1, Strawberry-0.5, Red-0
+(X-Gravelslug)HI_A06 : 2-Caramel
+(X-Gravelslug)HI_A16 : 4-Green
+(X-Gravelslug)HI_A17 : 3-Green, 3-Cyan-{PreCycle}
+
+(Gravelslug)OFFSCREEN : 0-Vulture-3, 0-MirosVulture-1-{Night}, 0-Scavenger-9-{Ignorecycle}
+(Gravelslug)HI_D01 : 2-Lantern Mouse-5, 2-Bro-{Night}
+(Gravelslug)HI_B09 : 2-Centiwing, 3-Caramel-{Ignorecycle}
+(Gravelslug)HI_B07 : 2-Strawberry-{Ignorecycle}, 3-Centiwing, 3-TentaclePlant-{Night}
+(Gravelslug)HI_C11 : 3-White-{Ignorecycle}, 4-Cyan-{Night}
+(Gravelslug)HI_A10 : 3-Centiwing
+(Gravelslug)HI_B03 : 3-Centiwing-2
+(Gravelslug)HI_C04 : 7-Salamander-{Ignorecycle}, 7-TentaclePlant-{Night}, 5-Cyan-{Night}, 5-Lantern Mouse-5
+(Gravelslug)HI_A25 : 2-Centipede-2, 2-Small Centipede-1
+(Gravelslug)HI_C01 : 4-Yellow-4-{Ignorecycle}
+(Gravelslug)HI_B13 : 2-Yellow-3-{Ignorecycle}
+(Gravelslug)HI_B12 : 3-Centiwing
+(Gravelslug)HI_B05 : 3-Cyan-2-{Night}, 3-Lantern Mouse-4
+(Gravelslug)HI_B15 : 2-Centipede, 3-Centipede-2
+(Gravelslug)HI_C05 : 3-EggBug-{Ignorecycle}, 4-Yellow-2-{Ignorecycle}
+(Gravelslug)HI_A06 : 2-Green-{Ignorecycle}, 2-Strawberry-{Night}
+(Gravelslug)LINEAGE : HI_A16 : 4 : Caramel-0.2, SmallCentipede-0.5, Centipede-0
+(Gravelslug)HI_A17 : 3-Lantern Mouse-4, 3-Cyan-{Night}
+(Gravelslug)LINEAGE : HI_C02 : 5 : Pink-0.2, Cyan-0.3, Strawberry-0.5, Yellow-0
+(Gravelslug)LINEAGE : HI_C02 : 6 : Caramel-0.2, Strawberry-0.5, Yellow-0
+(Gravelslug)HI_A04 : 2-Red-{Night}
+(Gravelslug)HI_B06 : 4-Yellow-3-{Ignorecycle}
+(Gravelslug)LINEAGE : HI_B06 : 3 : Caramel-0.2, Blue-0.5, White-0.2, Red-0
+
+END CREATURES
+
+[ENDMERGE]

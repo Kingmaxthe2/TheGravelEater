@@ -1,0 +1,6 @@
+DangerType: Thunder
+RumbleIntensity: 0
+Grime: 0.2065217
+Effects: DayNight-0.95-21-73, 
+PlacedObjects: DayNightSettings><190.3188><483.4152><5~8.660254~4~10, 
+FadePalette: 8, 0.1847826

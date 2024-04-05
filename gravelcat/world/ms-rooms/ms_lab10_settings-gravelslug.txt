@@ -1,0 +1,14 @@
+DangerType: Blizzard
+CeilingDrips: 0
+RainIntensity: 0.0326087
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Grime: 0
+Effects: LightBurn-0.2065217-263-72, WaterDepth-0.1521739-271-12, BrokenZeroG-0.4021739-260-124, Moth-0.1413043-265-187, ElectricDeath-0-258-242, 
+PlacedObjects: LightSource><572.738><331.8004><0.3813841~Environment~-390~190~-128.0394~115.639~1~0~None~0~0, SuperStructureFuses><800.1079><450.0931><46~62, SuperStructureFuses><797.5993><167.9237><35~78, 
+FadePalette: 13, 0.3152174
+WetTerrain: OFF

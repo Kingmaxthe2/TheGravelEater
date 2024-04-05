@@ -1,0 +1,20 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: FloodAndRain
+CeilingDrips: 0.5
+RainIntensity: 0.2608696
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.25
+RandomItemDensity: 0.5543478
+Palette: 15
+EffectColorA: 2
+EffectColorB: 6
+Effects: DirtyWater-1-30-30, 
+PlacedObjects: LightBeam><537.9454><324.0424><-37~451~78~418~288~-170~-552~-6~0.4652173~0~0~1~None~0~0, LightSource><641.5501><313.2569><0.1304348~Environment~-604~302~-10~244.6025~1~1~None~0~0, KarmaFlower><653.0503><284.0104><0~0~5~7, DangleFruit><772.9184><463.1079><0~0~2~3, DangleFruit><811.654><434.8246><-80~-47~2~3, DangleFruit><468.5635><405.0724><0~0~2~3, DangleFruit><452.8196><469.8125><0~0~2~3, DangleFruit><331.8284><439.6472><0~0~2~3, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><867.7319><642.4492><0.1086956><1, OMNI><MSC-StructureStrain.ogg><875.7568><562.9499><0.3369565><0.1782609, SPOT><AM_ENV-NatWind.ogg><693.933><599.0806><0.4021739><1><563.933><717.0806><-5.355347><-54.35535><0><0.7413045, 
+FadePalette: 10, 0.3043478
+WetTerrain: OFF

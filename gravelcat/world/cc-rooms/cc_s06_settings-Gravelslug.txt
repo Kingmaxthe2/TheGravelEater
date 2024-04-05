@@ -1,0 +1,7 @@
+Template: CC_SettingsTemplate_Gutter
+DangerType: Thunder
+RainIntensity: 1
+RumbleIntensity: 0
+Effects: DayNight-0.9456522-259-68, 
+PlacedObjects: DayNightSettings><176.4914><219.9498><5~8.660254~21~10, BrokenShelterWaterLevel><464.1852><301.8108><, 
+FadePalette: 21, 0.6847826

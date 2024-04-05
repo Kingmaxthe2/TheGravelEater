@@ -1,0 +1,6 @@
+DangerType: Flood
+Palette: 17
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><787.1027><342.8853><, DayNightSettings><282.9465><432.4427><5~8.660254~10~21, 
+AmbientSounds: OMNI><AM_ENV-SubTerr.ogg><822.4802><639.051><0.3695652><1, OMNI><AM_SUB-BlankState.ogg><649.3596><639.1674><0.3152174><1, 
+FadePalette: 21, 0.1956522

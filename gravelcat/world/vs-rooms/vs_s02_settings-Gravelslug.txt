@@ -1,0 +1,14 @@
+Template: VS_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04556853
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0.3586957
+EffectColorB: 6
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: DayNightSettings><48.38135><247.3492><5~8.660254~10~35, 
+FadePalette: 8, 0.4673913

@@ -1,0 +1,24 @@
+Palette: 1
+corruptionEffectColor: 0,1,1
+corruptionEyeColor: 0,1,1
+batDepleteCyclesMin: 2
+batDepleteCyclesMax: 7
+batDepleteCyclesMaxIfLessThanTwoLeft: 3
+batDepleteCyclesMaxIfLessThanFiveLeft: 4
+overseersSpawnChance: 0.01
+overseersMin: 1
+overseersMax: 1
+earlyCycleChance: 1.0
+earlyCycleFloodChance: 0.0
+Subregion: Solventicon
+playerGuideOverseerSpawnChance: 0.0
+pupSpawnChance: 1.0
+waterColorOverride: 0, 1, 1
+Room Setting Templates: Hell, HellNew, HellUpper, End
+Room_Attr: HR_AI: StandardGroundCreature-Forbidden,Slugcat-Forbidden,LizardTemplate-Forbidden,PinkLizard-Forbidden,GreenLizard-Forbidden,BlueLizard-Forbidden,YellowLizard-Forbidden,WhiteLizard-Forbidden,RedLizard-Forbidden,BlackLizard-Forbidden,Salamander-Forbidden,CyanLizard-Forbidden,Fly-Forbidden,Leech-Forbidden,SeaLeech-Forbidden,Snail-Forbidden,Vulture-Forbidden,GarbageWorm-Forbidden,LanternMouse-Forbidden,CicadaA-Forbidden,CicadaB-Forbidden,Spider-Forbidden,JetFish-Forbidden,BigEel-Forbidden,Deer-Forbidden,TubeWorm-Forbidden,DaddyLongLegs-Forbidden,BrotherLongLegs-Forbidden,TentaclePlant-Forbidden,PoleMimic-Forbidden,MirosBird-Forbidden,TempleGuard-Forbidden,Centipede-Forbidden,RedCentipede-Forbidden,Centiwing-Forbidden,SmallCentipede-Forbidden,Scavenger-Forbidden,Overseer-Forbidden,VultureGrub-Forbidden,EggBug-Forbidden,BigSpider-Forbidden,SpitterSpider-Forbidden,SmallNeedleWorm-Forbidden,BigNeedleWorm-Forbidden,DropBug-Forbidden,KingVulture-Forbidden,Hazer-Forbidden,MirosVulture-Forbidden,SpitLizard-Forbidden,EelLizard-Forbidden,MotherSpider-Forbidden,TerrorLongLegs-Forbidden,AquaCenti-Forbidden,HunterDaddy-Forbidden,FireBug-Forbidden,StowawayBug-Forbidden,ScavengerElite-Forbidden,Inspector-Forbidden,
+Room_Attr: HR_FINAL: StandardGroundCreature-Forbidden,Slugcat-Forbidden,LizardTemplate-Forbidden,PinkLizard-Forbidden,GreenLizard-Forbidden,BlueLizard-Forbidden,YellowLizard-Forbidden,WhiteLizard-Forbidden,RedLizard-Forbidden,BlackLizard-Forbidden,Salamander-Forbidden,CyanLizard-Forbidden,Fly-Forbidden,Leech-Forbidden,SeaLeech-Forbidden,Snail-Forbidden,Vulture-Forbidden,GarbageWorm-Forbidden,LanternMouse-Forbidden,CicadaA-Forbidden,CicadaB-Forbidden,Spider-Forbidden,JetFish-Forbidden,BigEel-Forbidden,Deer-Forbidden,TubeWorm-Forbidden,DaddyLongLegs-Forbidden,BrotherLongLegs-Forbidden,TentaclePlant-Forbidden,PoleMimic-Forbidden,MirosBird-Forbidden,TempleGuard-Forbidden,Centipede-Forbidden,RedCentipede-Forbidden,Centiwing-Forbidden,SmallCentipede-Forbidden,Scavenger-Forbidden,Overseer-Forbidden,VultureGrub-Forbidden,EggBug-Forbidden,BigSpider-Forbidden,SpitterSpider-Forbidden,SmallNeedleWorm-Forbidden,BigNeedleWorm-Forbidden,DropBug-Forbidden,KingVulture-Forbidden,Hazer-Forbidden,MirosVulture-Forbidden,SpitLizard-Forbidden,EelLizard-Forbidden,MotherSpider-Forbidden,TerrorLongLegs-Forbidden,AquaCenti-Forbidden,HunterDaddy-Forbidden,FireBug-Forbidden,StowawayBug-Forbidden,ScavengerElite-Forbidden,Inspector-Forbidden,
+Room_Attr: HR_GRAV01: MirosVulture-Forbidden,BigEel-Forbidden,FireBug-Like,HunterDaddy-Forbidden,CyanLizard-Forbidden,DaddyLongLegs-Forbidden,
+Room_Attr: HR_GRAV02: MirosVulture-Forbidden,BigEel-Forbidden,FireBug-Like,HunterDaddy-Forbidden,CyanLizard-Like,DaddyLongLegs-Like,
+Room_Attr: HR_GRAV03: MirosVulture-Forbidden,BigEel-Forbidden,FireBug-Like,HunterDaddy-Forbidden,CyanLizard-Avoid,DaddyLongLegs-Avoid,
+Room_Attr: HR_GRAV04: MirosVulture-Forbidden,BigEel-Forbidden,FireBug-Like,HunterDaddy-Forbidden,CyanLizard-Like,DaddyLongLegs-Avoid,
+Room_Attr: HR_GRAV05: MirosVulture-Forbidden,BigEel-Forbidden,FireBug-Like,HunterDaddy-Like,CyanLizard-Forbidden,DaddyLongLegs-Forbidden,

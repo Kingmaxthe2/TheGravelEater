@@ -1,0 +1,44 @@
+[MERGE]
+
+CREATURES
+
+(X-Gravelslug)GW_D02 : 6-Leech-10, 3-Snail, 4-Snail, 5-Snail
+(X-Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Scavenger-26
+(X-Gravelslug)GW_EDGE03 : 17-Leech-5, 18-Leech-8, 7-CicadaB-2, 8-CicadaA-3, 17-Salamander-{PreCycle}, 18-Salamander-{PreCycle}
+(X-Gravelslug)GW_EDGE02 : 5-Leech-12, 8-Leech-6
+(X-Gravelslug)GW_E02 : 7-Pink, 5-Green, 8-Mimic-{14}, 3-CicadaB-2, 4-CicadaB-1, 19-Garbage Worm-3
+(X-Gravelslug)GW_C06 : 3-Mimic, 4-Small Centipede-2, 4-Salamander-{PreCycle}
+(X-Gravelslug)GW_B04 : 3-Leech-7, 4-Leech-7
+(X-Gravelslug)GW_A10 : 3-Leech-4
+(X-Gravelslug)GW_D01 : 7-Leech-8, 19-Garbage Worm-5, 5-TentaclePlant-{PreCycle}, 9-Salamander-{PreCycle}
+(X-Gravelslug)GW_C04 : 13-Garbage Worm-2, 6-Leech-3, 7-Leech-3, 4-Salamander-2-{PreCycle}
+(X-Gravelslug)GW_C08 : 3-Leech-10, 5-Snail-4, 3-Daddy-{PreCycle}
+(X-Gravelslug)GW_C09 : 3-Bro, 4-Bro
+(X-Gravelslug)LINEAGE : GW_C09 : 5 : NONE-0.07, Bro-0.5, NONE-0.07, Bro-0
+(X-Gravelslug)GW_E01 : 7-Leech-10, 2-CicadaB, 3-CicadaB, 5-Bro, 6-Bro
+
+(Gravelslug)OFFSCREEN : 0-Vulture-3, 0-MirosVulture-2-{Night}, 0-Scavenger-17-{Ignorecycle}
+(Gravelslug)GW_EDGE03 : 17-Sea Leech-4, 18-Sea Leech-6, 5-Drop Bug-2-{Ignorecycle}, 7-CicadaB-1, 8-CicadaA-2, 17-Salamander-{Night}, 18-Salamander-{Night}, 7-Lantern Mouse-4
+(Gravelslug)GW_EDGE05 : 2-Drop Bug-{Ignorecycle}
+(Gravelslug)GW_EDGE04 : 3-Big Spider-3-{Ignorecycle}
+(Gravelslug)GW_EDGE02 : 5-Sea Leech-6, 8-Sea Leech-3
+(Gravelslug)GW_E02 : 7-Yellow-4-{Ignorecycle}, 5-Caramel-(Night), 8-Mimic-{14}, 3-CicadaB-2, 4-CicadaB-1, 19-Garbage Worm-3
+(Gravelslug)LINEAGE : GW_B02 : 4 : Cyan-0.5, Strawberry-0.6, White-0
+(Gravelslug)GW_C03 : 4-Caramel-{Ignorecycle}, 3-Centiwing-2
+(Gravelslug)GW_C06 : 3-Mimic, 4-Centipede-2, 4-Salamander-{Night}
+(Gravelslug)GW_A12 : 2-Drop Bug-{Ignorecycle}
+(Gravelslug)GW_B04 : 3-Leech-7, 4-Leech-11
+(Gravelslug)GW_A10 : 3-Leech-7, 3-TentaclePlant-{Ignorecycle}
+(Gravelslug)GW_D01 : 7-Leech-8, 19-Garbage Worm-2, 3-Centiwing-2, 6-Yellow-3-{Ignorecycle}, 5-TentaclePlant-{Night}, 9-Salamander-{Night}
+(Gravelslug)GW_C02 : 2-White-{Ignorecycle}, 13-Garbage Worm-3, 5-Scavenger-{Night,Seed:2837}, 5-TentaclePlant-{Night}
+(Gravelslug)GW_A11 : 3-Centiwing-1
+(Gravelslug)GW_C04 : 13-Garbage Worm-1, 6-Leech-3, 7-Leech-3, 4-Caramel-{Ignorecycle}, 4-Salamander-2-{Night}
+(Gravelslug)GW_B08 : 12-Sea Leech-6, 10-Sea Leech-3, 8-Sea Leech-3, 4-DropBug-{Ignorecycle}
+(Gravelslug)GW_C08 : 3-Leech-10, 5-Snail-4-{Ignorecycle}, 3-Bro-{Night}
+(Gravelslug)GW_C09 : 4-Bro-{Ignorecycle}, 6-Sea Leech-9
+(Gravelslug)GW_E01 : 2-Centipede-{Ignorecycle}, 3-Centipede-{Ignorecycle}, 4-Red Centipede-{Ignorecycle}, 6-SpitterSpider-{Ignorecycle}
+(Gravelslug)GW_D02 : 6-Jungle Leech-5, 3-Drop Bug-{Ignorecycle}, 4-Big Spider-2-{Ignorecycle}, 4-Snail-{Ignorecycle}, 5-Snail-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]

@@ -1,0 +1,10 @@
+Template: NONE
+DangerType: Thunder
+RainIntensity: 1
+RumbleIntensity: 0
+BkgDroneVolume: 0
+Palette: 5
+Effects: DayNight-0.06956515-20-20, 
+PlacedObjects: DayNightSettings><557.8004><441.5134><5~8.660254~10~5, BrokenShelterWaterLevel><468.0244><253.1985><, 
+AmbientSounds: SPOT><Basic Mech.ogg><720.6788><158.4104><0.1956522><1><472.6788><460.4104><-41.35535><-46.35535><0><0.4478262, 
+FadePalette: 8, 0.2391304

@@ -1,0 +1,15 @@
+Template: NONE
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+Clouds: 1
+RandomItemDensity: 0.6521739
+RandomItemSpearChance: 0.2217391
+Palette: 3
+EffectColorA: 19
+Effects: DustWave-1-28-70, Fog-1-283-152, HeatWave-0.1630435-297-87, Dustpuffs-0-299-19, FairyParticles-1-287-213, 
+PlacedObjects: FairyParticleSettings><213.3889><-31.91631><-319~-355.3398~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, LightSource><509.4394><214.9357><1~EffectColor1~-83~67~-702~-20.39746~0~0~None~0~0, LightSource><509.249><359.95><1~EffectColor1~0~100~-708~-45.39746~0~0~None~0~0, LightSource><509.55><111.4992><1~EffectColor1~0~100~-687~-43.39746~0~0~None~0~0, CustomDecal><550.1925><671.6957><488~-1~348~-609~-314~-531~377~-459~0~1~0~rust1~1~0~1~0~1~0~1~0, DeadSeedCob><120.166><216.1385><, DeadSeedCob><867.3181><279.4381><, DeadSeedCob><698.4852><435.8005><, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><783.304><518.4601><0.6086956><1.156522, OMNI><AM_ENV-CityTone.ogg><647.0704><597.8128><0.4021739><1, OMNI><AM_IND-SuperStructure.ogg><455.8088><530.9413><0.3043478><1.254348, SPOT><Basic Mech.ogg><674.5626><443.5699><0.3043478><1><507.5626><196.5699><-36.35535><-113.3553><0><0.1, 
+FadePalette: 10, 0.4565217
+WetTerrain: OFF

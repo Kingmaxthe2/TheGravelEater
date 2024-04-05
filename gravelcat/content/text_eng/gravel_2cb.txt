@@ -1,0 +1,12 @@
+agony_anim_1.0
+cough_anim_0.5
+
+You lean in for a kiss and they do too.
+Suddenly they start coughing and it burns your face off.
+You writhe in agony as the cyan fluid and flames melts away your flesh and bone.
+All you can see is cyan, then nothing at all.
+
+RESTART
+gravelstart.txt
+
+FADE

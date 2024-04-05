@@ -1,0 +1,15 @@
+DangerType: Rain
+RainIntensity: 0.02173913
+RumbleIntensity: 0
+WaveSpeed: 0.5001582
+WaveLength: 0.9999209
+WaveAmplitude: 8.153516E-08
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.09782609
+Grime: 0.2282609
+EffectColorA: 2
+Effects: SilenceWater-0.4456522-22-71, WaterDepth-0.06521739-21-129, DayNight-0.05434782-281-26, 
+PlacedObjects: WaterNut><1555.45><235.2454><0~0~2~3, WaterNut><1589.45><235.2477><0~0~2~3, WaterNut><1607.12><251.4016><0~0~2~3, ExitSymbolHidden><528.8539><668.1135><, DayNightSettings><1222.159><228.0719><5~8.660254~10~11, 
+AmbientSounds: SPOT><SO_WAT-OpenFlow.ogg><831.8434><529.8232><0.2826087><1><525.8434><696.8232><50.64465><-180.3553><0><0.404348, OMNI><SO_WAT-MoreDrips.ogg><655.3406><567.8708><0.5><1, 
+FadePalette: 8, 0.2065217, 0.2065217

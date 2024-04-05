@@ -1,0 +1,15 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04324574
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Palette: 4
+EffectColorA: 2
+EffectColorB: 5
+Effects: Fog-0-277-80, SilenceWater-0.3695652-19-133, DayNight-0.07608695-19-67, 
+PlacedObjects: DangleFruit><965.0966><484.3783><0~0~2~3, DangleFruit><939.6013><470.3275><0~0~2~3, DangleFruit><914.6003><504.6173><0~0~2~3, BubbleGrass><127.2494><293.45><-268~73~4~9, BubbleGrass><167.4493><293.1935><-304~-153~4~9, Filter><139.6846><306.1731><-7~82~-268~160~White|Red|Gravelslug, BlueToken><184.1907><513.6896><-9~64~361~15~1~Leech~~0~0~0~0, DeadTokenStalk><148.9144><494.3639><-6~57, InsectGroup><816.612><469.8343><-45~-67~92.00006~-440~Ant~0.6521739, DayNightSettings><294.699><266.0197><5~8.660254~10~11, 
+AmbientSounds: OMNI><SO_WAT-OpenFlow.ogg><732.537><473.6965><0.3152174><0.9804348, SPOT><SO_WAT-RunningWater.ogg><879.4429><21.6973><0.3152176><1><835.4429><218.6973><-106.3553><55.64465><0><0.6326092, 
+FadePalette: 11, 0.2065217

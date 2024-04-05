@@ -1,0 +1,9 @@
+sm2
+none
+
+You appear to be atop a large communications array in the bitter cold.
+How you got here is unknown and it frightens you slightly, though this is not the weirdest thing that has happened to you at this point.
+Its a long way down too, surely you would have remembered climbing up this high.
+
+Brrr!
+gravel_1.txt

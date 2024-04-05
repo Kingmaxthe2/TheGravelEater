@@ -1,0 +1,15 @@
+sm5
+Gvl3
+
+You take a generous bite of one of the pebbles, forgetting that it is inedible to you.
+Your teeth chip and break as you chew in the indigestable stone.
+"Here, i have something to wash that down." The slugcat claims.
+They hand you a metallic cylinder with liquid inside.
+"It's a drink my dad made for the aincents. He calls it 'Five Pebbsi'"
+You take a swig without hesitation and the golden liquid immediatly begins to burn your insides.
+Your vision gets fuzzy and you may be dying, but at least it was delicious!
+
+RESTART
+gravelstart.txt
+
+FADE

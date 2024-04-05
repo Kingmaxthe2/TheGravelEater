@@ -1,0 +1,8 @@
+Template: VS_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+EffectColorA: 2
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DayNightSettings><64.31229><346.319><5~8.660254~10~35, 
+FadePalette: 10, 0.5869565

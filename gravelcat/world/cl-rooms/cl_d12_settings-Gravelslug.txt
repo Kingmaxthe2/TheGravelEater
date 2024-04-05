@@ -1,0 +1,15 @@
+DangerType: FloodAndRain
+CeilingDrips: 0.5217391
+RainIntensity: 0.5
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.6195652
+EffectColorB: 13
+Effects: Fog-0.6956522-20-20, 
+PlacedObjects: LightSource><1485.699><1674.057><0.2934783~White~274~540~50~86.60254~1~0~None~0~0, LightSource><1456.813><1100.928><0.2608696~White~459~-227~177~50.60254~1~0~None~0~0, DangleFruit><1223.55><1106.76><0~0~2~3, DangleFruit><1252.941><1074.81><0~0~2~3, DangleFruit><1489.585><1971.886><0~0~2~3, DangleFruit><1456.801><2030.193><0~0~2~3, DangleFruit><1436.553><1996.035><0~0~2~3, Corruption><1243.344><425.5766><40~71, CentipedeAttractor><1473.184><1436.312><-428~-396, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><853.3845><582.3367><0.1847826><1, 
+FadePalette: 15, 0.3695652, 0.3804348, 0.3152174, 0.2391304

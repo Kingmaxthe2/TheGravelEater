@@ -1,0 +1,18 @@
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0.08695652
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04393333
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.05434782
+Grime: 0.3369565
+Palette: 4
+EffectColorB: 6
+Effects: DayNight-0.1195652-29-75, 
+PlacedObjects: Mushroom><91.68433><329.4224><-142~230~2~3, Mushroom><107.949><316.73><-155~159~2~3, Mushroom><877.8758><159.6555><0~0~2~3, Mushroom><864.4184><150.1421><0~0~2~3, CustomDecal><195.9795><48.44894><0~1159.489~667.5954~1152.713~676.6307~-13.5531~0~0~0.0326087~1~0~Rust2~1~1~1~1~0.3478261~1~0~1, InsectGroup><225.0229><150.1987><0~100~-381~39~RockFlea~0.5, InsectGroup><544.645><692.9202><0~100~-39~-182~StandardFly~0.1956522, LightBeam><551.5353><160.9471><-107~620~85~630~122~58~8~-130~0.4108694~0~0~1~None~0~0, WhiteToken><547.6122><581.5844><14~-172~87~-165.1132~0~Chatlog_DS0~White|Yellow|Rivulet|Saint|Gourmand~0~1~0~0, SteamPipe><304.0541><340.2099><-18~30, SteamPipe><311.0708><267.1434><20~39, SteamPipe><375.059><226.1906><-23~43, SteamPipe><395.2584><153.0502><28~44, SteamPipe><288.8275><130.4003><-22~44, Filter><362.756><233.2><13~145~-111~211~White|Yellow|Red|Rivulet|Saint|Gourmand, DataPearl><578.4056><446.23><58~-143~0~0~BroadcastMisc~1, Filter><573.5504><455.5565><6~27~63~-256~Red|Artificer|Spear, DayNightSettings><327.3357><371.1359><5~8.660254~10~11, 
+AmbientSounds: SPOT><AM_ENV-LightWind.ogg><751.229><521.3011><0.4673913><0.8043478><548.229><687.3011><-273.3553><16.64465><0><0.3934784, 
+FadePalette: 8, 0.1304348
+WetTerrain: OFF

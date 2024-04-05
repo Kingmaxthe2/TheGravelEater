@@ -1,0 +1,13 @@
+DangerType: Blizzard
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Grime: 0
+Effects: LightBurn-0.1413043-258-68, ElectricDeath-0-260-178, Coldness-1-265-6, BrokenZeroG-0.6521739-258-126, 
+FadePalette: 13, 0.173913, 0.2717391, 0.3695652
+WetTerrain: OFF

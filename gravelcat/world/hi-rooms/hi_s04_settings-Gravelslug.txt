@@ -1,0 +1,6 @@
+DangerType: Thunder
+RainIntensity: 1
+RumbleIntensity: 0
+Effects: DayNight-0.06521739-35-81, 
+PlacedObjects: BrokenShelterWaterLevel><288.4385><328.5668><, DayNightSettings><213.5504><397.7628><5~8.660254~10~5, 
+FadePalette: 20, 0.2934783

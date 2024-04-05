@@ -1,0 +1,15 @@
+Template: MS_SettingsTemplate_Vents
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Effects: Darkness-0.6956522-20-20, ElectricDeath-0.8043478-283-23, HeatWave-0.4021739-275-79, 
+PlacedObjects: LightFixture><664.2197><3470.552><RedLight~17.32051~-10~100, LightFixture><392.4194><2663.856><RedLight~17.32051~-10~0, LightFixture><223.2796><3572.552><RedLight~17.32051~-10~100, LightFixture><714.2995><1062.944><RedSubmersible~17.32051~-10~0, LightFixture><243.3401><1310.928><RedSubmersible~-37.6795~-317~0, LightFixture><881.198><2288.943><RedLight~17.32051~-10~0, LightFixture><181.1542><1904.926><RedLight~17.32051~-10~0, LightSource><184.1346><1909.648><0.3369565~EffectColor1~935~-363~50~86.60254~0~0~Fade~0~0, LightSource><879.0771><2292.185><0.2282609~EffectColor1~-1035~-747~-253~-273.3975~1~0~Fade~0~0, GlowWeed><521.0574><1290.442><0~0~2~3, GlowWeed><486.0914><1390.072><0~0~2~3, GlowWeed><302.0536><1446.193><0~0~2~3, DangleFruit><241.3032><2571.824><0~0~2~3, DangleFruit><267.802><2596.721><0~0~2~3, 
+AmbientSounds: OMNI><SO_WAT-DripTap.ogg><15.17505><298.1854><0.5><1, OMNI><SO_WAT-MoreDrips.ogg><18.10693><144.8602><0.5><1, OMNI><SO_WAT-RainishDrips.ogg><17.19501><220.7944><0.5><1, OMNI><AM_WIN-SubWnd.ogg><21.30286><380.7162><0.326087><1, 
+FadePalette: 35, 0.3586957, 0.3586957, 0.3586957, 0.3586957, 0.3586957
+WetTerrain: OFF

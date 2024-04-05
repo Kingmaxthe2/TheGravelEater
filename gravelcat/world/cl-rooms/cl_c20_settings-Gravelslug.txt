@@ -1,0 +1,17 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: Rain
+CeilingDrips: 0.5760869
+WaveSpeed: 0.5033745
+WaveLength: 0.8671894
+WaveAmplitude: 0.02801716
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0
+Palette: 10
+EffectColorA: 21
+EffectColorB: 13
+Effects: LightRain-0.2282609-78-94, LightBurn-0-30-30, Fog-0.8478261-20-20, 
+PlacedObjects: LightSource><3150.827><389.3502><0.08695652~White~-3304~394~-612~-199.3975~1~0~None~0~0, Corruption><1712.28><180.5522><54~42, Corruption><1660.46><614.2993><0~100, Corruption><1869.131><670.0986><69~7, CorruptionTube><1683.12><577.1521><191~51, Corruption><104.3442><272.8746><19~76, CorruptionTube><1917.306><689.942><332~-110, Corruption><2203.104><302.6366><49~63, CorruptionTube><2049.812><710.8188><141~-394, 
+AmbientSounds: SPOT><SO_WAT-ProperDrips.ogg><450.3167><602.1702><0.5><1><-64.68335><413.1702><1048.645><-42.35535><0><0.5, OMNI><AM_ENV-CityTone.ogg><638.1718><648.3159><0.2391304><1, SPOT><AM_ENV-NatWind.ogg><826.4457><607.2915><0.3369565><1><2887.446><398.2915><-590.3553><113.6447><0><1, SPOT><AM_WIN-SubWnd.ogg><756.6996><488.4884><0.326087><1><302.6996><477.4884><515.6447><-48.35535><0><1, 
+FadePalette: 15, 0.4347826, 0.5434783, 0.8586956
+WetTerrain: OFF

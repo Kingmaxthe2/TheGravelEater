@@ -1,0 +1,16 @@
+Template: MS_SettingsTemplate_Array
+DangerType: Blizzard
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 1.680353E-24
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Palette: 35
+Effects: Fog-0-18-77, LightBurn-0.6630435-276-20, BrokenZeroG-0.5108696-270-79, Moth-0.2391304-275-138, Coldness-1-22-138, 
+PlacedObjects: SSLightRod><1160.247><424.2928><17.32051~-10~0.1516133~0~393.913~0.1955898, LightFixture><1097.45><46.99023><RedLight~17.32051~-10~0, LightFixture><31.32758><250.8157><RedLight~17.32051~-10~69, LightFixture><2434.442><124.306><RedLight~17.32051~-10~56, LightFixture><2067.049><640.3552><RedLight~43.3205~-33~0, LightFixture><3518.051><94.22139><RedLight~17.32051~-10~22, 
+AmbientSounds: OMNI><AM_WIN-NiceWnd.ogg><35.06439><245.5745><0.3586957><1, OMNI><AM_IND-SuperStructure.ogg><38.10968><393.5828><0.2717391><0.9413043, 
+FadePalette: 10, 0.3043478, 0.2934783, 0.3152174, 0.3369565, 0.3586957
+WetTerrain: OFF

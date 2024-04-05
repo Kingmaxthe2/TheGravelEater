@@ -1,0 +1,20 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 0.1195652
+WaveSpeed: 0.5049679
+WaveLength: 0.9512661
+WaveAmplitude: 0.03999782
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.8478261
+Grime: 0.3586957
+Palette: 42
+EffectColorA: 11
+EffectColorB: 2
+Effects: DayNight-0.05-18-68, HeatWave-0.1630435-28-124, Dustpuffs-0-300-30, FairyParticles-1-320-78, SkyAndLightBloom-0-25-24, 
+PlacedObjects: FirecrackerPlant><429.5569><221.3021><-535~325~2~3, FirecrackerPlant><454.0468><222.1945><-562~240~2~3, FirecrackerPlant><471.064><219.3236><-581~158~2~3, FirecrackerPlant><495.3878><219.6656><-594~73~2~3, FirecrackerPlant><526.9263><221.3141><-623~-16~2~3, InsectGroup><524.5516><194.7758><-84~130~0~0~Beetle~0.3152174, DayNightSettings><251.1377><271.3951><5~8.660254~10~42, FairyParticleSettings><120.6188><-20.09904><-203~-353.3397~0~1~1~0~1~1.448696~60~495.2173~40~100~5~30~0~360~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><Basic Mech.ogg><747.3741><159.0946><0.1956522><1><479.3741><78.09457><-110.3553><-29.35535><0><0.4804349, OMNI><AM_ENV-LightWind.ogg><765.3163><518.5792><0.4565217><0.7456522, 
+FadePalette: 8, 0.5760869
+WetTerrain: OFF

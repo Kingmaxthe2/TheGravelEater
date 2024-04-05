@@ -1,0 +1,14 @@
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 0.6630435
+Clouds: 0.6413044
+Grime: 0.1304348
+BkgDroneVolume: 0.2608696
+Palette: 42
+EffectColorA: 10
+Effects: PixelShift-0.5-32-65, AboveCloudsView-1-20-20, Fog-0.8369565-19-79, DayNight-0.1-271-19, PixelShift-0.5-282-80, DustWave-0.8043478-282-136, HeatWave-0.1956522-18-140, Dustpuffs-0-264-185, FairyParticles-1-280-243, 
+PlacedObjects: NeedleEgg><1560.8><76.24786><0~0~4~9, DandelionPatch><1022.676><461.1554><0~100, DandelionPatch><723.8033><412.7862><15~75, InsectGroup><838.113><531.8958><-39~111~0~0~TinyDragonFly~0.2173913, WhiteToken><1981.072><524.8402><-3~-72~-251~25~0~Chatlog_SI2~White|Yellow|Red|Rivulet|Saint|Gourmand|Gravelslug~0~1~0~0, DataPearl><1937.064><463.5726><-461~110~0~0~BroadcastMisc~1, Filter><1907.404><457.9254><3~50~-312~-1~Artificer|Spear, DayNightSettings><1365.56><283.1879><5~8.660254~42~31, FairyParticleSettings><164.2111><129.3038><5~8.660254~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, DayNightSettings><303.1177><330.2839><5~8.660254~10~42, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><759.5138><517.5505><0.6086956><1.019565, 
+FadePalette: 8, 0.4130435, 0.4130435
+WetTerrain: OFF

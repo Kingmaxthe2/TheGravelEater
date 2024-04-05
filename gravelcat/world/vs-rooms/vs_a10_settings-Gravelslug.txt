@@ -1,0 +1,10 @@
+Template: VS_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Grime: 0.2173913
+Palette: 21
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DangleFruit><366.9978><465.3><0~0~2~3, DangleFruit><345.814><514.4264><0~0~2~3, DayNightSettings><288.337><344.6342><5~8.660254~10~21, 
+AmbientSounds: OMNI><waterGurgleLOOP1.wav><725.6159><567.8984><0.3586957><1, 
+FadePalette: 10, 0.5326087

@@ -1,0 +1,17 @@
+Template: NONE
+CeilingDrips: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Grime: 0.08695652
+BkgDroneVolume: 0
+Palette: 31
+EffectColorA: 18
+Effects: Darkness-0.5543478-94-36, FairyParticles-0.04347826-176-151, DarkenLights-0.6847826-441-257, VoidMelt-0-82-94, 
+PlacedObjects: FairyParticleSettings><1189.62><668.0979><-250~-349.3397~1~7.065217~37.5~0~1~2.35436~60~180~40~100~0~19.56522~0~23.47826~0.08695652~0.09782609~1~1~0.4347826~0.5217391~0.7065217~0.2717391~9.51087~Leaf~SIN_IO~SIN_IO~88.69563~0.4021739~0.6521739, LightFixture><1469.381><406.1509><HolyFire~-264.6795~-192~67, LightFixture><1573.934><384.1725><HolyFire~17.32051~-10~13, LightBeam><1162.622><378.9085><56~360~702~370~725~4~318~-262~0.04130422~0.5434783~0~1~None~0~0, KarmaShrine><1521.791><310.1958><-14~-13, 
+AmbientSounds: SPOT><SO_NAT-Fire.ogg><740.8312><323.3172><0.6413044><1><1519.831><390.3173><-75.35535><-40.35535><0><0.1, OMNI><SO_NAT-Stove.ogg><762.8402><144.3703><0.2065217><0.55, OMNI><SO_SFX-UnderWaterSub.ogg><757.83><219.8947><0.3913043><1, OMNI><SO_SFX-LakeBottom.ogg><593.2054><222.305><0.4021739><1, OMNI><SO_SFX-Doomsday.ogg><586.6795><143.4372><0.08695652><1, SPOT><SO_SFX-Corrosion.ogg><238.7281><215.9488><0.173913><1><1519.728><50.94881><-146.3553><137.6447><0><0.2847827, SPOT><AM_WIN-HowlingWnd.ogg><740.5503><551.5104><0.2826087><0.4913043><1535.55><687.5104><-99.35535><-259.3553><0><0.2413045, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>NA_33 - Else2<eA>vol<eB>0.3108693<eA>prio<eB>1<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>169.5652<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>159.3947<tB>298.83<tA>fireChance<tB>1<tA>entrance<tB>-1<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>1520.395<tB>310.83<tA>handlePos<tB>-61.35535<tB>-98.35535, 
+FadePalette: 75, 0.25, 0.25, 0.25
+WetTerrain: OFF

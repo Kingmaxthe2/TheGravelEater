@@ -1,0 +1,9 @@
+DangerType: Thunder
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04249527
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><318.348><349.7294><, DayNightSettings><198.1973><432.9675><5~8.660254~10~14, 

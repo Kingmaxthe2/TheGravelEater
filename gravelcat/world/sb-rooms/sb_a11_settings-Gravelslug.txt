@@ -1,0 +1,12 @@
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5001209
+WaveLength: 0.7499396
+WaveAmplitude: 0.04860936
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+BkgDroneVolume: 0
+Effects: DayNight-0.0326087-20-20, 
+PlacedObjects: DayNightSettings><407.5939><386.1766><5~8.660254~10~21, 
+AmbientSounds: OMNI><AM_SUB-BlankState.ogg><832.1908><651.941><0.2717391><1, OMNI><AM_SUB-CaveTone.ogg><656.9767><653.4486><0.3369565><1, 
+FadePalette: 8, 0.1956522

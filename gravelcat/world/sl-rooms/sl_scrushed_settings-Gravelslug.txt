@@ -1,0 +1,20 @@
+Template: NONE
+DangerType: Flood
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.9021739
+Grime: 0.07608695
+Palette: 8
+EffectColorA: 18
+EffectColorB: 11
+Effects: DirtyWater-1-20-20, 
+PlacedObjects: LightFixture><691.1679><337.1088><RedLight~17.32051~-10~86, LightFixture><272.0479><56.1942><RedSubmersible~17.32051~-10~58, CosmeticSlimeMold2><411.304><485.2899><13~126, CustomDecal><388.3033><426.714><-72~70~-11~117~68~69~-491~-314~0.3804348~1~0.2065217~UWshelter~1~0.3804348~1~0.3804348~1~0.3804348~1~0.3804348, BrokenShelterWaterLevel><570.0566><311.0512><, 
+AmbientSounds: OMNI><SO_WAT-MoreDrips.ogg><849.1572><633.1263><0.3913043><1, OMNI><MSC-ShadowAlley.ogg><851.4384><551.9327><0.3478261><1, SPOT><AM_ENV-WallHum.ogg><666.6168><591.3508><0.5><0.6282609><1144.617><707.3508><-343.3553><-105.3553><0><0.5565219, SPOT><AM_WIN-SubWnd.ogg><678.5529><469.8071><0.1847826><1><172.553><716.8071><138.6447><-334.3553><0><0.3826088, 
+FadePalette: 15, 0.4021739
+WetTerrain: OFF

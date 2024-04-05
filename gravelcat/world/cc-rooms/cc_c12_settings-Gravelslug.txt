@@ -1,0 +1,15 @@
+RainIntensity: 0.01086957
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04601168
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.1956522
+Grime: 0.3804348
+BkgDroneVolume: 0.2869565
+Palette: 42
+Effects: Fog-0.326087-20-20, DayNight-0.9-17-70, 
+PlacedObjects: DayNightSettings><176.4914><219.9498><5~8.660254~6~10, GhostSpot><571.6066><2268.581><, Rainbow><392.3093><2055.675><-189~-144~-451.9951~23.04907~0.4673993,0,0,0.4456276,0.7718161,0.3999999, 
+AmbientSounds: OMNI><AM_WIN-HowlingWnd.ogg><745.0768><264.9001><0.2173913><0.6282609, 
+FadePalette: 15, 0.7065217, 0.6739131, 0.6413044

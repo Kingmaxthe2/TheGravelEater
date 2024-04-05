@@ -1,0 +1,11 @@
+sm5
+Gvl4
+
+The slugcat spasms uncontrollably and has a major coughing fit to say the least.
+There's a loud and abrubt BOOM, you are flung against the wall with bits of slugcat and gravel smeared on you and the surrounding area.
+You feel burns from the cyan fluid, but not for long as the damage from the explosion is too great, and you fade to black.
+
+RESTART
+gravelstart.txt
+
+FADE

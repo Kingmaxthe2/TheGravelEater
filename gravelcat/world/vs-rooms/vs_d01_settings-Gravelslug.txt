@@ -1,0 +1,7 @@
+Template: VS_SettingsTemplate_Surface
+RainIntensity: 0.05434782
+RumbleIntensity: 0
+Grime: 0.2717391
+Effects: DayNight-0.1086956-20-20, 
+PlacedObjects: FirecrackerPlant><696.7824><2393.947><0~0~2~3, FirecrackerPlant><749.6706><2399.934><0~0~2~3, DeadSeedCob><-54.97333><2880.802><, DeadSeedCob><40.20001><2904.999><, Mushroom><733.2892><535.6962><0~0~2~3, Mushroom><761.0978><545.6297><0~0~2~3, DayNightSettings><149.2261><2649.198><5~8.660254~10~3, 
+FadePalette: 20, 0.1847826, 0.3043478, 0.4347826, 0.5869565

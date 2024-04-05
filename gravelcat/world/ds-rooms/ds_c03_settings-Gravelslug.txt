@@ -1,0 +1,12 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5000703
+WaveLength: 0.9999648
+WaveAmplitude: 2.044117E-09
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Palette: 4
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: DayNightSettings><205.0517><265.2242><5~8.660254~10~11, 
+FadePalette: 8, 0.2717391, 0.2608696, 0.2282609

@@ -1,0 +1,15 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04324574
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.7608696
+Grime: 0.3478261
+Palette: 4
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: InsectGroup><562.828><909.684><0~100~0~0~RockFlea~0.5, DayNightSettings><216.1444><332.9199><5~8.660254~10~11, 
+AmbientSounds: OMNI><SO_WAT-DripTap.ogg><827.0363><637.9467><0.25><1, OMNI><SO_WAT-LilDrips.ogg><648.3156><637.689><0.4021739><1, 
+FadePalette: 8, 0.173913, 0.2065217

@@ -1,0 +1,14 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04709369
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Palette: 4
+EffectColorB: 18
+Effects: DayNight-0.9565217-20-20, 
+PlacedObjects: SteamPipe><472.0457><529.9447><28~-28, SteamPipe><369.1687><551.6426><18~30, SteamPipe><282.1002><518.5769><-39~-33, Filter><351.45><511.0048><175~-48~-48~-151~White|Yellow|Red|Rivulet|Saint|Gourmand, RedToken><166.5664><402.5793><-14~-80~0~0~0~DS~~0~0~1~0, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><742.3232><523.1861><0.2826087><0.7847826, SPOT><SO_NAT-LilDrips.ogg><590.8341><595.3185><0.3369565><1><255.8341><271.3185><-159.3553><-12.35535><0><0.4369566, 
+FadePalette: 8, 0.1086956

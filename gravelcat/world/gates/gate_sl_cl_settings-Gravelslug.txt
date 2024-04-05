@@ -1,0 +1,20 @@
+Template: NONE
+DangerType: Flood
+CeilingDrips: 0.5413271
+RainIntensity: 1
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 1
+Grime: 0.1847826
+BkgDroneVolume: 0
+Palette: 17
+EffectColorA: 18
+Effects: SilenceWater-0.6413044-30-133, WaterDepth-0-27-19, DayNight-0.5652174-38-67, DirtyWater-1-30-30, 
+PlacedObjects: LightFixture><186.6669><95.86029><RedLight~17.32051~-10~51, LightFixture><712.6985><226.774><RedLight~-101.6795~-250~70, NoSpearStickZone><475.0604><254.564><194~167, SteamPipe><265.5827><382.1404><-22~-66, SteamPipe><258.9109><387.1315><-17~-24, 
+AmbientSounds: SPOT><SO_WAT-MoreDrips.ogg><819.2827><230.6973><0.5><1><509.2827><249.6973><-372.3553><-214.3553><0><1, SPOT><MSC-HeavyCreaking.ogg><820.597><113.1749><0.2173913><0.1586957><970.5969><316.1749><-625.3553><-207.3553><0><1, SPOT><SO_IND-HeatDuct.ogg><825.7065><-1.195221><0.2391304><0.8434783><510.7065><477.8049><-67.35535><-153.3553><0><0.7304349, OMNI><MSC-ShadowAlley.ogg><814.1993><433.233><0.4021739><1, 
+FadePalette: 15, 0.5
+WetTerrain: OFF

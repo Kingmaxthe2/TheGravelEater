@@ -1,0 +1,15 @@
+Template: MS_SettingsTemplate_Artery
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 1
+Effects: WaterDepth-0-276-21, BrokenZeroG-0.5108696-271-81, ElectricDeath-0.3152174-30-30, HeatWave-0.3478261-255-134, 
+PlacedObjects: LightFixture><313.1987><446.2645><RedSubmersible~17.32051~-10~0, LightFixture><955.9466><498.5426><RedSubmersible~17.32051~-10~0, LightFixture><473.8645><38.02824><RedSubmersible~17.32051~-10~0, 
+FadePalette: 35, 0.2173913
+WetTerrain: OFF

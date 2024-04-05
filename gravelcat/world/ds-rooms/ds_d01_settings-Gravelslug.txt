@@ -1,0 +1,14 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5000851
+WaveLength: 0.9999574
+WaveAmplitude: 0.001616025
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+BkgDroneVolume: 0
+Palette: 4
+Effects: RockFlea-0.3804348-20-20, DayNight-0.05434782-24-71, 
+PlacedObjects: WaterNut><1898.197><449.3073><-1~104~3~5, WaterNut><1742.55><427.9963><139~39~3~4, WaterNut><2647.052><432.0281><0~0~3~5, DataPearl><1701.891><405.6676><-141~77~0~0~Misc~1, BubbleGrass><2442.194><418.7972><0~0~4~9, BubbleGrass><2413.608><416.6686><0~0~4~9, Filter><2423.898><390.3849><-62~23~7~-224~Red|Rivulet|Spear|Gourmand, DayNightSettings><1225.892><279.391><5~8.660254~10~11, 
+AmbientSounds: SPOT><SO_NAT-LilDrips.ogg><733.9898><565.5502><0.3804348><1><2545.99><427.5502><-193.3553><1.644653><0><0.5347828, SPOT><SO_WAT-LilDrips.ogg><401.5674><576.9183><0.2934784><1><1975.567><460.9183><-146.3553><64.64465><0><0.3391306, 
+FadePalette: 8, 0.2065217, 0.1956522, 0.2065217, 0.2173913

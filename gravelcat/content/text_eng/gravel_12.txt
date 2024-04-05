@@ -1,0 +1,13 @@
+sm1
+none
+
+All at once, the insanity halts.
+You find yourself in a room with semi-organic tendrils shoot small arcs of electricity between themselves.
+The slugcat you met sits inside an open chamber with ice lining the sides.
+"I don't feel it anymore, the constant burning pain or the swells from growing tissue."
+They seem content with staying right where they are.
+
+Join them
+gravel_13.txt
+
+mute

@@ -1,0 +1,168 @@
+[MERGE]
+
+CONDITIONAL LINKS
+
+Gravelslug : HIDEROOM : HR_C01
+Gravelslug : HIDEROOM : HR_A02
+Gravelslug : HIDEROOM : HR_A06
+Gravelslug : HIDEROOM : HR_A07
+Gravelslug : HIDEROOM : HR_AP01
+Gravelslug : HIDEROOM : HR_S02
+Gravelslug : HIDEROOM : HR_LCA
+Gravelslug : HIDEROOM : HR_A03
+Gravelslug : HIDEROOM : HR_A05
+Gravelslug : HIDEROOM : HR_COL
+Gravelslug : HIDEROOM : HR_A04
+Gravelslug : HIDEROOM : HR_US1
+Gravelslug : HIDEROOM : HR_S1R
+Gravelslug : HIDEROOM : HR_A7R
+Gravelslug : HIDEROOM : HR_BR1
+Gravelslug : HIDEROOM : HR_IN1
+Gravelslug : HIDEROOM : HR_BI01
+Gravelslug : HIDEROOM : HR_SHR
+Gravelslug : HIDEROOM : HR_BI02
+Gravelslug : HIDEROOM : HR_TP1
+Gravelslug : HIDEROOM : HR_B03
+Gravelslug : HIDEROOM : HR_CT1
+Gravelslug : HIDEROOM : HR_B02
+Gravelslug : HIDEROOM : HR_S11
+Gravelslug : HIDEROOM : HR_TER
+Gravelslug : HIDEROOM : HR_B01
+Gravelslug : HIDEROOM : HR_hrce
+Gravelslug : HIDEROOM : HR_gbfi
+Gravelslug : HIDEROOM : HR_A16
+Gravelslug : HIDEROOM : HR_A17
+Gravelslug : HIDEROOM : HR_S04
+Gravelslug : HIDEROOM : HR_A18
+Gravelslug : HIDEROOM : HR_C02
+Gravelslug : HIDEROOM : HR_L07
+Gravelslug : HIDEROOM : HR_L08
+Gravelslug : HIDEROOM : HR_S06
+Gravelslug : HIDEROOM : HR_B05
+Gravelslug : HIDEROOM : HR_C14
+Gravelslug : HIDEROOM : HR_A14
+Gravelslug : HIDEROOM : HR_A25
+Gravelslug : HIDEROOM : HR_L02
+Gravelslug : HIDEROOM : HR_E04
+Gravelslug : HIDEROOM : HR_L03
+Gravelslug : HIDEROOM : HR_L04
+Gravelslug : HIDEROOM : HR_S12
+Gravelslug : HIDEROOM : HR_A08
+Gravelslug : HIDEROOM : HR_L05
+Gravelslug : HIDEROOM : HR_L06
+Gravelslug : HIDEROOM : HR_H01
+Gravelslug : HIDEROOM : HR_M06
+Gravelslug : HIDEROOM : HR_M05
+Gravelslug : HIDEROOM : HR_J02
+Gravelslug : HIDEROOM : HR_I01
+Gravelslug : HIDEROOM : HR_S05
+Gravelslug : HIDEROOM : HR_S03
+Gravelslug : HIDEROOM : HR_R05
+Gravelslug : HIDEROOM : HR_R07
+Gravelslug : HIDEROOM : HR_R01
+Gravelslug : HIDEROOM : HR_R04
+Gravelslug : HIDEROOM : HR_R06
+Gravelslug : HIDEROOM : HR_R11
+Gravelslug : HIDEROOM : HR_S01
+Gravelslug : HIDEROOM : HR_R13
+Gravelslug : HIDEROOM : HR_B14
+Gravelslug : HIDEROOM : HR_R08
+Gravelslug : HIDEROOM : HR_R10
+Gravelslug : HIDEROOM : HR_R12
+Gravelslug : HIDEROOM : HR_R16
+Gravelslug : HIDEROOM : HR_R17
+Gravelslug : HIDEROOM : HR_R18
+Gravelslug : HIDEROOM : HR_R03
+Gravelslug : HIDEROOM : HR_S10
+Gravelslug : HIDEROOM : HR_R14
+Gravelslug : HIDEROOM : HR_R15
+Gravelslug : HIDEROOM : HR_C09
+Gravelslug : HIDEROOM : HR_R09
+Gravelslug : HIDEROOM : HR_R02
+Gravelslug : HIDEROOM : HR_M01
+Gravelslug : HIDEROOM : HR_M02
+Gravelslug : HIDEROOM : HR_M03
+Gravelslug : HIDEROOM : HR_M04
+Gravelslug : HIDEROOM : HR_LAYERS_OF_REALITY
+
+Gravelslug : EXCLUSIVEROOM : HR_GRAVINTRO
+Gravelslug : EXCLUSIVEROOM : HR_GRAV01
+Gravelslug : EXCLUSIVEROOM : HR_GRAV02
+Gravelslug : EXCLUSIVEROOM : HR_GRAV03
+Gravelslug : EXCLUSIVEROOM : HR_GRAV04
+Gravelslug : EXCLUSIVEROOM : HR_GRAV05
+Gravelslug : EXCLUSIVEROOM : HR_GRAV06
+Gravelslug : EXCLUSIVEROOM : HR_GRAV07
+Gravelslug : EXCLUSIVEROOM : HR_GRAV08
+Gravelslug : EXCLUSIVEROOM : HR_GRAV09
+Gravelslug : EXCLUSIVEROOM : HR_A01GRAV
+Gravelslug : EXCLUSIVEROOM : HR_A03GRAV
+Gravelslug : EXCLUSIVEROOM : HR_X01GRAV
+Gravelslug : EXCLUSIVEROOM : HR_E06GRAV
+Gravelslug : EXCLUSIVEROOM : HR_E07GRAV
+Gravelslug : EXCLUSIVEROOM : HR_L01GRAV
+Gravelslug : EXCLUSIVEROOM : HR_S01GRAV
+Gravelslug : EXCLUSIVEROOM : HR_S02GRAV
+
+Gravelslug : HR_M04 : HR_AI : DISCONNECTED
+Gravelslug : HR_AI : HR_FINAL : HR_L01GRAV
+Gravelslug : HR_AI : HR_M04 : HR_FINAL
+
+
+END CONDITIONAL LINKS
+
+ROOMS
+HR_GRAVINTRO : HR_GRAV01
+HR_GRAV01 : HR_GRAV02, HR_GRAVINTRO
+HR_GRAV02 : HR_GRAV04, HR_GRAV03, HR_GRAV01
+HR_GRAV03 : HR_GRAV02, HR_S02GRAV
+HR_GRAV04 : HR_GRAV05, HR_GRAV02
+HR_GRAV05 : HR_GRAV06, HR_GRAV04
+HR_GRAV06 : HR_GRAV07, HR_GRAV05
+HR_GRAV07 : HR_GRAV08, HR_GRAV06
+HR_GRAV08 : HR_GRAV09, HR_GRAV07
+HR_GRAV09 : HR_A03GRAV, DISCONNECTED, HR_GRAV08
+HR_A03GRAV : HR_X01GRAV, HR_GRAV09
+HR_X01GRAV : HR_A01GRAV, HR_A03GRAV, HR_S01GRAV
+HR_A01GRAV : HR_E06GRAV, HR_X01GRAV, DISCONNECTED
+HR_E07GRAV : HR_L01GRAV, HR_E06GRAV
+HR_E06GRAV : HR_E07GRAV, DISCONNECTED, DISCONNECTED, HR_A01GRAV, DISCONNECTED
+HR_L01GRAV : DISCONNECTED, HR_AI, HR_E07GRAV
+HR_S01GRAV : HR_X01GRAV : SHELTER
+HR_S02GRAV : HR_GRAV03 : SHELTER
+END ROOMS
+
+CREATURES
+(X-Gravelslug)OFFSCREEN : 0-MirosVulture-8-{Voidsea}, 0-Leviathan-1-{Voidsea}, 0-Miros-6
+(X-Gravelslug)HR_LCA : 8-FireBug-{Voidsea}
+(X-Gravelslug)HR_A04 : 2-RedCentipede-{Voidsea}
+(X-Gravelslug)HR_A05 : 3-Cyan-{Voidsea}, 6-RedCentipede-{Voidsea}, 8-White-{Voidsea}, 9-White-{Voidsea}, 10-Cyan-{Voidsea}
+(X-Gravelslug)HR_BR1 : 4-Cyan-{Voidsea}, 16-Red-{Voidsea}, 4-Red-{Voidsea}, 14-SpitterSpider-{Voidsea}, 16-Red-{Voidsea}
+(X-Gravelslug)HR_A7R : 2-Red-{Voidsea}, 7-Red-{Voidsea}
+(X-Gravelslug)HR_US1 : 4-FireBug-{Voidsea}
+(X-Gravelslug)HR_IN1 : 3-Tentacle Plant, 4-Tentacle Plant
+(X-Gravelslug)HR_B03 : 4-RedCentipede-{Voidsea}, 8-Red-{Voidsea}, 5-SpitterSpider-{Voidsea}, 6-White-{Voidsea}
+(X-Gravelslug)HR_gbfi : 2-FireBug-{Voidsea}
+(X-Gravelslug)HR_R07 : 7-BigNeedleWorm, 8-SmallNeedleWorm-3, 9-CicadaA, 10-CicadaB, 11-CicadaA, 12-CicadaB, 14-Red-{Voidsea}, 19-Red-{Voidsea}
+(X-Gravelslug)HR_R04 : 2-SpitterSpider-{Voidsea}, 3-White-2-{Voidsea}, 4-White-{Voidsea}, 5-SpitterSpider-{Voidsea}
+(X-Gravelslug)HR_R10 : 5-FireBug-{Voidsea}
+(X-Gravelslug)HR_R13 : 6-RedCentipede-{Voidsea}, 8-Red-{Voidsea}
+(X-Gravelslug)HR_R17 : 5-Daddy-{Voidsea}
+(X-Gravelslug)HR_R18 : 2-Snail-3, 6-Snail-2, 8-Red-{Voidsea}
+(X-Gravelslug)HR_R09 : 2-Yellow-5, 6-White-{Mean:1.0}, 7-White-{Mean:1.0}
+(X-Gravelslug)HR_I01 : 5-FireBug-{Voidsea}
+(X-Gravelslug)HR_J02 : 5-Daddy-{Voidsea}, 6-Daddy-{Voidsea}, 7-Cyan-{Voidsea}, 8-Daddy-{Voidsea}, 12-Cyan-{Voidsea}, 17-FireBug-{Voidsea}, 18-FireBug-{Voidsea}
+(X-Gravelslug)HR_L02 : 4-Yellow-6
+(X-Gravelslug)HR_A25 : 2-FireBug-{Voidsea}
+(X-Gravelslug)HR_B05 : 3-RedCentipede-{Voidsea}
+(X-Gravelslug)HR_L06 : 2-CicadaA-3, 3-CicadaB-4
+(X-Gravelslug)HR_C02 : 5-Red-{Voidsea}, 7-Red-{Voidsea}, 8-Centiwing, 9-Centiwing
+(X-Gravelslug)HR_hrce : 5-FireBug-{Voidsea}, 8-FireBug-{Voidsea}
+
+(Gravelslug)HR_GRAV02 : 6-Daddy-{Lavasafe}, 5-FireBug
+(Gravelslug)HR_GRAV03 : 2-Tube, 3-Tube, 4-FireBug
+(Gravelslug)HR_GRAV04 : 3-Daddy-{Lavasafe}
+(Gravelslug)HR_GRAV05 : 2-Daddy-{Lavasafe}
+(Gravelslug)HR_GRAV07 : 2-Daddy-{Lavasafe}, 3-FireBug
+END CREATURES
+[ENDMERGE]

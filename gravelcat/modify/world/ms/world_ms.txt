@@ -1,0 +1,22 @@
+[MERGE]
+
+CONDITIONAL LINKS
+Gravelslug : MS_MEM06 : 1 : MS_ARTERY12
+Gravelslug : MS_ARTERY12 : 1 : MS_MEM06
+Gravelslug : MS_CAPI04 : 1 : MS_bitteraccess
+Gravelslug : MS_bitteraccess : 1 : MS_CAPI04
+Gravelslug : EXCLUSIVEROOM : MS_ARTERY12
+Gravelslug : EXCLUSIVEROOM : MS_CAPI04
+END CONDITIONAL LINKS
+
+CREATURES
+
+(Gravelslug)OFFSCREEN : 0-Miros Vulture-4, 0-Scavenger-3
+(Gravelslug)MS_VENT08 : 3-Eel, 3-Aquapede, 8-Jetfish-3
+(X-Gravelslug)MS_VENT08 : 8-Jetfish-3
+(Gravelslug)MS_ARTERY07 : 5-Aquapede
+(Gravelslug)MS_bitteraerie1 : 5-White-{Winter}
+
+END CREATURES
+
+[ENDMERGE]

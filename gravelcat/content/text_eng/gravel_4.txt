@@ -1,0 +1,12 @@
+sm4
+rock
+
+Then you find it.
+The biggest, roundest rock you've ever seen.
+There are several different types of material and crystals that are present within the stone.
+Surely the variety of flavors will impress your newly found friend!
+
+conquer the height of the mountain
+gravel_5a.txt
+Present cool boulder
+gravel_5.txt

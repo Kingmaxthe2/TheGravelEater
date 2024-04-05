@@ -1,0 +1,36 @@
+[MERGE]
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Deer-6, 0-Vulture-3, 0-Scavenger-8
+(X-Gravelslug)LF_F02 : 3-BigNeedleWorm, 3-SmallNeedleWorm-3, 3-CicadaB-2-{PreCycle}, 3-CicadaA-4-{PreCycle}
+(X-Gravelslug)LF_D03 : 2-CicadaB, 3-CicadaA-2, 6-Salamander-{PreCycle}
+(X-Gravelslug)LF_E02 : 2-Green
+(X-Gravelslug)LF_D01 : 2-Blue, 6-Salamander-{PreCycle}
+(X-Gravelslug)LF_C01 : 2-Green, 3-TentaclePlant-{PreCycle}
+(X-Gravelslug)LF_E01 : 3-Green, 2-Salamander-{PreCycle}, 3-TentaclePlant-{PreCycle}
+(X-Gravelslug)LF_C02 : 6-Green, 6-Blue, 3-CicadaA-2, 5-CicadaB-3-{PreCycle}, 6-CicadaA-3-{PreCycle}
+(X-Gravelslug)LF_A13 : 3-Mimic-{10}, 4-Mimic-{8}, 5-Eggbug
+(X-Gravelslug)LF_D04 : 3-CicadaA-3
+(X-Gravelslug)LF_D08 : 7-Mimic-{13}, 3-Mimic-{10}, 5-Mimic-{15}, 8-Yellow-2, 9-Yellow-2
+(X-Gravelslug)LF_C03 : 3-Small Centipede-2, 4-Small Centipede-2
+
+(Gravelslug)OFFSCREEN : 0-Deer-4-{Ignorecycle}, 0-Vulture-4, 0-Scavenger-12-{Ignorecycle}
+(Gravelslug)LF_F02 : 3-Centiwing-2, 3-CicadaB-2-{Night}, 3-CicadaA-4-{Night}
+(Gravelslug)LF_E04 : 5-Caramel
+(Gravelslug)LF_D03 : 2-CicadaB, 3-CicadaA-2, 2-Centiwing, 5-Centiwing, 6-Caramel, 6-Salamander-{Night}
+(Gravelslug)LF_E02 : 2-Caramel, 3-Yeek-6, 5-Caramel
+(Gravelslug)LF_D01 : 3-CicadaA, 4-CicadaA, 5-Caramel, 3-Centiwing, 6-Salamander-{Night}
+(Gravelslug)LF_C01 : 2-Caramel, 3-TentaclePlant-{Night}
+(Gravelslug)LF_B03 : 3-Centipede-2
+(Gravelslug)LF_C02 : 6-Caramel-{Ignorecycle}, 4-CicadaA-2, 4-Yeek-5-{Ignorecycle}, 5-Centiwing, 5-CicadaB-3-{Night}, 6-CicadaA-3-{Night}
+(Gravelslug)LF_E01 : 5-Caramel-{Ignorecycle}, 2-Salamander-{Night}, 3-TentaclePlant-{Night}
+(Gravelslug)LINEAGE : LF_E01 : 4 : Blue-0.3, White-0.3, Red-0
+(Gravelslug)LF_A13 : 5-Eggbug-{Ignorecycle}, 3-BigSpider-{Ignorecycle}, 4-BigSpider-{Ignorecycle}
+(Gravelslug)LF_D04 : 3-CicadaA-3, 3-Centiwing-1
+(Gravelslug)LF_D08 : 7-Mimic-{13}, 3-Mimic-{10}, 5-Mimic-{15}, 8-SpitterSpider-2-{Ignorecycle}, 9-BigSpider-4-{Ignorecycle}
+(Gravelslug)LF_C03 : 3-Yeek-2-{Ignorecycle}, 4-Yeek-3-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]

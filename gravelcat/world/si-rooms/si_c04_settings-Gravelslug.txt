@@ -1,0 +1,15 @@
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+Clouds: 1
+Grime: 0.3586957
+BkgDroneVolume: 0.2608696
+Palette: 42
+EffectColorA: 10
+EffectColorB: 2
+Effects: DustWave-1-20-20, DayNight-0.09782609-21-84, HeatWave-0.1847826-284-88, Dustpuffs-0-281-27, FairyParticles-1-61-147, 
+PlacedObjects: DeadTokenStalk><2486.357><751.9191><-22~-31, DeadTokenStalk><2390.05><765.7427><26~-48, DeadTokenStalk><2381.413><678.8654><23~34, BlueToken><2433.724><761.3017><6~-37~-177~-282~1~DandelionPeach~Artificer|Saint|Spear~0~0~0~0, DayNightSettings><320.8738><321.5948><5~8.660254~10~42, FairyParticleSettings><210.1433><177.6105><-138~-437.3288~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_ENV-LightWind.ogg><697.0783><633.1475><0.3152174><0.9217392><-2.921692><249.1475><-98.35535><213.6447><0><0.502174, SPOT><AM_WIN-StrongWnd2.ogg><697.6901><521.3123><0.3043478><1.117391><1497.69><287.3123><-327.3553><225.6447><0><0.3065219, SPOT><AM_ENV-LightWind.ogg><696.1364><400.8964><0.3804348><0.9413043><3171.136><308.8964><-309.3553><102.6447><0><0.6326088, OMNI><AM_ENV-LightWind.ogg><863.775><509.9484><0.6413044><1, 
+FadePalette: 8, 0.4673913, 0.4673913, 0.4673913
+WetTerrain: OFF

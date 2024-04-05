@@ -1,0 +1,13 @@
+Template: OE_SettingsTemplate_Cave
+DangerType: Rain
+CeilingDrips: 0
+RumbleIntensity: 0
+Clouds: 0.8478261
+BkgDroneVolume: 0
+Palette: 19
+EffectColorA: 13
+EffectColorB: 18
+Effects: LightRain-0-277-71, Darkness-0.1413043-286-20, DayNight-0.5326087-273-188, VoidMelt-0.01086957-20-20, Fog-0.4782609-279-132, 
+PlacedObjects: TradeOutpost><454.7372><916.8007><-166~4, LanternOnStick><402.6734><1277.85><-32~-104, LanternOnStick><321.311><1005.816><36~-103, LanternOnStick><349.3004><980.843><-9~-80, UniqueDataPearl><425.6674><1194.609><-119~123~0~0~Misc~0, GooieDuck><649.1675><775.2695><172~-320~2~3, GooieDuck><448.0768><629.4><76~-246~2~3, GooieDuck><518.0742><614.5955><-1~-149~2~3, DayNightSettings><98.4212><347.9338><5~8.660254~17~10, 
+AmbientSounds: OMNI><AM_WIN-HowlingWnd.ogg><377.1452><505.9203><0.2173913><0.2565217, 
+FadePalette: 31, 0.6847826, 0.6304348

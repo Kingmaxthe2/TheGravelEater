@@ -1,0 +1,19 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: Rain
+CeilingDrips: 0.5326087
+RainIntensity: 1
+RumbleIntensity: 1
+WaveSpeed: 0.4839126
+WaveLength: 0.8576809
+WaveAmplitude: 0.02861939
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.1086956
+EffectColorA: 18
+EffectColorB: 12
+Effects: LightRain-0.1086956-43-75, LightBurn-0-48-34, Fog-0.7717391-20-20, SSSwarmers-0.0326087-56-131, ZeroG-0.6521739-325-42, BrokenZeroG-0.75-331-111, 
+PlacedObjects: LightSource><1971.586><627.8195><0.1195652~Environment~1261~723~-57.98376~-143.7555~1~1~None~0~0, LightFixture><122.6805><539.3362><RedLight~17.32051~-10~64, LightFixture><904.4985><667.45><RedLight~-268.6795~-20~0, LightSource><413.8597><406.0828><0.1847826~EffectColor1~1385~-130~377~-356.3975~0~0~Fade~0.3043478~0, SteamPipe><156.6851><405.0757><69~-49, SteamPipe><145.3958><406.8293><31~-47, SteamPipe><378.9144><254.4229><30~56, SteamPipe><291.8569><705.3898><28~-60, SteamPipe><283.1054><694.4199><-2~-19, SteamPipe><264.8086><496.1921><28~-48, SteamPipe><175.9247><617.4353><57~16, UniqueDataPearl><2544.383><137.3506><0~0~0~0~RM~0, Corruption><1324.146><147.8292><7~103, Corruption><1268.436><668.9105><73~-87, CorruptionTube><1326.446><665.0419><393~-503, CorruptionTube><1211.841><623.4285><442~42, Corruption><521.3632><164.5851><15~139, Corruption><1003.497><652.95><0~100, Corruption><589.4254><674.5963><-5~-90, CorruptionTube><632.0792><669.3539><-123~-493, CorruptionTube><611.5513><645.7727><407~-16, RotFlyPaper><2343.583><545.5999><-8~-106, Corruption><2442.292><583.3328><112~14, Corruption><2817.082><560.0862><0~100, Corruption><2308.242><576.2296><0~100, RotFlyPaper><2414.304><570.9196><3~-166, RotFlyPaper><575.7043><654.3053><3~-115, CorruptionTube><2840.324><549.2277><-387~26, CorruptionDarkness><2321.288><597.6529><109~72, CorruptionDarkness><2836.847><588.7199><0~100, CorruptionDarkness><2460.772><610.3008><0~100, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><868.4235><647.6505><0.2065217><1, SPOT><AM_ENV-NatWind.ogg><696.868><613.0885><0.2391304><1><2133.868><782.0885><548.6447><-398.3553><0><0.4260871, SPOT><AM_WIN-SubWnd.ogg><868.86><529.333><0.3913043><1><491.86><252.333><427.6447><290.6447><0><0.4369566, SPOT><MSC-ElectricPulse.ogg><695.5552><496.7049><0.1956522><1.313043><115.5552><484.7049><149.6447><123.6447><0><0.2195653, SPOT><SO_IND-HeatDuct.ogg><869.052><419.2218><0.1413043><1><12.052><12.2218><317.6447><151.6447><0><0.5565219, SPOT><SO_SFX-DataTones.ogg><702.2><386.0045><0.3804348><0.1><479.2><739.0045><-20.35535><-266.3553><0><0.7739132, SPOT><AM_ENV-NatWind.ogg><754.5344><254.303><0.2391304><1><969.5344><17.30298><-250.3553><130.6447><0><0.1978262, 
+FadePalette: 15, 0.09782609, 0.3043478, 0.3586957
+RoomSpecificScriptActive: ON
+WetTerrain: OFF

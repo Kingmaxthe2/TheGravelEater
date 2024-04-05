@@ -1,0 +1,7 @@
+DangerType: Flood
+Clouds: 0.2608696
+BkgDroneVolume: 0
+Effects: DayNight-0.04347826-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><708.2266><30.94861><, LightSource><284.1959><82.03998><0.25~Environment~727~-146~239~-254.3975~1~1~None~0~0, LightSource><295.0241><74.55145><0.3152174~Environment~624~-337~234~-364.3975~1~0~None~0~0, LightSource><197.1687><180.6426><0.2173913~Environment~478~-249~60~-416.3975~1~0~None~0~0, DayNightSettings><453.8904><242.3925><5~8.660254~10~21, 
+AmbientSounds: OMNI><AM_SUB-CaveTone.ogg><656.6971><640.4665><0.2717391><1, OMNI><AM_SUB-BlankState.ogg><832.3633><641.4149><0.3152174><1, SPOT><AM_IND-Utility01.ogg><96.65448><479.6271><0.4673913><1><398.6545><86.62708><-82.35535><-46.35535><0><0.1434784, SPOT><SO_WAT-LilDrips.ogg><734.8973><521.3647><0.3586957><1><593.8973><133.3647><-147.3553><-122.3553><0><0.3500001, 
+FadePalette: 8, 0.08695652

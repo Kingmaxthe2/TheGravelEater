@@ -1,0 +1,18 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0.09782609
+WaveSpeed: 0.4597914
+WaveLength: 0.7621457
+WaveAmplitude: 0.04999958
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.8043478
+Palette: 3
+EffectColorA: 10
+Effects: SkyAndLightBloom-0-20-20, DayNight-0.05-28-81, HeatWave-0.1630435-297-94, Dustpuffs-0-299-23, FairyParticles-1-288-161, 
+PlacedObjects: KarmaFlower><500.2><334.5001><0~0~5~7, DandelionPeach><410.8541><308.8868><0~0~2~3, DandelionPeach><316.8503><305.8826><0~0~2~3, DandelionPeach><298.9597><320.5541><0~0~2~3, DayNightSettings><230.8242><269.9357><-190~34.66025~10~3, FairyParticleSettings><115.2314><114.3009><5~8.660254~0~1~1~0~1~1.448696~60~495.2173~40~100~5~30~0~360~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><755.5623><457.0689><0.3369565><1><440.5623><389.0689><-187.3553><-30.35535><0><0.6652175, OMNI><AM_ENV-LightWind.ogg><765.3163><518.5792><0.4673913><0.8043478, 
+FadePalette: 8, 0.25
+WetTerrain: OFF

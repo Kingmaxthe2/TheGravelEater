@@ -1,0 +1,5 @@
+Template: NONE
+Palette: 19
+EffectColorA: 13
+Effects: VoidMelt-0.1956522-20-20, 
+FadePalette: 31, 0.6413044

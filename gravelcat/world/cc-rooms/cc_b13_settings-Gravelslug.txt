@@ -1,0 +1,5 @@
+RainIntensity: 0.1521739
+RumbleIntensity: 0
+Effects: DayNight-0.9-27-132, 
+PlacedObjects: DayNightSettings><176.4914><219.9498><5~8.660254~6~10, InsectGroup><453.7271><1445.199><0~100~0~0~Wasp~0.3369565, 
+FadePalette: 15, 0.423913, 0.3913043

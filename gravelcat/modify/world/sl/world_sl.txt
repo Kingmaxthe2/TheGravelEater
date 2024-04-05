@@ -1,0 +1,100 @@
+[MERGE]
+CONDITIONAL LINKS
+//unlink shaded rooms on Gravelslug
+Gravelslug : SL_B02 : SL_A02 : DISCONNECTED
+Gravelslug : SL_B02 : SL_C11 : DISCONNECTED
+Gravelslug : SL_B02 : SL_A14 : DISCONNECTED
+//link CL rooms on Gravelslug
+Gravelslug : SL_B02SAINT : 1 : SL_A02
+Gravelslug : SL_B02SAINT : 2 : SL_A14
+Gravelslug : SL_A02 : SL_B02 : SL_B02SAINT
+Gravelslug : SL_A14 : SL_B02 : SL_B02SAINT
+//Gravelslug's broken grates
+Gravelslug : SL_C06 : SL_S04 : DISCONNECTED
+Gravelslug : SL_C06 : SL_A03 : DISCONNECTED
+Gravelslug : SL_C06 : SL_A06 : DISCONNECTED
+Gravelslug : SL_C06SAINT : 1 : SL_S04
+Gravelslug : SL_C06SAINT : 2 : SL_A03
+Gravelslug : SL_C06SAINT : 3 : SL_A06
+Gravelslug : SL_S04 : SL_C06 : SL_C06SAINT
+Gravelslug : SL_A03 : SL_C06 : SL_C06SAINT
+Gravelslug : SL_A06 : SL_C06 : SL_C06SAINT
+
+//Only show on Gravelslug
+Gravelslug : EXCLUSIVEROOM : GATE_SL_CL
+Gravelslug : EXCLUSIVEROOM : SL_B02SAINT
+Gravelslug : EXCLUSIVEROOM : SL_C16
+Gravelslug : EXCLUSIVEROOM : SL_I02
+Gravelslug : EXCLUSIVEROOM : SL_SCRUSHED
+Gravelslug : EXCLUSIVEROOM : SL_B10
+Gravelslug : EXCLUSIVEROOM : SL_B11
+Gravelslug : EXCLUSIVEROOM : SL_C06SAINT
+//Hidden on Gravelslug
+Gravelslug : HIDEROOM : SL_B02
+Gravelslug : HIDEROOM : SL_C11
+Gravelslug : HIDEROOM : SL_S02
+Gravelslug : HIDEROOM : GATE_SH_SL
+Gravelslug : HIDEROOM : SL_C06
+Gravelslug : HIDEROOM : GATE_UW_SL
+Gravelslug : HIDEROOM : SL_BRIDGEEND
+Gravelslug : HIDEROOM : SL_S13
+Gravelslug : HIDEROOM : SL_EDGE01
+Gravelslug : HIDEROOM : SL_EDGE02
+Gravelslug : HIDEROOM : SL_BRIDGE01
+END CONDITIONAL LINKS
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Leviathan-2
+(X-Gravelslug)SL_A02 : 3-Salamander, 4-Sea Leech-10
+(X-Gravelslug)SL_A10 : 3-Sea Leech-6
+(X-Gravelslug)SL_E02 : 4-Jet Fish, 5-Jet Fish, 6-Sea Leech-7, 7-Sea Leech-7, 8-Sea Leech-7
+(X-Gravelslug)SL_H02 : 5-Jet Fish, 7-Jet Fish, 8-Jet Fish, 3-Tentacle Plant, 9-Sea Leech-15, 10-Aquacenti-{PreCycle}
+(X-Gravelslug)SL_H03 : 7-Sea Leech-6, 5-Jet Fish, 7-Jet Fish, 9-Tentacle Plant
+(X-Gravelslug)SL_D06 : 5-Salamander, 6-Salamander, 7-Salamander, 8-Tentacle Plant, 9-Aquacenti-{PreCycle}
+(X-Gravelslug)SL_D03 : 6-Jet Fish, 5-Jet Fish
+(X-Gravelslug)SL_C02 : 5-Eel, 6-Salamander, 5-Eel-{PreCycle}
+(X-Gravelslug)SL_D01 : 6-Jet Fish, 4-Jet Fish, 5-Jet Fish
+(X-Gravelslug)SL_D04 : 4-Salamander, 5-Sea Leech-10, 7-Sea Leech-15, 7-Aquacenti-{PreCycle}
+(X-Gravelslug)SL_ECNIUS03 : 2-Snail, 3-Snail, 4-Jetfish
+(X-Gravelslug)SL_EDGE02 : 3-Dropbug-1, 6-Cyan, 5-Snail-2-{PreCycle}, 6-Snail-3-{PreCycle}
+(X-Gravelslug)SL_B01 : 3-Eel-{PreCycle}
+(X-Gravelslug)SL_F02 : 16-Garbage Worm-5, 4-Salamander, 6-Jet Fish, 7-Jet Fish, 5-Tentacle Plant, 8-Aquacenti-{PreCycle}
+(X-Gravelslug)SL_F01 : 4-Jet Fish, 5-Jet Fish, 6-Jet Fish
+(X-Gravelslug)SL_C03 : 3-Jet Fish, 5-Jet Fish
+(X-Gravelslug)SL_B04 : 2-White
+(X-Gravelslug)SL_C05 : 3-Jet Fish, 4-Salamander-{PreCycle}
+(X-Gravelslug)SL_C04 : 3-Sea Leech-5
+(X-Gravelslug)SL_ECNIUS03 : 2-Snail, 3-Snail, 4-Jetfish
+(X-Gravelslug)SL_D03 : 6-Jet Fish, 5-Jet Fish
+(X-Gravelslug)SL_E01 : 4-Jet Fish, 5-Aquacenti-{PreCycle}
+(X-Gravelslug)SL_C15 : 4-Jet Fish, 5-Aquacenti
+(X-Gravelslug)LINEAGE : SL_D05 : 5 : NONE-0.05, Salamander-0
+
+(Gravelslug)SL_B02SAINT : 6-Eel-{Night}, 7-Bro-1
+(Gravelslug)OFFSCREEN : vulture-2, MirosVulture-3-{Night}, Leviathan-3-{Ignorecycle}
+(Gravelslug)SL_I02 : 3-LanternMouse-4
+(Gravelslug)SL_A02 : 4-Sea Leech-7
+(Gravelslug)SL_B01 : 3-Sea Leech-7, 3-Eel-{Night}
+(Gravelslug)SL_D06 : 5-Eel-{Ignorecycle}, 6-Salamander-{Ignorecycle}, 8-Tentacle Plant-{Ignorecycle}, 9-Aquacenti-{Night}, 9-Sea Leech-7
+(Gravelslug)SL_C02 : 10-Sea Leech-6, 12-Sea Leech-9, 7-Yellow-{winter}-4, 5-Eel-{Night}
+(Gravelslug)SL_F02 : 16-Garbage Worm-4, 4-Salamander-{Ignorecycle}, 7-Jet Fish, 5-Tentacle Plant-{Ignorecycle}, 8-Aquacenti-{Night}, 10-Sea Leech-3, 9-Sea Leech-2
+(Gravelslug)SL_D04 : 5-Sea Leech-5, 6-Sea Leech-11, 7-Aquacenti-{Night}
+(Gravelslug)SL_H02 : 5-Jet Fish, 8-Jet Fish, 3-Tentacle Plant-{Ignorecycle}, 9-Sea Leech-9, 10-Aquacenti-{Night}
+(Gravelslug)SL_F01 : 4-Jet Fish, 6-Jet Fish
+(Gravelslug)SL_D01 : 6-Jet Fish, 4-Aquacenti-{Ignorecycle}, 7-Sea Leech-6
+(Gravelslug)SL_C03 : 5-jetfish
+(Gravelslug)SL_H03 : 7-Jet Fish, 9-Tentacle Plant-{Ignorecycle}
+(Gravelslug)SL_C05 : 3-Jet Fish, 4-Salamander-{Night}, 4-Sea Leech-6
+(Gravelslug)SL_C04 : 3-Sea Leech-3
+(Gravelslug)SL_D02 : 5-Aquacenti-{Ignorecycle}
+(Gravelslug)SL_ECNIUS03 : 2-Snail-{Ignorecycle}, 3-Snail-{Ignorecycle}
+(Gravelslug)SL_D03 : 6-Aquacenti-{Ignorecycle}
+(Gravelslug)SL_E01 : 4-Jet Fish, 5-Sea Leech-6, 5-Aquacenti-{Night}
+(Gravelslug)SL_E02 : 5-Eel-{Ignorecycle}, 6-Sea Leech-3, 7-Sea Leech-4, 8-Sea Leech-2
+(Gravelslug)SL_C14 : leeches-7
+(Gravelslug)SL_C15 : 4-Jet Fish, 6-Aquacenti-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]

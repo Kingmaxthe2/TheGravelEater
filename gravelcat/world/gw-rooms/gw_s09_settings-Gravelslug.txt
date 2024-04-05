@@ -1,0 +1,15 @@
+Template: NONE
+DangerType: Thunder
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04601168
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0.2608696
+BkgDroneVolume: 0
+Palette: 9
+EffectColorA: 13
+Effects: DayNight-0.9782609-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><463.8011><407.2717><, LightSource><512.7319><530.9492><0.1195652~EffectColor1~0~100~-248~-455.3975~0~1~None~0~0, LightSource><555.631><555.5892><0.08695652~EffectColor1~0~100~-436~-14.39746~0~1~None~0~0, LightSource><469.5992><568.8813><0.1195652~EffectColor1~0~100~145~-79.39746~0~1~None~0~0, DayNightSettings><180.3727><325.5958><5~8.660254~12~10, 
+FadePalette: 10, 0.7065217

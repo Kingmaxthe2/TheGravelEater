@@ -1,0 +1,14 @@
+smgrn
+Gvlgrn
+
+As you reach for the grains of gravel, you feel an odd presence.
+Everything has turned a bluish gray, and the clouds seem to be rapidly shifting.
+Looking to the eyes of the slugcat, a golden gaze stares back in return.
+They lips do not move, but you hear a voice nonetheless.
+"Fall" It boomingly announces.
+You hear a clattering of chains, and you fall deep into a slumber, never to wake again.
+
+RESTART
+gravelstart.txt
+
+NA_35 - Else4

@@ -1,0 +1,12 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0.09782609
+Clouds: 0.8913044
+Palette: 42
+Effects: SkyAndLightBloom-0.1413043-30-30, DarkenLights-0.6521739-29-85, DayNight-0.05434782-29-135, HeatWave-0.1847826-293-39, Dustpuffs-0-297-90, FairyParticles-1-293-149, 
+PlacedObjects: ScavengerTreasury><338.3984><249.4223><7~127, ScavengerTreasury><606.3019><257.2223><0~100, LanternOnStick><623.5101><308.3002><27~-127, LanternOnStick><691.3082><330.4434><-34~-176, ScavengerTreasury><474.6992><279.0182><0~100, DataPearl><377.1653><229.1125><0~0~0~0~Misc~0, DataPearl><565.9664><206.8028><0~0~0~0~Misc~0, DataPearl><650.9048><216.1759><0~0~0~0~Misc~0, DayNightSettings><268.4304><269.6638><-35~92.66025~10~3, FairyParticleSettings><-70.61609><135.1629><5~8.660254~0~1~1~0~1~1.448696~60~495.2173~40~100~5~30~0~360~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: SPOT><AM_ENV-NatWind.ogg><743.0071><485.3001><0.2934783><1><496.0071><613.3002><-8.355347><-112.3553><0><0.6000001, OMNI><AM_ENV-LightWind.ogg><824.3163><595.5792><0.423913><0.7847826, 
+FadePalette: 10, 0.8586956
+WetTerrain: OFF

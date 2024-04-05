@@ -1,0 +1,15 @@
+DangerType: Flood
+CeilingDrips: 0.5
+RumbleIntensity: 1
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 5.605194E-45
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.173913
+EffectColorB: 13
+Effects: SilenceWater-0.4130435-20-72, Fog-0.6521739-20-20, DirtyWater-1-30-30, 
+PlacedObjects: LightSource><507.0609><347.0649><0.173913~Environment~592~-322~50~86.60254~1~0~None~0~0, Corruption><505.6479><1136.672><0~100, Corruption><557.6117><1489.356><0~100, Corruption><343.9567><1514.196><-2~76, StuckDaddy><452.4885><1477.051><-35~-44, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><649.4484><653.7246><0.2391304><1, SPOT><AM_WIN-SubWnd.ogg><830.7108><615.6961><0.3695652><1><493.7108><355.6961><331.6447><42.64465><0><0.7086958, 
+FadePalette: 15, 0.2282609, 0.1630435
+WetTerrain: OFF

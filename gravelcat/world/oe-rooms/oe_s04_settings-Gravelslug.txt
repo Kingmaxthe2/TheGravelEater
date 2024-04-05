@@ -1,0 +1,12 @@
+Template: OE_SettingsTemplate_Cave
+DangerType: None
+RainIntensity: 0
+RumbleIntensity: 0
+Clouds: 0.8043478
+Grime: 0
+Palette: 14
+EffectColorB: 14
+Effects: Darkness-0.4130435-263-129, DayNight-0.8369565-257-201, LightRain-0-342-40, VoidMelt-0.01086957-30-30, Fog-0-271-77, FireFlies-0-19-90, RockFlea-0-296-67, 
+PlacedObjects: LightSource><421.6551><303.1237><0.2173913~White~0~100~93~-95.39746~1~0~None~0~0, LightSource><361.4831><410.0507><0.2282609~White~104~-46~178~-9.397461~1~0~None~0~0, DayNightSettings><205.8004><119.5119><5~8.660254~43~10, 
+AmbientSounds: OMNI><AM_SUB-MysticCave2.ogg><604.1166><636.101><0><1, OMNI><AM_SUB-BlankState.ogg><778.9274><637.3425><0.2717391><1, 
+FadePalette: 31, 0.6413044

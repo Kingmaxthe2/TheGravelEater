@@ -1,0 +1,13 @@
+Template: SL_SettingsTemplate_Sewer
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.05214901
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.7391304
+EffectColorB: 6
+Effects: DayNight-0.6521739-20-20, DirtyWater-1-30-30, 
+FadePalette: 15, 0.2608696

@@ -1,0 +1,14 @@
+Template: HR_SettingsTemplate_End
+DangerType: None
+CeilingDrips: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0
+EffectColorA: 4
+Effects: SSMusic-0-14-16, VoidSpawn-0.08695652-270-64, VoidMelt-0.0326087-297-9, 
+PlacedObjects: LightSource><235.9345><94.32715><0.1195652~EffectColor1~595~612~-305~29.60254~0~0~Fade~0.6739131~0, LightSource><736.1999><99.74347><0.1521739~EffectColor1~-593~603~-798~266.6025~0~0~Fade~0.5108696~0, LightSource><233.813><612.9398><0.1304348~EffectColor1~587~-530~-302~-369.3975~0~0~Fade~0.6195652~0, LightSource><729.3226><600.5636><0.1195652~EffectColor1~-544~-562~-786~-114.3975~0~0~Fade~0.75~0, CellDistortion><436.438><401.9319><1279~768~50~86.60254~0~0.5760869~0~0.08695652, KarmaShrine><408.3905><745.3326><0~10, PlayerPushback><408.5816><766.6421><54~2, 
+FadePalette: 25, 0.2391304
+WetTerrain: OFF

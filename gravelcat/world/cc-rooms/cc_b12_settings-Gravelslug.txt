@@ -1,0 +1,5 @@
+RainIntensity: 0.1413043
+RumbleIntensity: 0
+Effects: DayNight-0.8913044-28-125, 
+PlacedObjects: DayNightSettings><176.4914><219.9498><5~8.660254~6~10, NoSpearStickZone><0.984375><1554.551><-40~45, NoSpearStickZone><923.697><1273.284><0~100, 
+FadePalette: 15, 0.3586957, 0.3586957

@@ -1,0 +1,10 @@
+Template: SU_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0
+Clouds: 1
+Grime: 0.423913
+EffectColorA: 2
+Effects: DayNight-0.95-32-72, 
+PlacedObjects: BrokenShelterWaterLevel><486.908><354.6776><, DayNightSettings><173.1391><414.5836><5~8.660254~4~10, 
+AmbientSounds: SPOT><Basic Mech.wav><523.95><262.5025><0.2065217><0.8630434><431.95><477.5024><67.64465><-132.3553><0><0.1652175, 
+FadePalette: 8, 0.5217391

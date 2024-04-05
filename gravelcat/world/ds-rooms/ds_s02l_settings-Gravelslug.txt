@@ -1,0 +1,7 @@
+DangerType: Thunder
+RumbleIntensity: 0
+Clouds: 1
+Effects: DayNight-0.9565217-35-72, 
+PlacedObjects: BrokenShelterWaterLevel><498.3615><348.4161><, DayNightSettings><203.95><262.9987><5~8.660254~4~10, 
+AmbientSounds: SPOT><SO_WAT-OpenFlow.ogg><792.8503><290.0769><0.1847826><0.823913><270.8503><367.0769><-86.35535><-56.35535><0><0.1760871, 
+FadePalette: 8, 0.25

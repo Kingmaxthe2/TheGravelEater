@@ -1,0 +1,7 @@
+Template: SI_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0
+Palette: 2
+Effects: DayNight-0.9021739-32-75, HeatWave-0.1086956-41-130, 
+PlacedObjects: DayNightSettings><582.1741><395.8485><5~8.660254~42~10, 
+FadePalette: 42, 0.5869565

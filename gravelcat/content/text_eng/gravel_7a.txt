@@ -1,0 +1,10 @@
+sm5b
+Gvl8_anim_1.0
+
+With a tinge of cyan fire in their eyes, they look at you with vicious intent.
+Then, before you even realize it, a loud POW is heard and theres a sudden blackness as the newly crafted weapon met it's first kill.
+
+RESTART
+gravelstart.txt
+
+FADE

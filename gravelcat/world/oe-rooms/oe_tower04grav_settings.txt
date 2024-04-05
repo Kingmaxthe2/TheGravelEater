@@ -1,0 +1,18 @@
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 0
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.7934783
+RandomItemDensity: 0.2234487
+EffectColorA: 13
+EffectColorB: 18
+Effects: LightRain-0.1195652-20-74, FireFlies-0.7173913-18-14, Fog-0.3369565-272-129, Darkness-0.08695652-17-135, WaterDepth-0.1195652-276-67, BorderPushBack-1-274-10, VoidMelt-0.01086957-292-298, 
+PlacedObjects: CustomDecal><2341.608><758.3163><-3~289~601~293~589~-25~585~8.11969~0~1~1~Scav Wedges2~0.3804348~0.9673913~0.08695652~0.9673913~0.3804348~0.9673913~0.06521739~0.9673913, LanternOnStick><2094.05><692.9286><-72~-162, LanternOnStick><1663.122><1188.437><54~-263, LanternOnStick><1985.603><978.5854><-36~-218, CustomDecal><1290.178><898.9168><-38~477~812~445~796~-60~340~-208~0.1630435~0.6304348~0.1195652~ScavMark MS_scavtrader~0.5543478~0.2391304~0.1956522~0.2391304~0.5434783~0.2391304~0.326087~0.2391304, CustomDecal><2480.648><1036.699><-40~335~344~346~317~-30~-16~-357~0.6521739~1~0.4782609~ScavMark Stonehead2~0.3913043~1~0.3913043~1~0.3913043~1~0.3913043~1, CustomDecal><2354.696><1018.789><-3~235~605~244~594~7~-276~30~0~0.1086956~0~Scav Wedges3(vert)~0~0.6304348~0~0.6304348~0.4130435~0.6304348~0.3586957~0.6304348, BlinkingFlower><1436.661><1318.071><, BlinkingFlower><1472.939><1162.184><, BlinkingFlower><1449.63><1128.411><, BlinkingFlower><1409.925><1200.153><, BlinkingFlower><1418.95><1110.242><, BlinkingFlower><1390.949><1156.273><, LightSource><3707.91><26.3697><0.2065217~EffectColor1~-1598~1220~-236~343.6025~0~0~Fade~0.5543478~0, LightSource><3726.119><29.33878><0.1630435~EffectColor1~-930~642~-392~479.6025~0~0~None~0~0, LightSource><3745.407><34.03994><0.2065217~EffectColor1~-928~463~-728~565.6025~0~1~None~0~0, 
+AmbientSounds: OMNI><AM_ENV-LushNight.ogg><24.80676><178.1985><0.5><1, SPOT><AM_ENV-SubTerr.ogg><674.6304><444.0897><0.4565217><0.7847826><3484.63><80.08973><-243.3553><542.6447><0><0.578261, 
+Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>bm_uw_upperwall<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>0<eA>fadeIn<eB>0<eA>oneSongPerCycle<eB>0<eA>stopAtDeath<eB>0<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>0<tA>panPos<tB>1070.627<tB>475.8453<tA>fireChance<tB>1<tA>entrance<tB>-1<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>2652.627<tB>1181.845<tA>handlePos<tB>-310.3553<tB>-59.35535, 
+FadePalette: 31, 0.6630435, 0.6413044, 0.6195652, 0.6413044, 0.6739131

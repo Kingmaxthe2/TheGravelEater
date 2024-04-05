@@ -1,0 +1,18 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: Rain
+CeilingDrips: 0.4891304
+RumbleIntensity: 0.3369565
+WaveSpeed: 0.511722
+WaveLength: 0.744139
+WaveAmplitude: 0.04998522
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.2826087
+WaterReflectionAlpha: 0
+Palette: 10
+EffectColorB: 12
+Effects: WaterDepth-0.05434782-279-15, SilenceWater-0.5-275-69, LightRain-0.25-25-72, Fog-0.7717391-30-30, LightBurn-0-23-118, DirtyWater-1-20-20, 
+PlacedObjects: LightSource><1409.985><1704.699><0.09782609~Environment~-1570~1252~50~86.60254~1~1~None~0~0, DangleFruit><2125.632><1758.9><0~0~2~3, DangleFruit><2255.525><1733.552><0~0~2~3, DangleFruit><2204.62><1652.59><0~0~2~3, DangleFruit><532.9785><2661.301><0~0~2~3, DangleFruit><559.1783><2626.409><0~0~2~3, Corruption><1960.037><715.7936><-11~72, CorruptionTube><1949.576><778.0652><-659~-41, Corruption><1896.328><1087.614><0~100, Corruption><1956.55><896.5089><-40~61, CorruptionTube><1936.164><1054.82><-747~36, CorruptionTube><1287.579><825.1035><612~314, CorruptionTube><1959.89><885.1074><-272~325, Corruption><509.5963><2060.373><85~94, Corruption><390.6602><1658.631><-5~90, Corruption><308.1433><1831.17><42~114, CorruptionTube><355.0978><1710.371><193~369, 
+AmbientSounds: OMNI><AM_ENV-NatWind.ogg><869.4029><645.6211><0.25><1, OMNI><AM_ENV-CityTone.ogg><693.6045><643.6128><0.2173913><1, SPOT><AM_WIN-StrongWnd2.ogg><514.3737><603.9072><0.4347826><1><1318.374><1687.907><935.6447><-298.3553><0><1, SPOT><AM_WIN-SubWnd.ogg><700.1521><528.5756><0.4021739><1><2496.152><1753.576><-597.3553><-188.3553><0><0.752174, SPOT><AM_IND-SuperStructure.ogg><873.158><527.6776><0.2065219><1><1175.158><499.6776><416.6447><926.6447><0><0.404348, 
+FadePalette: 15, 0.3804348, 0.3913043, 0.3695652, 0.3695652, 0.3695652, 0.3695652, 0.3695652, 0.3586957
+WetTerrain: OFF

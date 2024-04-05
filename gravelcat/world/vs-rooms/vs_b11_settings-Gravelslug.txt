@@ -1,0 +1,11 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 0
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: DayNightSettings><96.46313><464.3034><5~8.660254~10~3, 
+FadePalette: 8, 0.4456522, 0.4456522

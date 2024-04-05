@@ -1,0 +1,15 @@
+{
+	"id": "Ghost_Gravelslug",
+	"scene_folder": "scenes/slugcat end - gravelslug",
+	"images": [
+		{ "name": "gravelslug bkg", "pos": [330, -18], "depth": 3.7, "shader": "Basic" },
+		{ "name": "gravelslug b",    "pos": [505, 175], "depth": 2.2, "shader": "Basic" },
+		{ "name": "gravelslug a",    "pos": [505, 175], "depth": 2.0, "shader": "Basic" },
+		{ "name": "gravelslug shiny",    "pos": [505, 175], "depth": 1.8, "shader": "Basic" }
+	],
+	"idle_depths": [ 2.8 ],
+	"glow_pos": [688, 484],
+	"mark_pos": [689, 583],
+	"select_menu_pos": [17, 17],
+	"slugcat_depth": 2.8
+}

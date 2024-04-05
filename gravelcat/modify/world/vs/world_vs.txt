@@ -1,0 +1,51 @@
+[MERGE]
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Scavenger-8, 0-Vulture-2
+(X-Gravelslug)VS_D02 : 4-Snail-3
+(X-Gravelslug)VS_E01 : 6-Jet Fish
+(X-Gravelslug)VS_C08 : 4-Snail-4, 7-Jet Fish
+(X-Gravelslug)VS_D03 : 4-Snail-3
+(X-Gravelslug)VS_F01 : 5-Small Centipede-8
+(X-Gravelslug)VS_C09 : 2-Egg Bug-2
+(X-Gravelslug)VS_E02 : 8-Black, 10-Black-2, 13-Black
+(X-Gravelslug)VS_F02 : 7-Black-2, 14-Salamander-2
+(X-Gravelslug)VS_C01 : 12-Eel, 13-Salamander-2
+(X-Gravelslug)LINEAGE : VS_C02 : 3 : Blue-0.2, Cyan-0.4, Strawberry-0
+(X-Gravelslug)VS_B07 : 6-Centipede-4
+(X-Gravelslug)VS_C07 : 8-Centipede-2, 11-Centipede-3
+(X-Gravelslug)VS_B09 : 3-Centipede-2, 5-Small Centipede-4
+(X-Gravelslug)VS_C05 : 3-Pole Mimic-{13}, 4-Pole Mimic-{21}
+(X-Gravelslug)VS_A03 : 4-Small Centipede-3
+(X-Gravelslug)LINEAGE : VS_A05 : 4 : None-0.2, Pink-0.2, Cyan-0
+(X-Gravelslug)VS_C04 : 4-Pink, 3-CicadaA-3, 6-CicadaB-5, 2-Pole Mimic-{12}
+(X-Gravelslug)LINEAGE : VS_C04 : 4 : Pink-0.1, Caramel-0.4, Strawberry-0
+
+(Gravelslug)OFFSCREEN : 0-Scavenger-12-{Ignorecycle}, 0-Vulture-2
+(Gravelslug)VS_D02 : 4-Snail-3-{Ignorecycle}, 6-Sea Leech-6
+(Gravelslug)VS_E01 : 7-Aquacenti-{Ignorecycle}, 6-Jet Fish, 7-Sea Leech-5
+(Gravelslug)VS_C08 : 7-Aquacenti-{Ignorecycle}, 4-Snail-4-{Ignorecycle}, 7-Jet Fish, 3-Sea Leech-6
+(Gravelslug)VS_D03 : 4-Sea Leech-6
+(Gravelslug)VS_F01 : 5-Small Centipede-4-{Ignorecycle}
+(Gravelslug)VS_C09 : 5-Centipede-3-{Ignorecycle}
+(Gravelslug)VS_E02 : 8-Black-{Ignorecycle}, 10-Black-{Ignorecycle}, 13-Black-{Ignorecycle}, 7-LanternMouse-2, 6-Big Spider-2-{Ignorecycle}, 4-SpitterSpider-{Ignorecycle}
+(Gravelslug)VS_B06 : 3-LanternMouse-3
+(Gravelslug)VS_H01 : 8-Tentacle Plant-{Ignorecycle}, 2-Drop Bug-{Ignorecycle}
+(Gravelslug)VS_E06 : 4-Centipede-2-{Ignorecycle}, 4-Small Centipede-3-{Ignorecycle}, 3-Drop Bug-{Ignorecycle}
+(Gravelslug)VS_F02 : 7-Black-2-{Ignorecycle}, 14-Salamander-1-{Ignorecycle}
+(Gravelslug)VS_C01 : 10-Sea Leech-4, 12-Sea Leech-5, 13-Sea Leech-3
+(Gravelslug)VS_C02 : 3-Cyan-{Ignorecycle}
+(Gravelslug)LINEAGE : VS_C02 : 3 : Cyan-0.2, White-0.4, Strawberry-0
+(Gravelslug)LINEAGE : VS_C03 : 4 : White-0.2, Blue0.4, Strawberry-0
+(Gravelslug)VS_C07 : 7-Yellow-3-{Ignorecycle}
+(Gravelslug)VS_B09 : 3-Yellow-2-{Ignorecycle}
+(Gravelslug)VS_C05 : 4-Pole Mimic-{21}, 3-Centipede-3-{Ignorecycle}, 3-Red Centipede-{Ignorecycle}
+(Gravelslug)VS_A04 : 4-Strawberry-{Ignorecycle}
+(Gravelslug)VS_A05 : 4-Green-1-{Ignorecycle}
+(X-Gravelslug)VS_B07 : 6-Bro-1-(Night)
+(Gravelslug)VS_C04 : 2-Centiwing-2, 4-Centiwing, 4-Strawberry-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]

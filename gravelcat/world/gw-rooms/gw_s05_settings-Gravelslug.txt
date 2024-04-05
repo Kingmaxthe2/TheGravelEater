@@ -1,0 +1,9 @@
+Template: NONE
+DangerType: Thunder
+RumbleIntensity: 0
+Grime: 0.2608696
+Palette: 4
+EffectColorA: 13
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><460.224><402.4483><, DayNightSettings><227.8002><269.5564><5~8.660254~10~11, 
+FadePalette: 8, 0.3043478

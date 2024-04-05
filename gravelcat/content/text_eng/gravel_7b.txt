@@ -1,0 +1,16 @@
+sm9
+cough_anim_0.5
+
+"Why- *cough* -thank you" they sputter between coughs.
+"np" you respond
+with a true strike, they demolish the nigh indestructible stone with their powerful stick.
+It shatters the boulder into exactly five pebbles and six grains of gravel.
+"Thats good eating right there" the slugcat proclaims
+You nod your head in agreement.
+
+Dig into the pebbles
+gravel_8a.txt
+Dig into the grains
+gravel_8b.txt
+You brought your own snack
+gravel_8c.txt

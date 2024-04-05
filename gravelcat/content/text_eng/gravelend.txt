@@ -1,0 +1,15 @@
+sm9
+Gvl11
+
+You curl up together and rest your weary peepers.
+Never has such calmness been around you, such serenity.
+The chamber closes behind you and the room chills.
+Ice begins to coat the both of you and your breathing slows.
+You do not mind this at all, for you have found a friend.
+
+Accept your fate.
+END
+Retry.
+gravelstart.txt
+
+mute

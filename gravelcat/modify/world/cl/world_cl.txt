@@ -1,0 +1,74 @@
+[MERGE]
+
+CONDITIONAL LINKS
+// gravel connections
+Gravelslug : CL_D05 : 1 : CL_GRAVEL
+Gravelslug : CL_GRAVEL : CL_D05
+// gravel exclusive
+Gravelslug : EXCLUSIVEROOM : CL_GRAVEL
+Gravelslug : EXCLUSIVEROOM : CL_GRAV07
+END CONDITIONAL LINKS
+
+ROOMS
+CL_GRAVEL : CL_GRAV07, CL_D05
+CL_GRAV07 : CL_GRAVEL
+END ROOMS
+
+CREATURES
+(X-Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Scavenger-37, 0-Miros Bird-9-{Ignorecycle}
+(Gravelslug)OFFSCREEN : 0-Vulture-3, 0-Scavenger-29, 0-Miros Bird-5-{Ignorecycle}, 0-MirosVulture-1
+(Gravelslug)CL_C02 : 2-Tube-2, 4-Bro-{PreCycle}
+(X-Gravelslug)CL_C14 : 3-Bro, 4-Bro
+(Gravelslug)LINEAGE : CL_C14 : 3 : Daddy-0.25, Daddy-0.25, Bro-0
+(Gravelslug)LINEAGE : CL_C14 : 4 : Daddy-0.25, Daddy-0.25, Bro-0
+
+(X-Gravelslug)CL_A33 : 4-Centipede-3, 4-Centipede Small, 4-Red Centipede
+(Gravelslug)LINEAGE : CL_A33 : 4 : Daddy-0.2, Bro-0
+(Gravelslug)CL_C03 : 4-Bro
+(Gravelslug)CL_C01 : 4-Tube-2
+
+(X-Gravelslug)CL_HALL : 7-Big Spider-{Winter}, 8-Big Spider-2-{Winter}, 9-SpitterSpider-{Winter}
+(X-Gravelslug)CL_B06 : 4-BigSpider-2-{Winter}, 5-BigSpider-{Winter}
+(X-Gravelslug)CL_B17 : 5-SpitterSpider-{Winter}, 5-BigSpider-{Winter}
+(X-Gravelslug)CL_C09 : 4-BigSpider-3-{Winter}, 5-SpitterSpider-{Winter}
+(X-Gravelslug)CL_A17 : 3-BigSpider-{Winter}, 4-BigSpider-{Winter}
+(X-Gravelslug)CL_B11 : 6-BigSpider-{Winter}
+(X-Gravelslug)CL_C12 : 3-BigSpider-2-{Winter}
+(X-Gravelslug)CL_E04 : 3-SpitterSpider-{Winter}, 3-BigSpider-2-{Winter}
+(X-Gravelslug)CL_V01 : 3-SpitterSpider-{Winter}
+(X-Gravelslug)CL_B26 : 3-SpitterSpider-{Winter}, 5-BigSpider-3-{Winter}
+(X-Gravelslug)CL_B24 : 3-BigSpider-3-{Winter}
+(X-Gravelslug)CL_C08 : 3-BigSpider-2-{Winter}
+(X-Gravelslug)CL_LCFILTERS : 10-BigSpider-3-{Winter}, 6-SpitterSpider-2-{Winter}
+(X-Gravelslug)CL_LSCOREACCESS : 6-BigSpider-5-{Winter}
+(X-Gravelslug)CL_A05 : 3-Lantern Mouse-4
+(X-Gravelslug)CL_CURVE : 3-Lantern Mouse-4, 2-BigSpider-{Winter}
+
+(Gravelslug)CL_HALL : 7-Big Spider, 8-Big Spider-2, 9-SpitterSpider
+(Gravelslug)CL_B06 : 4-BigSpider-2, 5-BigSpider
+(Gravelslug)CL_B17 : 5-MotherSpider, 5-BigSpider
+(Gravelslug)CL_C09 : 3-MotherSpider-1, 4-BigSpider-2, 5-SpitterSpider
+(Gravelslug)CL_A17 : 3-BigSpider, 4-BigSpider
+(Gravelslug)LINEAGE : CL_B11 : 6 : NONE-0.05, MotherSpider-0
+(Gravelslug)LINEAGE : CL_C12 : 3 : Bro-0.25, Bro-0.25, BigSpider-0 
+(Gravelslug)CL_E04 : 3-SpitterSpider, 3-BigSpider-2, 6-Bro-{PreCycle}
+(Gravelslug)CL_B26 : 3-SpitterSpider, 5-BigSpider-2
+(Gravelslug)CL_C20 : 3-Centipede-3, 3-Centipede Small, 3-Red Centipede
+(Gravelslug)CL_LCFILTERS : 10-BigSpider-2
+(Gravelslug)LINEAGE : CL_LSCOREACCESS : 6 : Bro-0.2, Bro-0.2, BigSpider-0 
+(Gravelslug)CL_CURVE : 3-Lantern Mouse-4, 2-MotherSpider
+(Gravelslug)CL_A05 : 3-Lantern Mouse-4, 2-Tube-2
+
+(Gravelslug)CL_D01 : 3-Black-2
+(Gravelslug)CL_A25 : 2-White-{PreCycle}
+(Gravelslug)LINEAGE : CL_A11 : 4 : NONE-0.15, Caramel-0.4, Black-0
+(X-Gravelslug)CL_A12 : 3-Lantern Mouse-4
+(Gravelslug)CL_A12 : 3-Lantern Mouse-3
+(X-Gravelslug)CL_LCLPIPE : 5-Lantern Mouse-6
+(X-Gravelslug)CL_A42 : 4-Lantern Mouse-8
+(Gravelslug)CL_A42 : 4-Lantern Mouse-4
+(Gravelslug)CL_A04 : 2-Tube, 3-Tube, 4-Tube
+(Gravelslug)CL_D15 : 2-Tube
+
+END CREATURES
+[ENDMERGE]

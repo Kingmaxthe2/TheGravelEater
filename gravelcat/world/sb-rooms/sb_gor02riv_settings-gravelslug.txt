@@ -1,0 +1,13 @@
+DangerType: Rain
+RainIntensity: 0.01086957
+RumbleIntensity: 0
+Clouds: 0.8043478
+Grime: 0
+Palette: 14
+EffectColorA: 18
+EffectColorB: 18
+Effects: FireFlies-0.326087-20-20, Fog-0.04347826-18-73, Darkness-0.3478261-274-20, Desaturation-0.2282609-16-132, DayNight-0.1086956-275-68, 
+PlacedObjects: LightFixture><1411.663><292.3659><RedLight~17.32051~-10~62, DayNightSettings><1261.21><590.696><5~8.660254~10~14, 
+AmbientSounds: OMNI><AM_WIN-NiceWnd.ogg><75.94751><530.7816><0.3913043><1, SPOT><AM_IND-Utility03.ogg><760.2935><448.5548><0.4130435><1><1407.293><249.5548><-105.3553><12.64466><0><0.1, SPOT><AM_IND-ElectricHum03.ogg><778.1654><266.6812><0.2173913><1><1397.165><189.6812><6.644653><122.6447><0><0.2739132, 
+FadePalette: 10, 0.2608696, 0.2717391, 0.2608696
+RoomSpecificScriptActive: ON

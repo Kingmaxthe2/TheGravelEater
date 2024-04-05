@@ -1,0 +1,9 @@
+Template: GW_SettingsTemplate_Inside
+DangerType: Thunder
+RainIntensity: 1
+RumbleIntensity: 0
+BkgDroneVolume: 0.2769565
+Effects: DayNight-0.5-20-20, 
+PlacedObjects: Corruption><485.3851><407.8525><0~100, StuckDaddy><495.8164><410.5793><0~100, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><60.07574><506.1518><0.4021739><0.9413043><493.0757><306.1518><-83.35535><-75.35535><0><0.2086958, SPOT><waterGurgleLOOP1.wav><748.8686><280.9008><0.1847826><0.7456522><492.8686><147.9008><-57.35535><-54.35535><0><0.2086958, 
+FadePalette: 8, 0.2173913

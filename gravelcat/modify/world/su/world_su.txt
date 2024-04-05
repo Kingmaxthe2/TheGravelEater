@@ -1,0 +1,46 @@
+[MERGE]
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Scavenger-5
+(X-Gravelslug)SU_C02 : 2-BigNeedleWorm, 3-SmallNeedleWorm-3, 5-Pink, 4-TentaclePlant-{PreCycle}
+(X-Gravelslug)SU_A07 : 4-Green, 5-Pink
+(X-Gravelslug)SU_B06 : 4-Salamander-{PreCycle}, 6-CicadaB, 7-CicadaB
+(X-Gravelslug)SU_B11 : 4-CicadaB, 5-CicadaA, 8-TentaclePlant-{PreCycle}
+(X-Gravelslug)SU_B02 : 4-CicadaB, 5-CicadaB
+(X-Gravelslug)LINEAGE : SU_B08 : 2 : Green-0.1, NONE-0.5, Yellow-0.2, Strawberry-0
+(X-Gravelslug)LINEAGE : SU_A06 : 3 : Green-0.1, NONE-0.5, Pink-0.1, Strawberry-0.5, Red-0
+(X-Gravelslug)SU_B04 : 3-Pink, 4-Green, 5-Salamander-2-{PreCycle}
+(X-Gravelslug)LINEAGE : SU_B12 : 3 : Green-0.1, NONE-0.5, Blue-0.2, Strawberry-0
+(X-Gravelslug)SU_A17 : 2-Salamander-2-{PreCycle}
+(X-Gravelslug)SU_B07 : 3-TentaclePlant-{PreCycle}
+(X-Gravelslug)LINEAGE : SU_A40 : 2 : Green-0.1, Pink-0.5, Blue-0.2, Red-0
+(X-Gravelslug)SU_A10 : 2-Mimic-{21}, 3-Green
+(X-Gravelslug)SU_A04 : 4-Pink-2, 2-CicadaB, 3-CicadaB
+
+(Gravelslug)OFFSCREEN : 0-MirosVulture-1-{Night}, 0-Vulture-3, 0-Scavenger-13-{Ignorecycle}
+(Gravelslug)SU_C02 : 3-SmallNeedleWorm-3, 5-Caramel-{Ignorecycle}, 4-TentaclePlant-{Night}
+(Gravelslug)SU_A07 : 4-Caramel-{Ignorecycle}, 5-CicadaB-4, 3-CicadaA
+(Gravelslug)SU_B06 : 4-White-{Night}, 6-CicadaB, 7-CicadaB
+(Gravelslug)SU_B11 : 4-CicadaB, 5-CicadaA, 8-TentaclePlant-{Night}, 8-Centiwing-2
+(Gravelslug)SU_B05 : 4-Caramel-{Ignorecycle}
+(Gravelslug)LINEAGE : SU_A32 : 2 : Caramel-0.2, Red-0-{Ignorecycle}
+(Gravelslug)SU_B02 : 4-CicadaB, 5-CicadaB, 7-Yellow-2-{Ignorecycle}
+(Gravelslug)SU_A31 : 3-Small Centipede-2-{Ignorecycle}
+(Gravelslug)SU_A20 : 5-Centipede-2-{Ignorecycle}, 6-Small Centipede-2-{Ignorecycle}
+(Gravelslug)SU_B09 : 4-Centipede-3-{Ignorecycle}, 4-Small Centipede-2-{Ignorecycle}
+(Gravelslug)LINEAGE : SU_B08 : 2 : Green-0.1, NONE-0.5, Yellow-0
+(Gravelslug)SU_A06 : 3-Caramel-{Ignorecycle}
+(Gravelslug)LINEAGE : SU_A06 : 3 : Caramel-0.1, NONE-0.5, Cyan-0.5, Yellow-0.5, Red-0
+(Gravelslug)SU_B04 : 4-Yellow-2-{Ignorecycle}, 5-Yellow-3-{Ignorecycle}, 5-BigSpider-2-{Night}
+(Gravelslug)LINEAGE : SU_B12 : 3 : Green-0.1, Caramel-0.5, Blue-0
+(Gravelslug)SU_A17 : 2-Cyan-2-{Ignorecycle}, 2-BigSpider-2-{Night}
+(Gravelslug)SU_A40 : 2-Strawberry-{Ignorecycle}
+(Gravelslug)SU_B07 : 2-TentaclePlant-{Night}, 3-Caramel-{Ignorecycle}
+(Gravelslug)SU_A10 : 2-Mimic-{21}, 3-Caramel-{Ignorecycle}
+(Gravelslug)SU_A04 : 4-White-{Ignorecycle}, 2-CicadaB-2, 3-CicadaB
+(Gravelslug)LINEAGE : SU_A04 : 5 : NONE-0.05, Mimic-{17}-0.4, Mimic-{13}-0.4, TentaclePlant-0
+
+END CREATURES
+
+[ENDMERGE]

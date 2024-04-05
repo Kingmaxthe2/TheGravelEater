@@ -1,0 +1,19 @@
+Template: NONE
+DangerType: None
+CeilingDrips: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Grime: 0
+BkgDroneVolume: 0
+Palette: 31
+EffectColorA: 11
+EffectColorB: 15
+Effects: VoidMelt-0.3152174-20-20, Bloom-1-15-71, VoidSpawn-0-18-129, FairyParticles-1-266-23, 
+PlacedObjects: LightSource><4443.142><240.1169><0.3478261~White~0~100~50~86.60254~0~0~None~0~0, FairyParticleSettings><100.3213><816.1868><5~8.660254~1~7.065217~37.5~0~1~4.458576~60~180~40~100~0~19.56522~0~23.47826~0.4893042~0.5611871~1~1~0.4347826~0.5217391~0.7065217~0.2717391~9.123243~Bubble_Thin~SIN_IO~SIN_IO~156.4355~0.2229548~0.6521739, 
+AmbientSounds: OMNI><SO_SFX-Drowning.ogg><751.6582><580.1277><0.2173913><1, OMNI><Weird Deep Hole.wav><751.0591><431.3089><0.3043478><1, OMNI><AM_SUB-BlankState.ogg><751.1912><356.5586><0.5><1, OMNI><AM_ENV-SubTerr.ogg><753.95><286.5016><0.5><1, OMNI><AM_ENV-NatWind.ogg><753.4451><506.1923><0.5326087><1, 
+FadePalette: 1, 0, 0, 0.2065217, 0.2282609, 0.2282609
+RoomSpecificScriptActive: ON
+WetTerrain: OFF

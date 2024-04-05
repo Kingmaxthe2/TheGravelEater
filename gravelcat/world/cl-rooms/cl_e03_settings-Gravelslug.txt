@@ -1,0 +1,19 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: Rain
+CeilingDrips: 0.5
+RainIntensity: 1
+RumbleIntensity: 1
+WaveSpeed: 0.4926787
+WaveLength: 0.9292016
+WaveAmplitude: 0.01432343
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.2065217
+Palette: 10
+EffectColorA: 6
+EffectColorB: 13
+Effects: SilenceWater-0.6521739-19-68, BorderPushBack-1-277-73, LightRain-0.2934783-262-134, LightBurn-0-30-30, Fog-0.8152174-20-20, DirtyWater-1-40-40, 
+PlacedObjects: LightSource><3328.143><719.6411><0.1304348~White~-3269~-191~-521~-144.3975~1~1~None~0~0, ExitSymbolHidden><2008.895><650.888><, Corruption><1430.825><595.3667><-86~60, Corruption><443.9106><592.3211><0~100, Corruption><674.0516><565.2751><-56~-24, Corruption><1632.58><594.9855><-32~-109, CorruptionTube><1674.453><557.0555><-277~17, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><871.5679><645.1673><0.326087><1, OMNI><AM_ENV-NatWind.ogg><710.8524><644.8849><0.2934783><1, SPOT><AM_WIN-HowlingWnd.ogg><871.5618><527.3176><0.1304348><1><3640.562><721.2051><697.6447><-703.3553><0><1, SPOT><AM_WIN-StrongWnd2.ogg><707.1999><526.4937><0.4130435><1><3124.2><326.4937><-1168.355><-670.3553><0><1, SPOT><AM_WIN-SubWnd.ogg><880.4286><406.84><0.5><1><114.4286><349.84><303.6447><28.64465><0><0.6326088, SPOT><MSC-Subtundra.ogg><704.2573><406.9499><0.3478261><1><96.25726><78.94986><436.6447><306.6447><0><0.9152175, 
+FadePalette: 15, 0.4782609, 0.4891304, 0.5217391, 0.5326087, 0.5543478
+WetTerrain: OFF

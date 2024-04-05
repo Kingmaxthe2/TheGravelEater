@@ -1,0 +1,11 @@
+DangerType: Thunder
+CeilingDrips: 0
+RainIntensity: 1
+RumbleIntensity: 1
+Clouds: 0.8260869
+Palette: 42
+Effects: SkyDandelions-0.3695652-20-20, DayNight-0.1-20-69, DustWave-1-18-124, Fog-1-295-12, HeatWave-0.1847826-279-61, Dustpuffs-0-287-121, FairyParticles-1-268-170, 
+PlacedObjects: DandelionPatch><634.5502><192.259><0~100, DandelionPatch><1504.253><196.0504><0~100, DandelionPatch><1860.444><237.2991><0~100, DeadSeedCob><1810.146><350.8631><, DeadSeedCob><1834.828><323.8988><, DeadSeedCob><624.6057><351.3616><, SeedCob><687.0821><336.8587><0~0~7~10, DandelionPeach><1498.333><272.4318><0~0~2~3, DandelionPeach><1530.311><236.4404><0~0~2~3, DayNightSettings><372.6173><262.8391><5~8.660254~10~42, FairyParticleSettings><1403.073><616.3431><-162~-382.3398~0~1~1~0~1~2.912481~5.434783~6.08693~40~100~5~30~273.9131~266.0869~0~0.1999999~0.1521739~0.2282609~0.05434782~0.1413043~1~0.1195652~7.790894~Pixel~SIN_IO~SIN_IO~0~0~0, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><866.0468><499.0555><0.6956522><1, 
+FadePalette: 8, 0.4565217, 0.4565217
+WetTerrain: OFF

@@ -1,0 +1,13 @@
+DangerType: Thunder
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04676946
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Grime: 0.07608695
+BkgDroneVolume: 0
+Effects: DayNight-0.05434782-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><470.3078><384.8052><, DayNightSettings><256.1218><484.0964><5~8.660254~10~14, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><731.8688><457.5891><0.3913043><1><465.8688><454.5891><-123.3553><-24.35535><0><0.2739132, 
+FadePalette: 8, 0.2826087

@@ -1,0 +1,16 @@
+Template: CL_SettingsTemplate_DarkSun
+DangerType: Rain
+CeilingDrips: 0.5543478
+WaveSpeed: 0.5434772
+WaveLength: 0.7482542
+WaveAmplitude: 0.04621195
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Palette: 0
+EffectColorA: 11
+EffectColorB: 13
+Effects: LightRain-0.1195652-38-80, LightBurn-0-30-30, Fog-0.7826087-20-20, 
+PlacedObjects: DeadSeedCob><2401.302><267.7789><, DeadSeedCob><2336.521><239.9489><, SeedCob><2261.868><334.5887><0~0~7~10, DeadSeedCob><1545.591><457.1779><, DeadSeedCob><1427.627><405.8457><, DeadSeedCob><532.6793><260.5629><, SeedCob><406.8875><250.6453><0~0~7~10, SeedCob><479.5513><299.5223><0~0~7~10, DeadTokenStalk><1144.166><399.6111><30~-51, DeadTokenStalk><1094.102><497.6718><9~-74, DeadTokenStalk><1124.933><513.6738><-2~-50, DeadTokenStalk><1211.836><447.6138><-63~-18, BlueToken><1170.642><533.6093><-32~-80~159~-10~1~YellowLizard~White|Yellow|Red|Rivulet|Artificer|Spear|Gourmand~0~0~0~0, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><869.1997><655.7603><0.2934783><1, OMNI><AM_ENV-NatWind.ogg><696.1804><648.5625><0.3043478><1, SPOT><AM_WIN-StrongWnd2.ogg><875.7438><533.55><0.3260867><1><3113.744><206.5501><-557.3553><62.64465><0><1, 
+FadePalette: 15, 0.7608696, 0.7391304, 0.7282609
+WetTerrain: OFF

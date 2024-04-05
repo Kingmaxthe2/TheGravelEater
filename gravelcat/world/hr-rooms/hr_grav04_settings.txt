@@ -1,0 +1,18 @@
+Template: NONE
+DangerType: Flood
+CeilingDrips: 0
+RainIntensity: 0
+WaveSpeed: 0.4
+WaveLength: 1
+WaveAmplitude: 0.63
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.3804348
+BkgDroneVolume: 0.4413044
+Palette: 1
+EffectColorA: 11
+EffectColorB: 15
+Effects: SilenceWater-0.4891304-23-79, VoidMelt-0.6086956-296-204, WaterViscosity-0.2065217-360-347, FairyParticles-0.4021739-20-20, HeatWave-0.4021739-288-24, LethalWater-1-309-71, ZeroG-0.3586957-284-134, 
+PlacedObjects: LightSource><-164.8295><3079.396><0.08695652~White~1282~-3024~616~-550.3975~1~1~None~0~0, 
+AmbientSounds: OMNI><AM_ENV-CityTone.ogg><878.8748><650.156><0.2065217><1, SPOT><AM_IND-SuperStructure.ogg><879.6942><535.048><0.1195652><1><1123.694><353.048><-655.3553><270.6447><0><1, OMNI><AM_WIN-StrongWnd2.ogg><700.5641><649.9261><0.4456522><1, OMNI><SO_SFX-Doomsday.ogg><716.0696><428.6875><0.1086956><1, OMNI><SO_SFX-UnderWaterSub.ogg><506.0446><324.195><0.3586957><0.7652174, OMNI><Weird Deep Hole.wav><738.3003><338.3064><0.04347826><0.8826087, OMNI><AM_SUB-MysticCave1.ogg><489.6217><229.9087><0.326087><0.823913, 
+FadePalette: 187, 0.4673913, 0.5, 0.5, 0.5108696

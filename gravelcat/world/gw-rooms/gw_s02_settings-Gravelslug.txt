@@ -1,0 +1,8 @@
+Template: GW_SettingsTemplate_Inside
+DangerType: Thunder
+RumbleIntensity: 0
+Grime: 0.2065217
+Effects: DayNight-0.1086956-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><496.6258><351.5945><, DayNightSettings><203.1427><265.3901><5~8.660254~10~9, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><760.8157><456.3276><0.4347826><1><399.8157><344.3276><-207.3553><-73.35535><0><0.328261, 
+FadePalette: 8, 0.6086956

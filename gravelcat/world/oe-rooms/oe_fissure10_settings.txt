@@ -1,0 +1,6 @@
+Template: OE_SettingsTemplate_Cave
+RainIntensity: 0.05217378
+Palette: 53
+EffectColorB: 12
+Effects: SilenceWater-0.4456522-56-126, Moth-0-20-20, RockFlea-0.1956522-317-135, LightRain-0-285-29, 
+FadePalette: 10, 0.6304348

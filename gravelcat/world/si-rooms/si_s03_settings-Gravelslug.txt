@@ -1,0 +1,10 @@
+Template: NONE
+DangerType: Thunder
+RumbleIntensity: 0
+Grime: 0.2173913
+BkgDroneVolume: 0
+Palette: 14
+Effects: DayNight-0.9130435-20-20, 
+PlacedObjects: BrokenShelterWaterLevel><495.0516><448.475><, 
+AmbientSounds: SPOT><AM_IND-Utility02.ogg><200.8324><347.1092><0.4130435><1><563.8324><465.1091><-149.3553><-11.35535><0><0.3065219, 
+FadePalette: 3, 0.7282609

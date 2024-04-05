@@ -1,0 +1,14 @@
+Template: NONE
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04738326
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Palette: 4
+EffectColorB: 6
+Effects: DayNight-0.06521739-20-20, 
+PlacedObjects: DataPearl><841.3328><649.6404><169~23~0~0~Misc~0, CustomDecal><58.20117><124.0561><-122~169~1095~206~1047~-51~-187~224~0~1~0~DirtyWaterLine~0.6847826~1~0.6847826~1~0.6847826~1~0.6847826~1, CustomDecal><249.8176><224.6679><-76~483~258~497~214~-29~181~-208~0~1~0~Rust3~1~0.6847826~0.3913043~0.6847826~0~0.6847826~0.1847826~0.6847826, InsectGroup><404.5886><350.4293><0~100~0~0~StandardFly~0.1413043, LillyPuck><502.287><205.6965><0~0~2~3, LillyPuck><726.2964><206.6945><0~0~2~3, DayNightSettings><654.4489><489.9791><5~8.660254~10~11, 
+AmbientSounds: OMNI><SO_WAT-OpenFlow.ogg><742.332><475.9324><0.25><1, SPOT><SO_WAT-RunningWater.ogg><243.4194><362.3563><0.326087><0.9217392><192.4194><197.3563><-148.3553><116.6447><0><0.502174, 
+FadePalette: 8, 0.08695652

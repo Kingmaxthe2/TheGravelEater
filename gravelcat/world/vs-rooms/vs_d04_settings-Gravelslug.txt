@@ -1,0 +1,7 @@
+Template: VS_SettingsTemplate_Filter
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Effects: DayNight-0.9565217-20-20, 
+PlacedObjects: DayNightSettings><164.4036><1141.628><5~8.660254~21~10, 
+FadePalette: 21, 0.4565217, 0.4347826, 0.4347826, 0.4456522

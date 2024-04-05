@@ -1,0 +1,18 @@
+Template: MS_SettingsTemplate_Artery
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 1
+WaveAmplitude: 2.634508E-08
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 0.1413043
+RandomItemDensity: 0.06521739
+EffectColorB: 11
+Effects: ElectricDeath-0.5217391-311-84, BrokenZeroG-1-27-21, 
+PlacedObjects: LightSource><767.9265><2538.563><0.1956522~EffectColor1~-912~392~-581.0396~258.5608~0~0~None~0~0, GravityDisruptor><792.8988><2512.097><, LightSource><2259.428><2533.37><0.1847826~EffectColor1~1020~558~50~86.60254~0~0~None~0~0, GravityDisruptor><2228.659><2510.855><, EnergySwirl><1510.199><1909.979><EffectColor2~-97~146~50~86.60254~0.06423353, EnergySwirl><1512.235><1912.2><EffectColor2~-15~97~57~17.60254~0.05434782, GravityDisruptor><1509.892><1908.777><, LightSource><783.4486><1298.998><0.1946511~EffectColor1~1212~610~-275~-137.3975~0~0~None~0~0, GravityDisruptor><790.6392><1313.675><, LightSource><2245.281><1300.079><0.2173913~EffectColor1~-1209~712~99~-321.3975~0~0~None~0~0, GravityDisruptor><2230.685><1314.236><, LightFixture><1347.137><688.6366><RedLight~17.32051~-10~0, LightFixture><1691.821><357.5689><RedLight~17.32051~-10~0, LightSource><1522.099><439.2098><0.1847826~EffectColor1~1272~761~108~98.60254~0~0~None~0~0, LightFixture><1322.329><902.3828><RedLight~17.32051~-10~60, LightFixture><1730.442><897.5569><RedLight~17.32051~-10~38, LightFixture><1343.684><3002.416><RedLight~-121.6795~-142~19, LightFixture><1697.575><3004.258><RedLight~-75.6795~-154~99, MSArteryPush><1536.977><439.1981><0~314, MSArteryPush><1511.949><774.7708><-199~165, MSArteryPush><1527.693><1300.943><-438~43, MSArteryPush><920.3445><1060.122><-246~-31, MSArteryPush><453.4529><1138.366><-80~152, MSArteryPush><626.9679><1006.465><-169~56, MSArteryPush><160.3849><1230.207><159~8, MSArteryPush><1174.133><916.1622><-109~69, MSArteryPush><2143.591><1049.475><-310~11, MSArteryPush><2570.492><1325.455><-131~-214, MSArteryPush><2629.286><904.8417><-270~29, MSArteryPush><2981.357><1374.695><-248~-18, MSArteryPush><2609.219><1966.881><-34~-472, MSArteryPush><2502.34><2825.153><171~-174, MSArteryPush><2931.657><2503.896><-106~-189, MSArteryPush><2093.402><2778.222><262~50, MSArteryPush><1804.374><2381.85><166~267, MSArteryPush><1510.252><1926.459><75~324, MSArteryPush><1479.601><1695.533><-158~18, MSArteryPush><1253.45><1754.235><-161~118, MSArteryPush><580.669><1800.234><-54~319, MSArteryPush><940.9081><1592.786><-43~198, MSArteryPush><227.6479><2143.422><92~239, MSArteryPush><963.6665><1960.634><7~203, MSArteryPush><455.3363><2486.321><148~188, MSArteryPush><633.14><2799.169><231~35, MSArteryPush><959.4332><2778.829><207~-38, MSArteryPush><713.8708><2262.407><171~108, MSArteryPush><1115.318><2419.062><217~132, MSArteryPush><1406.748><2589.401><123~116, MSArteryPush><1441.143><2261.535><123~130, MSArteryPush><1608.395><2753.095><54~173, MSArteryPush><1527.231><3248.802><8~360, MSArteryPush><1520.617><3755.48><12~480, MSArteryPush><2159.668><2216.26><206~36, MSArteryPush><2154.956><1550.503><-207~-181, MSArteryPush><2005.2><1854.309><-128~-204, MSArteryPush><1866.34><2753.61><98~82, MSArteryPush><135.1235><1768.343><144~-23, MSArteryPush><96.92291><2498.899><153~-38, MSArteryPush><1004.938><1371.19><-84~117, MSArteryPush><2422.237><1517.41><2~-121, MSArteryPush><643.0458><2394.986><0~100, MSArteryPush><1263.357><2798.156><190~52, MSArteryPush><2118.104><2488.088><0~100, MSArteryPush><2616.573><2523.012><-31~-194, MSArteryPush><467.2478><884.0106><40~75, MSArteryPush><376.4793><1393.816><11~180, 
+FadePalette: 27, 0.08695652, 0.1847826, 0.1847826, 0.1847826, 0.1847826, 0.1956522, 0.1956522, 0.2065217, 0.1956522, 0.2065217, 0.1956522
+RoomSpecificScriptActive: ON
+WetTerrain: OFF

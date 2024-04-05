@@ -1,0 +1,17 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.5
+WaveLength: 0.75
+WaveAmplitude: 0.04738326
+SecondWaveLength: 0.1666667
+SecondWaveAmplitude: 0
+Clouds: 0.8478261
+BkgDroneVolume: 0
+Palette: 19
+EffectColorA: 13
+EffectColorB: 15
+Effects: Darkness-0.2826087-20-20, FastFloodDrain-1-22-72, VoidMelt-0.2391304-268-22, LethalWater-1-288-77, FairyParticles-1-30-30, SilenceWater-0.4782609-260-145, LightRain-0-283-311, 
+PlacedObjects: LightFixture><82.80011><1190.003><RedLight~17.32051~-10~62, LightFixture><812.9337><240.0613><RedLight~17.32051~-10~31, DevToken><178.3818><1837.839><-12~75~0~0~0~OE~Gravelslug~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1~0~0~0~1, FairyParticleSettings><576.4126><1868.43><5~8.660254~0~7.065217~35.32609~0~1~2.828388~288.2608~396.7391~32.6087~100.0001~0~19.56522~0~23.47826~0.1086956~0.1413043~0.5217391~0.7717391~0.4347826~0.5217391~0.7065217~0.2717391~9.430216~Leaf~SIN_IO~SIN_IO~27.82606~0.1956522~0.6521739, LightSource><419.0584><529.4395><0.4673913~EffectColor2~-95~991~50~86.60254~0~0~None~0~0, 
+AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><761.4526><547.3057><0.3586957><0.7456522, OMNI><AM_WIN-StrongWnd2.ogg><760.5574><625.804><0.173913><1, OMNI><SO_WAT-LilDrips.ogg><578.2927><626.8046><0.3043478><1, SPOT><SO_WAT-Splashes.ogg><582.8997><509.3826><0.1304348><0.1782609><-165.1003><2257.383><457.6447><-396.3553><0><1, SPOT><so_wat-splashes.ogg><734.1946><341.546><0.2934783><0.3152174><424.1946><462.546><-101.3553><463.6447><0><0.502174, OMNI><MSC-StructureStrain.ogg><765.3494><457.1317><0.1521739><0.4521739, 
+FadePalette: 31, 0.6521739, 0.6413044, 0.6413044

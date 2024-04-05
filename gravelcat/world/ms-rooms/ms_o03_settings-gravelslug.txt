@@ -1,0 +1,16 @@
+Template: MS_SettingsTemplate_Vents
+DangerType: Rain
+CeilingDrips: 0
+RainIntensity: 0
+RumbleIntensity: 0
+WaveSpeed: 0.51
+WaveLength: 1
+WaveAmplitude: 0.0001
+SecondWaveLength: 1
+SecondWaveAmplitude: 0.0001
+Clouds: 1
+Effects: SilenceWater-0.4673913-291-16, ElectricDeath-0.4021739-287-74, HeatWave-0.5217391-289-130, 
+PlacedObjects: LightFixture><501.4023><1544.38><RedLight~17.32051~-10~5, LightFixture><1390.084><871.121><RedSubmersible~17.32051~-10~0, LightFixture><1832.339><1511.492><RedLight~-283.6813~-147.1384~0, LightFixture><821.0725><951.158><RedLight~17.32051~-10~0, LightFixture><371.8255><1318.404><ZapCoilLight~17.32051~-10~34, ZapCoil><354.0918><1211.291><38~217, LightFixture><1271.927><1395.258><RedLight~17.32051~-10~73, LightFixture><1302.329><218.3752><RedSubmersible~17.32051~-10~0, LightFixture><83.396><310.2935><RedSubmersible~17.32051~-10~0, LightFixture><1231.278><552.0265><RedSubmersible~17.32051~-10~0, LightFixture><2070.49><243.2565><RedSubmersible~17.32051~-10~0, LightFixture><2034.445><595.1619><RedSubmersible~17.32051~-10~0, LightFixture><646.2921><95.05232><RedSubmersible~17.32051~-10~0, DangleFruit><1198.95><1351.638><-142~-216~2~3, DangleFruit><1230.874><1386.595><-189~-350~2~3, DangleFruit><1266.144><1297.889><-199~-84~2~3, ExitSymbolHidden><1954.346><368.0746><, 
+AmbientSounds: SPOT><SO_IND-FlourLight.ogg><634.6984><448.2247><0.5869565><1><255.6881><1372.149><240.6447><-134.3553><0><0.9369566, OMNI><SO_WAT-LilDrips.ogg><809.6379><566.8344><0.4130435><1, OMNI><SO_WAT-RainishDrips.ogg><807.8571><647.8899><0.3152174><1, 
+FadePalette: 35, 0.3586957, 0.3586957, 0.3586957, 0.3586957
+WetTerrain: OFF

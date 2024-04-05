@@ -1,0 +1,8 @@
+﻿{
+	"id": "kingmaxthe2.gravelslug",
+	"name": "The Gravel-Eater",
+	"authors": "Kingmaxthe2",
+	"description": "Introduces a new slugcat called the Gravel-Eater.",
+	"requirements": [ "slime-cubed.slugbase", "moreslugcats", "bro.mergefix" ],
+	"requirements_names": [ "SlugBase", "More Slugcats Expansion", "Merge Fix" ]
+}

@@ -1,0 +1,13 @@
+Template: SU_SettingsTemplate_Inside
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Clouds: 0.3913043
+Grime: 0.4347826
+BkgDroneVolume: 0.2769565
+EffectColorA: 8
+EffectColorB: 8
+Effects: Flies-0.1195652-20-20, DayNight-0.9608695-26-76, 
+PlacedObjects: DangleFruit><611.7652><544.1995><-645~-304~2~3, DangleFruit><522.3256><583.6521><-577~-249~2~3, DangleFruit><571.5944><574.1763><-631~-140~2~3, DayNightSettings><386.6822><356.9174><5~8.660254~4~10, 
+AmbientSounds: OMNI><AM_ENV-LightWind.ogg><733.6951><571.4561><0.3043478><0.6673913, 
+FadePalette: 4, 0.8043478

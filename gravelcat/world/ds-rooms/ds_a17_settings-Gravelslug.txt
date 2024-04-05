@@ -1,0 +1,9 @@
+DangerType: Rain
+RainIntensity: 0
+RumbleIntensity: 0
+Grime: 0.4021739
+Palette: 4
+Effects: DayNight-0.06521739-21-72, 
+PlacedObjects: InsectGroup><825.5846><158.1376><-285~140~0~0~RockFlea~0.5, Hazer><699.1978><244.22><0~0~7~10, Hazer><783.8868><246.0851><0~0~7~10, DeadHazer><583.0547><190.0432><-649~-47~7~10, DayNightSettings><303.8265><401.6848><5~8.660254~10~11, 
+AmbientSounds: SPOT><SO_NAT-LilDrips.ogg><754.2253><560.3015><0.3369565><1><561.2253><343.3015><-146.3553><13.64465><0><0.404348, 
+FadePalette: 11, 0.04347826

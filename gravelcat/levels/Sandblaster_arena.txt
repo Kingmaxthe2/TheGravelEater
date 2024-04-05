@@ -1,0 +1,19 @@
+DenGroup - TOP - 4,5
+DenGroup - BOT - 6,7,8,9
+
+Creature - Yellow - dens:BOT - chance:0.5 - amount:2
+Creature - Yellow - dens:BOT - chance:0.4 - amount:3
+
+Creature - White - dens:TOP - chance:0.31 - amount:1
+
+Creature - Centiwing - dens:TOP - chance:0.23 - amount:3
+Creature - Centiwing - dens:TOP - chance:0.34 - amount:2
+
+Creature - Cyan - dens:BOT - chance:0.25 - amount:2
+Creature - Blue - dens:TOP - chance:0.35 - amount:2
+
+Creature - Needle Worm - dens:TOP - chance:0.2 - amount:1 - RARE
+
+Creature - Vulture - dens:-1 - chance:0.15 - RARE
+Creature - Vulture - dens:-1 - chance:0.15 - RARE
+Creature - Miros Vulture - dens:-1 - chance:0.05 - RARE

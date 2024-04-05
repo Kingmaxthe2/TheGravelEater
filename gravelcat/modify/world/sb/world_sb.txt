@@ -1,0 +1,128 @@
+[MERGE]
+
+CONDITIONAL LINKS
+
+//Connections
+Gravelslug : SB_GOR02 : SB_GOR01 : DISCONNECTED
+Gravelslug : SB_E05 : SB_D06 : DISCONNECTED
+Gravelslug : SB_D02 : SB_A14 : DISCONNECTED
+Gravelslug : SB_E05 : SB_A14 : DISCONNECTED
+Gravelslug : SB_GOR02 : GATE_SB_OE : DISCONNECTED
+
+Gravelslug : SB_GOR01 : SB_GOR02 : SB_GOR02RIV
+Gravelslug : SB_GOR02RIV : 1 : SB_GOR01
+Gravelslug : SB_D06 : SB_E05 : SB_E05GRAV
+Gravelslug : SB_A14 : SB_D02 : SB_D02GRAV
+Gravelslug : SB_A14 : SB_E05 : SB_E05GRAV
+Gravelslug : GATE_SB_OE : SB_GOR02 : SB_B03GRAV
+
+Gravelslug : SB_E01GRAV : 1 : SB_E06
+Gravelslug : SB_E06 : SB_E01 : SB_E01GRAV
+Gravelslug : SB_E01 : SB_E06 : DISCONNECTED
+
+
+//Only show on gravelslug
+Gravelslug : EXCLUSIVEROOM : SB_GOR02RIV
+Gravelslug : EXCLUSIVEROOM : SB_A02GRAV
+Gravelslug : EXCLUSIVEROOM : SB_D02GRAV
+Gravelslug : EXCLUSIVEROOM : SB_A05GRAV
+Gravelslug : EXCLUSIVEROOM : SB_A06GRAV
+Gravelslug : EXCLUSIVEROOM : SB_A07GRAV
+Gravelslug : EXCLUSIVEROOM : SB_A08GRAV
+Gravelslug : EXCLUSIVEROOM : SB_E05GRAV
+Gravelslug : EXCLUSIVEROOM : SB_B03GRAV
+Gravelslug : EXCLUSIVEROOM : SB_E03GRAV
+Gravelslug : EXCLUSIVEROOM : SB_J04GRAV
+Gravelslug : EXCLUSIVEROOM : SB_D05GRAV
+Gravelslug : EXCLUSIVEROOM : SB_E01GRAV
+
+Gravelslug : HIDEROOM : SB_GOR02
+Gravelslug : HIDEROOM : SB_A02
+Gravelslug : HIDEROOM : SB_J04
+Gravelslug : HIDEROOM : SB_A08
+Gravelslug : HIDEROOM : SB_B03
+Gravelslug : HIDEROOM : SB_A07
+Gravelslug : HIDEROOM : SB_E03
+Gravelslug : HIDEROOM : SB_D05
+Gravelslug : HIDEROOM : SB_A06
+Gravelslug : HIDEROOM : SB_A05
+Gravelslug : HIDEROOM : SB_D03
+Gravelslug : HIDEROOM : SB_D07
+Gravelslug : HIDEROOM : SB_D01
+Gravelslug : HIDEROOM : SB_C08
+Gravelslug : HIDEROOM : SB_E01
+Gravelslug : HIDEROOM : SB_D02
+Gravelslug : HIDEROOM : SB_E05
+
+END CONDITIONAL LINKS
+
+ROOMS
+
+SB_D02GRAV : SB_A14, SB_E03GRAV, SB_A05GRAV, SB_A02GRAV
+SB_E05GRAV : SB_D06, SB_A14
+SB_A02GRAV : SB_J04GRAV, SB_D02GRAV
+SB_A05GRAV : SB_D02GRAV, SB_D05GRAV
+SB_A06GRAV : SB_D05GRAV, SB_J04GRAV
+SB_A07GRAV : SB_B03GRAV, SB_E03GRAV
+SB_A08GRAV : SB_B03GRAV, SB_J04GRAV
+SB_B03GRAV : GATE_SB_OE, SB_J04GRAV, SB_A08GRAV, SB_A07GRAV
+SB_J04GRAV : SB_A02GRAV, SB_B03GRAV, SB_A08GRAV, SB_A06GRAV
+SB_E03GRAV : SB_A07GRAV, SB_D02GRAV, SB_D05GRAV
+SB_D05GRAV : SB_E03GRAV, SB_A06GRAV, SB_A05GRAV
+SB_E01GRAV : DISCONNECTED
+
+END ROOMS
+
+CREATURES
+
+(X-Gravelslug)OFFSCREEN : 0-Miros-7, 0-Scavenger-10, 0-Leviathan
+(X-Gravelslug)SB_G02 : 4-Centipede, 10-TentaclePlant, 5-Centipede-2, 6-TentaclePlant, 5-Salamander-{PreCycle}
+(X-Gravelslug)SB_E02 : 6-TentaclePlant, 7-TentaclePlant, 5-Centipede, 10-Centipede, 8-Centipede
+(X-Gravelslug)SB_C07 : 2-Salamander, 3-Salamander
+(X-Gravelslug)SB_J02 : 3-Salamander, 4-Salamander-3, 5-Eel-2-{PreCycle}
+(X-Gravelslug)SB_J03 : 7-Black, 4-TentaclePlant, 5-Small Centipede-3, 6-Centipede-2, 5-Salamander-{PreCycle}
+(X-Gravelslug)SB_G04 : 15-Black, 17-Black, 7-MotherSpider
+(X-Gravelslug)SB_C10 : 17-TentaclePlant, 5-BigSpider-2
+(X-Gravelslug)SB_F01 : 3-Black, 4-Black-2, 5-Black
+(X-Gravelslug)SB_E07 : 8-Black-2
+(X-Gravelslug)SB_I01 : 8-Black, 9-Black, 10-Black, 11-Black, 12-Black, 13-Black
+(X-Gravelslug)SB_F02 : 4-Black, 5-Black, 6-Black, 7-Black
+(X-Gravelslug)SB_TESTC : 2-TentaclePlant, 5-Caramel, 4-Small Centipede-5, 5-Salamander-{PreCycle}
+(X-Gravelslug)SB_TESTB : 2-Salamander, 3-Small Centipede-3
+(X-Gravelslug)SB_J10 : 3-TentaclePlant, 4-Centipede, 6-Small Centipede-2
+(X-Gravelslug)SB_C11 : 2-Centipede-2
+(X-Gravelslug)SB_B02 : 3-TentaclePlant, 3-Salamander-{PreCycle}, 2-Eel-{PreCycle}
+(X-Gravelslug)LINEAGE : SB_B02 : 5 : Blue-0.5, White-0.5, Black-0.5, Red-0
+(X-Gravelslug)SB_C01 : 2-TentaclePlant, 7-Black, 9-Black
+(X-Gravelslug)SB_A03 : 4-TentaclePlant, 5-Caramel
+(X-Gravelslug)SB_H02 : 4-Centipede-3, 5-BigSpider-5, 7-Centipede-4, 5-Red Centipede
+(X-Gravelslug)SB_H03 : 10-Small Centipede-2, 7-Caramel, 8-Blue-2, 9-Small Centipede-3
+(X-Gravelslug)SB_GOR01 : 3-Small Centipede-5, 5-Blue, 6-Small Centipede-5
+
+(Gravelslug)OFFSCREEN : 0-Miros-8, 0-Scavenger-11-{Ignorecycle}, 0-Leviathan-{Ignorecycle}
+(Gravelslug)SB_G02 : 4-Lantern Mouse-5, 10-TentaclePlant-{Ignorecycle}, 5-Centipede-2-{Ignorecycle}, 6-TentaclePlant-{Ignorecycle}, 5-Salamander-{Night}
+(Gravelslug)SB_E02 : 6-TentaclePlant-{Ignorecycle}, 7-TentaclePlant-{Ignorecycle}, 5-Lantern Mouse-4, 10-Centipede-{Ignorecycle}, 8-Centipede-{Ignorecycle}
+(Gravelslug)SB_C07 : 2-Lantern Mouse-4, 3-Salamander-{Ignorecycle}
+(Gravelslug)SB_J02 : 3-Salamander-{Ignorecycle}, 5-Jetfish-3-{Ignorecycle}, 5-Eel-2-{Night}
+(Gravelslug)SB_J03 : 8-Black-{Ignorecycle}, 5-Black-{Ignorecycle}, 4-SpitterSpider-{Ignorecycle}, 5-Small Centipede-3-{Ignorecycle}, 6-TentaclePlant-{Ignorecycle}, 5-Salamander-{Night}
+(Gravelslug)SB_G04 : 6-SpitterSpider-2-{Ignorecycle}, 9-Drop Bug-{Ignorecycle}
+(Gravelslug)SB_C10 : 5-BigSpider-2-{Ignorecycle}, 8-Black-{Ignorecycle}
+(Gravelslug)SB_F01 : 3-Drop Bug-{Ignorecycle}, 4-Black-{Ignorecycle}, 5-Black-{Ignorecycle}
+(Gravelslug)SB_E07 : 8-Black-{Ignorecycle}
+(Gravelslug)SB_I01 : 9-Black-{Ignorecycle}, 10-Black-{Ignorecycle}, 11-Black-{Ignorecycle}, 12-Black-{Ignorecycle}, 13-Black-{Ignorecycle}
+(Gravelslug)SB_F02 : 5-Black-{Ignorecycle}, 6-Black-{Ignorecycle}, 8-Black-{Ignorecycle}
+(Gravelslug)SB_D04 : 7-SpitterSpider-{Ignorecycle}, 9-TentaclePlant-{Ignorecycle}
+(Gravelslug)SB_TESTC : 2-TentaclePlant-{Ignorecycle}, 5-Caramel-{Ignorecycle}, 4-Small Centipede-3-{Ignorecycle}, 5-Salamander-{Night}
+(Gravelslug)SB_TESTB : 3-Small Centipede-4-{Ignorecycle}
+(Gravelslug)SB_J10 : 3-TentaclePlant-{Ignorecycle}, 4-Centipede-2-{Ignorecycle}
+(Gravelslug)SB_C11 : 2-Yellow-2-{Ignorecycle}
+(Gravelslug)SB_B02 : 3-TentaclePlant-{Ignorecycle}, 5-Yeek-3-{Ignorecycle}, 3-Salamander-{Night}, 2-Eel-{Night}
+(Gravelslug)SB_C01 : 2-TentaclePlant-{Ignorecycle}, 7-Black-{Ignorecycle}, 9-Yeek-5-{Ignorecycle}, 9-Black-{Ignorecycle}
+(Gravelslug)SB_A03 : 5-Caramel-{Ignorecycle}, 4-BigSpider-2-{Ignorecycle}
+(Gravelslug)SB_H02 : 4-Centipede-{0.7}, 6-SpitterSpider-2-{Ignorecycle}, 7-Centipede-2-{Ignorecycle}, 5-Yeek-3-{Ignorecycle}
+(Gravelslug)SB_H03 : 10-Small Centipede-2-{Ignorecycle}, 7-Small Centipede-{Ignorecycle}, 7-Yellow-3-{Ignorecycle}, 9-Small Centipede-3-{Ignorecycle}
+(Gravelslug)SB_GOR01 : 3-Small Centipede-4-{Ignorecycle}, 3-Yeek-3-{Ignorecycle}, 6-Yeek-2-{Ignorecycle}
+
+END CREATURES
+
+[ENDMERGE]
