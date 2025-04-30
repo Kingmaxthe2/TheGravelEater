@@ -1,0 +1,7 @@
+Template: NONE
+Palette: 19
+EffectColorA: 11
+EffectColorB: 14
+Effects: WaterDepth-0.0326087-20-20, HeatWave-0.1195652-29-62, LethalWater-1-51-113, DirtyWater-1-270-10, SilenceWater-0.4347826-289-63, 
+PlacedObjects: CustomDecal><1357.818><329.6664><-14~221~205~202~184~-39~-227~-18~0~0.3369565~0~unq - orangeteeth~0.7717391~0.2826087~0.5~0.2826087~0~0.2826087~0.1521739~0.2826087, LightSource><242.4207><2140.646><0.2065217~Environment~285~-156~-318~-168.3975~0~0~None~0~0, LightSource><852.5059><1927.801><0.4891304~EffectColor2~-280~23~50~86.60254~1~0~None~0~0, LightSource><2149.317><69.83162><0.2826087~EffectColor2~-714~1507~-287~198.6025~1~0~None~0~0, 
+FadePalette: 31, 0.4673913, 0.5760869, 0.6739131, 0.6847826

@@ -1,3 +1,4 @@
+DangerType: FloodAndRain
 RainIntensity: 0
 RumbleIntensity: 0
 WaveSpeed: 0.5

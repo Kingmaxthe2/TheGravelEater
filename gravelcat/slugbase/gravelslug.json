@@ -5,7 +5,7 @@
 	"features": {
 		
 		"diet": {
-  "base": "SlugcatStats.Artificer",
+  "base": "Artificer",
   "corpses": 0.33,
   "meat": 0.125,
   "plants": 0.125,
@@ -22,14 +22,7 @@
 			}
 },
 		
-		"weight": [2.0, 1.3],
 		"auto_grab_batflies": false,
-		"tunnel_speed": [0.85, 1.05],
-		"climb_speed": [0.75, 1.1],
-		"walk_speed": [0.85, 1.1],
-		"throw_skill": [1, 1],
-		"loudness": [1.8, 1.35],
-		"lung_capacity": [1.3, 0.8],
 		"can_maul": true,
 		"maul_blacklist": [ "TubeWorm" ],
 		
@@ -40,7 +33,7 @@
 		
 		"gravelslug/gravel_gut": true,
 		
-		"karma": 2,
+		"karma": 0,
 		"karma_cap": 3,
 		
 		"the_mark": true,
@@ -51,7 +44,7 @@
 		"title_card": "intro_roll_gravel",
 		"timeline_after": "Rivulet",
 		"world_state": [ "Gravelslug" ],
-		"has_dreams": true,
+		"has_dreams": false,
 		"use_default_dreams": false,
 		"expedition_enabled": true,
 		"expedition_description": "Seeking refuge from their delacate balance, The Gravel-Eater<LINE>strides foreward through the constant pain",

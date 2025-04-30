@@ -1,11 +1,11 @@
-Template: CL_SettingsTemplate_DarkSun
+Template: cl_settingstemplate_darksun
 DangerType: FloodAndRain
 CeilingDrips: 0.5
 RainIntensity: 0.2608696
 RumbleIntensity: 1
-WaveSpeed: 0.5
-WaveLength: 1
-WaveAmplitude: 5.605194E-45
+WaveSpeed: 0.5010538
+WaveLength: 0.9994732
+WaveAmplitude: 6.309887E-07
 SecondWaveLength: 1
 SecondWaveAmplitude: 0.0001
 Clouds: 0.25

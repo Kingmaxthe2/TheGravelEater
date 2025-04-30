@@ -1,0 +1,7 @@
+Template: NONE
+Palette: 19
+EffectColorA: 13
+EffectColorB: 13
+Effects: HeatWave-0.1521739-20-20, Darkness-0.4673913-22-70, 
+PlacedObjects: Vine><381.5174><700.5508><415~7, Vine><369.0927><528.8249><226~-233, Vine><546.0833><874.8602><259~75, NoSpearStickZone><441.834><2053.069><5~96, 
+FadePalette: 10, 0.5543478, 0.5543478, 0.5543478

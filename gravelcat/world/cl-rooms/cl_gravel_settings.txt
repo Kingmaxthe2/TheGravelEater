@@ -1,4 +1,4 @@
-Template: CL_SettingsTemplate_DarkSun
+Template: cl_settingstemplate_darksun
 DangerType: Rain
 CeilingDrips: 0.5217391
 RainIntensity: 1

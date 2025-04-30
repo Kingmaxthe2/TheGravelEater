@@ -1,14 +1,21 @@
 {
   "Title": "The Gravel-Eater",
-  "Description": "This mod features a new slugcat campaign, region properties, and mechanics\r\n\r\nSome features that Gravel Eater has are:\r\n\r\n- Ability to eat anything that they can shove in their mouth\r\n- Can craft fire spears and other items similar to Artificer\r\n- If you have nothing stored in your stomach you can regurgitate rocks and eventually make yourself malnourished\r\n- Can and will sink in deep water if full enough\r\n- Food drains over time\r\n- Hated by Garbage Worms\r\n\r\nGravel Eater\u0027s main mechanic activates when they are malnourished or not\r\n\r\nif nourished:\r\n\r\n- Resistant to projectiles and stunning\r\n- Body slam\r\n- Immune to Wormgrass\r\n- Unable to roll\r\n\r\nif malnourished:\r\n\r\n- Increased damage and velocity to thrown weapons\r\n- Boosts to move set\r\n- Mauling\r\n- Faster Drain speed\r\n\r\nThere are many other things that you will discover for yourself as well :)\r\n\r\nThis update is beatable, there is a side quest for a future alternate ending but all this is past a locked gate with no content behind it.\r\n\r\nfor best experience, have Merge Fix between Gravel Eater and More Slugcats for proper creature spawns and restart your game if your save is before the Ascension Update or many new things wont work.\r\nDo NOT use jolly co-op in Gravel Eater\u0027s Campaign! It is very broken, play at your own discretion!\r\n\r\nEnjoy!",
+  "Description": "Fair warning that playing GE\u0027s campaign with jolly coop will freeze when interacting with iterators, it is disabled by default but other mods can bypass that if you really want to play with friends.\r\n\r\nThis mod features a new slugcat campaign, world state, and mechanics\r\n\r\nSome features that Gravel Eater has are:\r\n\r\n- Ability to eat anything that they can shove in their mouth\r\n- Can craft fire spears and other items similar to Artificer\r\n- If you have nothing stored in your stomach you can regurgitate rocks and eventually make yourself malnourished\r\n- Can and will sink in deep water if full enough\r\n- Food drains over time\r\n- Hated by Garbage Worms\r\n\r\nGravel Eater\u0027s main mechanic activates when they are malnourished or not\r\n\r\nif nourished:\r\n\r\n- Resistant to projectiles and stunning\r\n- Body slam\r\n- Immune to Wormgrass\r\n- Unable to roll\r\n\r\nif malnourished:\r\n\r\n- Increased damage and velocity to thrown weapons\r\n- Boosts to move set\r\n- Mauling\r\n\r\nThere are many other things that you will discover for yourself as well :)\r\n\r\nCompatible with: The Vinki, Rotund World, and Push To Meow\r\n\r\nLovely art by Beep (mod thumbnail and intro card), SAPatry (menu screen, sleep screen, ending slideshows(coming soon)), and CopperCrow (graffiti)\r\n\r\nEnjoy!",
   "ID": "kingmaxthe2.gravelslug",
   "Version": "",
   "TargetGameVersion": "v1.9.06",
-  "Requirements": "slime-cubed.slugbase,moreslugcats,bro.mergefix",
-  "RequirementNames": "SlugBase,More Slugcats Expansion,Merge Fix",
+  "Requirements": "slime-cubed.slugbase,moreslugcats",
+  "RequirementNames": "SlugBase,More Slugcats Expansion",
   "Authors": "Kingmaxthe2",
-  "Visibility": "Unlisted",
-  "Tags": [],
+  "Visibility": "Public",
+  "Tags": [
+    "Arenas",
+    "Regions",
+    "Campaigns",
+    "Game Mechanics",
+    "Custom Slugcat"
+  ],
   "WorkshopID": 2964671523,
-  "UploadFilesOnly": true
+  "UploadFilesOnly": false,
+  "UploadThumbnail": false
 }

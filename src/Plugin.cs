@@ -12,12 +12,11 @@ using Mono.Cecil.Cil;
 using MoreSlugcats;
 using HUD;
 using Expedition;
+using Watcher;
 using Menu.Remix.MixedUI;
+using RWCustom;
 using Vinki;
-using SprayCans;
-using static SlugBase.JsonAny;
-using JetBrains.Annotations;
-using SlugBase;
+using DevInterface;
 
 namespace GravelSlug
 {
@@ -27,14 +26,15 @@ namespace GravelSlug
     {
         private const string MOD_ID = "kingmaxthe2.gravelslug";
 
-        public static readonly PlayerFeature<bool> GravelGut = PlayerBool("gravelslug/gravel_gut");
-
         // Add hooks
         public void OnEnable()
         {
             //On.RainWorld.OnModsInit += Extras.WrapInit(LoadResources);
 
             // Put your custom hooks here!
+
+            //PlayerHooks.ApplyHooks();
+            RoomscriptHooks.ApplyHooks();
 
             On.Player.Jump += Player_Jump; //cool epic jumps
             On.Player.UpdateBodyMode += Player_UpdateBodyMode;
@@ -69,7 +69,15 @@ namespace GravelSlug
             On.Player.MaulingUpdate += Player_MaulingUpdate; // mauling effects for GE
             On.Player.EatMeatUpdate += Player_EatMeatUpdate; // food tier increase from corpse eating
 
+            IL.PlayerGraphics.Update += PlayerGraphics_Update; //enables spitting animation for rocks
+
             On.RainWorld.OnModsInit += RainWorld_OnModsInit;
+
+            On.SaveState.ctor += SaveState_ctor;
+            On.RainWorldGame.GhostShutDown += RainWorldGame_GhostShutDown;
+            On.GhostConversation.AddEvents += GhostOVerride; // echo dialouge
+            On.GhostHunch.Update += GhostHunch_Update;
+            On.World.SpawnGhost += World_SpawnGhost; // Karma Protection condition for GE
 
             On.SlugcatStats.NourishmentOfObjectEaten += SlugcatStats_NourishmentOfObjectEaten; // increase food amount per quest completion
             On.SlugcatStats.getSlugcatStoryRegions += SlugcatStats_getSlugcatStoryRegions; //sets story regions
@@ -77,15 +85,10 @@ namespace GravelSlug
             On.SlugcatStats.SlugcatFoodMeter += SlugcatStats_SlugcatFoodMeter;
             On.SlugcatStats.ctor += SlugcatStats_ctor;
 
-            On.Menu.CharacterSelectPage.UpdateSelectedSlugcat += CharacterSelectPage_UpdateSelectedSlugcat;
+            On.Spear.HitSomething += Spear_HitSomething; //spear resistance and feral armor peircing
+            On.Weapon.Thrown += Weapon_Thrown; //boosts thrown velocity for gravelslug
 
-            IL.PlayerGraphics.Update += PlayerGraphics_Update; //enables spitting animation for rocks
-
-            On.Spear.HitSomething += Spear_HitSomething; //spear resistance
-            On.Weapon.Thrown += Weapon_Thrown; //boost weapons for gravelslug
-
-            On.Region.GetProperRegionAcronym += Region_GetProperRegionAcronym; //sets sh as cl
-            On.MoreSlugcats.MSCRoomSpecificScript.AddRoomSpecificScript += GravelStart; //add room specific scripts
+            On.Region.GetProperRegionAcronym_Timeline_string += Region_GetProperRegionAcronym; //sets sh as cl
             On.MiscWorldSaveData.ctor += MiscWorldSaveData_ctor; //
             On.RoomRain.ThrowAroundObjects += RoomRain_ThrowAroundObjects;
             On.RainCycle.GetDesiredCycleLength += RainCycle_GetDesiredCycleLength;
@@ -106,10 +109,18 @@ namespace GravelSlug
             On.Menu.StoryGameStatisticsScreen.TickerIsDone += StoryGameStatisticsScreen_TickerIsDone;
             IL.Menu.StoryGameStatisticsScreen.GetDataFromGame += StoryGameStatisticsScreen_GetDataFromGame1;
 
+            On.MoreSlugcats.MoreSlugcatsEnums.DreamID.RegisterValues += DreamID_RegisterValues;
+            On.MoreSlugcats.MoreSlugcatsEnums.DreamID.UnregisterValues += DreamID_UnregisterValues;
+            //On.DreamsState.StaticEndOfCycleProgress += DreamsState_StaticEndOfCycleProgress;
+
             On.MoreSlugcats.MoreSlugcatsEnums.SlideShowID.RegisterValues += SlideShowID_RegisterValues;
             On.MoreSlugcats.MoreSlugcatsEnums.SlideShowID.UnregisterValues += SlideShowID_UnregisterValues;
             On.Menu.SlideShow.ctor += SlideShow_ctor;
+            On.MoreSlugcats.MoreSlugcatsEnums.MenuSceneID.RegisterValues += MenuSceneID_RegisterValues;
+            On.MoreSlugcats.MoreSlugcatsEnums.MenuSceneID.UnregisterValues += MenuSceneID_UnregisterValues;
+            On.Menu.MenuScene.BuildMSCScene += MenuScene_BuildMSCScene;
 
+            On.Menu.CharacterSelectPage.UpdateSelectedSlugcat += CharacterSelectPage_UpdateSelectedSlugcat;
             On.Menu.SlugcatSelectMenu.CheckJollyCoopAvailable += SlugcatSelectMenu_CheckJollyCoopAvailable; // disables jolly coop for GE campaign
             On.Menu.SleepAndDeathScreen.AddPassageButton += SleepAndDeathScreen_AddPassageButton; //removes passagng
             //On.Menu.SlugcatSelectMenu.SlugcatPageContinue.ctor += SlugcatPageContinue_ctor; // food limit updates for menu {NOT IMPLEMENTED}
@@ -123,7 +134,7 @@ namespace GravelSlug
             On.MoreSlugcats.DustWave.Update += DustWave_Update;
             On.PhysicalObject.WeatherInertia += PhysicalObject_WeatherInertia;
 
-            //!!!                       !!!
+            //!!!   ^      ^     ^    !!!
 
             On.DartMaggot.ShotUpdate += NoStick;
             On.GarbageWorm.Update += GarbageHate;
@@ -132,26 +143,29 @@ namespace GravelSlug
             On.VoidSea.VoidSeaScene.ArtificerEndUpdate += VoidSeaScene_ArtificerEndUpdate;
             On.TubeWorm.JumpButton += TubeWorm_JumpButton;
 
-            On.ShelterDoor.Update += ShelterDoor_Update;
+            //On.ShelterDoor.Update += ShelterDoor_Update; // Slugcat memory ping
+            On.ShelterDoor.DoorClosed += ShelterDoor_DoorClosed;
 
             On.Expedition.PearlDeliveryChallenge.ValidForThisSlugcat += PearlDeliveryChallenge_ValidForThisSlugcat;
+            //On.Expedition.PearlHoardChallenge.Generate += PearlHoardChallenge_Generate;
             //On.Expedition.VistaChallenge.Modify
 
             On.DaddyGraphics.HunterDummy.ApplyPalette += HunterDummy_ApplyPalette; // Gravel long legs
             On.DaddyGraphics.ApplyPalette += DaddyGraphics_ApplyPalette;
-            On.DaddyGraphics.DaddyTubeGraphic.ApplyPalette += DaddyTubeGraphic_ApplyPalette;
-            On.DaddyGraphics.DaddyDangleTube.ApplyPalette += DaddyDangleTube_ApplyPalette;
-            On.DaddyGraphics.DaddyDeadLeg.ApplyPalette += DaddyDeadLeg_ApplyPalette;
-            //On.DaddyLongLegs.ctor += DaddyLongLegs_ctor;
-            On.DaddyGraphics.ctor += DaddyGraphics_ctor;
+            On.DaddyGraphics.RotBodyColor += DaddyGraphics_RotBodyColor;
+
+            On.DaddyGraphics.ctor += DaddyGraphics_ctor; // temp colors override for HR
             On.DaddyCorruption.ctor += DaddyCorruption_ctor;
-            //On.CreatureSymbol.ColorOfCreature += CreatureSymbol_ColorOfCreature; // color for GravelEaten {NOT IMPLEMENTED}
+            On.DaddyCorruption.InitiateSprites += DaddyCorruption_InitiateSprites;
+
+            On.DaddyLongLegs.Update += DaddyLongLegs_Update; // GravelEaten teleportation
+            On.DaddyLongLegs.Stun += DaddyLongLegs_Stun;
+            On.DaddyLongLegs.Die += DaddyLongLegs_Die;
+            On.DaddyLongLegs.SpitOutOfShortCut += DaddyLongLegs_SpitOutOfShortCut;
 
             On.MoreSlugcats.CLOracleBehavior.InitateConversation += CLOracleBehavior_InitateConversation; // pebbles stuffs
             On.MoreSlugcats.CLOracleBehavior.InterruptRain += CLOracleBehavior_InterruptRain;
             On.MoreSlugcats.CLOracleBehavior.TalkToDeadPlayer += CLOracleBehavior_TalkToDeadPlayer;
-            On.GhostConversation.AddEvents += GhostOVerride; // echo dialouge
-            //On.World.SpawnGhost += World_SpawnGhost; // Karma Protection condition for GE
             On.SLOrcacleState.ctor += SLOrcacleState_ctor; // moon stuff
             On.SLOracleBehaviorHasMark.MoonConversation.AddEvents += MoonOverride;
             On.SLOracleBehaviorHasMark.InterruptRain += SLOracleBehaviorHasMark_InterruptRain;
@@ -165,16 +179,333 @@ namespace GravelSlug
             On.WormGrass.WormGrassPatch.Update += WormGrassPatch_Update;
             On.WormGrass.WormGrassPatch.AlreadyTrackingCreature += WormGrassPatch_AlreadyTrackingCreature;
 
+
             On.MoreSlugcats.DatingSim.ctor += DatingSim_ctor;
             On.MoreSlugcats.DatingSim.InitNextFile += DatingSim_InitNextFile;
             On.ProcessManager.Update += ProcessManager_Update;
 
+            //On.SaveState.ApplyCustomEndGame += SaveState_ApplyCustomEndGame;
+
 
             new Hook(typeof(RainCycle).GetMethod("get_MusicAllowed"), (Func<RainCycle, bool> orig, RainCycle cycle) => GravelThreatCheck(cycle) || orig(cycle)); // allows threat music post cycle for GE
-            //new Hook(typeof(RoomRain).GetMethod("get_OutsidePushAround"), (Func<RoomRain, float> orig, RoomRain roomRain) => SandstormPush(roomRain));
-            //new Hook(typeof(SlugcatGhost).GetMethod("get_MainColor"), (Func<SlugcatGhost, Color> orig, SlugcatGhost ghost) => SlugGhostColor(ghost));
             new Hook(typeof(SlugcatGhost).GetMethod("get_SecondaryColor"), (Func<SlugcatGhost, Color> orig, SlugcatGhost ghost) => SlugGhostColor(ghost)); // slugcat ghost colors
 
+        }
+
+        private void GhostHunch_Update(On.GhostHunch.orig_Update orig, GhostHunch self, bool eu)
+        {
+            orig(self, eu);
+            if (self.room.game.GetStorySession.characterStats.name.value == "Gravelslug" && self.ghostNumber != null && self.go && self.ghostNumber == MoreSlugcatsEnums.GhostID.CL)
+            {
+                if (self.room.game.session is StoryGameSession && ((self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[self.ghostNumber] == 1 && (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap < 8))
+                {
+                    (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[self.ghostNumber] = 0;
+                }
+            }
+        }
+
+        private void DaddyLongLegs_SpitOutOfShortCut(On.DaddyLongLegs.orig_SpitOutOfShortCut orig, DaddyLongLegs self, IntVector2 pos, Room newRoom, bool spitOutAllSticks)
+        {
+            orig(self, pos, newRoom, spitOutAllSticks);
+            if (self.room.game.IsStorySession && self.room.game.StoryCharacter.value == "Gravelslug" && self.HDmode)
+            {
+                ChunkDynamicSoundLoop loop = new ChunkDynamicSoundLoop(GravelEaten.mainBodyChunk)
+                {
+                    sound = SoundID.Void_Sea_Worms_Bkg_LOOP,
+                    Volume = 0.55f,
+                    Pitch = 0.75f
+                };
+                loop.InitSound();
+            }
+        }
+
+        private void DaddyLongLegs_Die(On.DaddyLongLegs.orig_Die orig, DaddyLongLegs self)
+        {
+            orig(self);
+            if(self.room.game.IsStorySession && self.room.game.StoryCharacter.value == "Gravelslug" && self.HDmode)
+            {
+                self.room.AddObject(new ShockWave(new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y), 300f, 0.2f, 15, false));
+                self.room.PlaySound(SoundID.Coral_Circuit_Break, self.mainBodyChunk.pos, 1f, 0.5f);
+                self.Destroy();
+            }
+        }
+
+        private void SaveState_ApplyCustomEndGame(On.SaveState.orig_ApplyCustomEndGame orig, SaveState self, RainWorldGame game, bool addFiveCycles)
+        {
+            if(game.StoryCharacter.value == "Gravelslug")
+            {
+                self.BringUpToDate(game);
+                self.deathPersistentSaveData.karma = self.deathPersistentSaveData.karmaCap;
+                self.deathPersistentSaveData.karmaFlowerPosition = null;
+
+                game.GetStorySession.AppendTimeOnCycleEnd(false);
+
+                self.deathPersistentSaveData.winState.CycleCompleted(game);
+
+                //self.deathPersistentSaveData.winState.ConsumeEndGame();
+                //self.food = SlugcatStats.SlugcatFoodMeter(self.saveStateNumber).x - SlugcatStats.SlugcatFoodMeter(self.saveStateNumber).y;
+                game.rainWorld.progression.SaveWorldStateAndProgression(false);
+                return;
+            }
+            orig(self, game, addFiveCycles);
+        }
+
+        private void DreamsState_StaticEndOfCycleProgress(On.DreamsState.orig_StaticEndOfCycleProgress orig, SaveState saveState, string currentRegion, string denPosition, ref int cyclesSinceLastDream, ref int cyclesSinceLastFamilyDream, ref int cyclesSinceLastGuideDream, ref int inGWOrSHCounter, ref DreamsState.DreamID upcomingDream, ref DreamsState.DreamID eventDream, ref bool everSleptInSB, ref bool everSleptInSB_S01, ref bool guideHasShownHimselfToPlayer, ref int guideThread, ref bool guideHasShownMoonThisRound, ref int familyThread)
+        {
+            orig(saveState, currentRegion, denPosition, ref cyclesSinceLastDream, ref cyclesSinceLastFamilyDream, ref cyclesSinceLastGuideDream, ref inGWOrSHCounter, ref upcomingDream, ref eventDream, ref everSleptInSB, ref everSleptInSB_S01, ref guideHasShownHimselfToPlayer, ref guideThread, ref guideHasShownMoonThisRound, ref familyThread);
+            
+            if (saveState.saveStateNumber.value == "Gravelslug" &&
+                saveState.progression.rainWorld.processManager.currentMainLoop is RainWorldGame loop)
+            {
+                upcomingDream = new DreamsState.DreamID(ExtEnum<DreamsState.DreamID>.values.GetEntry(loop.setupValues.artificerDreamTest), false);
+                return;
+            }
+        }
+
+        private void DreamID_UnregisterValues(On.MoreSlugcats.MoreSlugcatsEnums.DreamID.orig_UnregisterValues orig)
+        {
+            orig();
+            GravelDreamID.UnregisterValues();
+        }
+
+        private void DreamID_RegisterValues(On.MoreSlugcats.MoreSlugcatsEnums.DreamID.orig_RegisterValues orig)
+        {
+            orig();
+            GravelDreamID.RegisterValues();
+        }
+
+        private void ShelterDoor_DoorClosed(On.ShelterDoor.orig_DoorClosed orig, ShelterDoor self)
+        {
+            if(self.room.game.IsStorySession && self.room.game.GetStorySession.saveStateNumber.value == "Gravelslug" && self.room.game.GetStorySession.saveState.cycleNumber < 0)
+            {
+                self.room.game.GetStorySession.saveState.cycleNumber = 0;
+            }
+            orig(self);
+        }
+
+        private void RainWorldGame_GhostShutDown(On.RainWorldGame.orig_GhostShutDown orig, RainWorldGame self, GhostWorldPresence.GhostID ghostID)
+        {
+            if(self.IsStorySession && !(ModManager.Expedition && self.manager.rainWorld.ExpeditionMode) && self.GetStorySession.characterStats.name.value == "Gravelslug" && ghostID == MoreSlugcatsEnums.GhostID.CL && self.GetStorySession.saveState.deathPersistentSaveData.karmaCap < 8)
+            {
+                if (self.manager.upcomingProcess != null)
+                {
+                    return;
+                }
+                if (self.GetStorySession.saveState.deathPersistentSaveData.GoExploreMessage == false)
+                {
+                    self.GetStorySession.saveState.deathPersistentSaveData.GoExploreMessage = true;
+                }
+                if (self.GetStorySession.saveState.cycleNumber < 0)
+                {
+                    self.GetStorySession.saveState.ApplyCustomEndGame(self.GetStorySession.game, false);
+                    self.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] = 0;
+                    self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.KarmaToMaxScreen);
+                    RainWorldGame.ForceSaveNewDenLocation(self, "CL_GRAVEL", true);
+                    return;
+                }
+                self.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] = 0;
+                self.GetStorySession.saveState.dreamsState.InitiateEventDream(GravelDreamID.GravelIntroDream);
+                self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.Dream);
+                return;
+            }
+            orig(self, ghostID);
+        }
+
+        private void SaveState_ctor(On.SaveState.orig_ctor orig, SaveState self, SlugcatStats.Name saveStateNumber, PlayerProgression progression)
+        {
+            if(saveStateNumber.value == "Gravelslug")
+            {
+                self.cycleNumber = -1;
+            }
+            orig(self, saveStateNumber, progression);
+            if (saveStateNumber.value == "Gravelslug")
+            {
+                if (GravelOptionsMenu.SkipTutorial.Value)
+                {
+                    self.deathPersistentSaveData.ArtificerMaulTutorial = true;
+                }
+                self.deathPersistentSaveData.GoExploreMessage = false;
+                self.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] = 1;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEWhite] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEYellow] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERed] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERiv] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEGour] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEArti] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESpear] = 0;
+                self.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESaint] = 0;
+            }
+        }
+
+        private void MenuScene_BuildMSCScene(On.Menu.MenuScene.orig_BuildMSCScene orig, Menu.MenuScene self)
+        {
+            if (self.sceneID == GravelSceneID.GravelApproach)
+            {
+                BuildGravelAltEnd(1, self);
+                return;
+            }
+            if (self.sceneID == GravelSceneID.GravelWeary)
+            {
+                BuildGravelAltEnd(2, self);
+                return;
+            }
+            if (self.sceneID == GravelSceneID.GravelOffer)
+            {
+                BuildGravelAltEnd(3, self);
+                return;
+            }
+            if (self.sceneID == GravelSceneID.GravelAccept)
+            {
+                BuildGravelAltEnd(4, self);
+                return;
+            }
+            orig(self);
+        }
+
+        private void BuildGravelAltEnd(int sceneID, Menu.MenuScene self)
+        {
+            string text = "Outro Gravelslug 1_b - Approach";
+            if (sceneID == 2)
+            {
+                text = "Outro Gravelslug 2_b - Weary";
+            }
+            else if (sceneID == 3)
+            {
+                text = "Outro Gravelslug 3_b - Offer";
+            }
+            else if (sceneID == 4)
+            {
+                text = "Outro Gravelslug 4_b - Accept";
+            }
+            self.sceneFolder = "Scenes" + System.IO.Path.DirectorySeparatorChar.ToString() + text;
+            if (self.flatMode)
+            {
+                self.AddIllustration(new Menu.MenuIllustration(self.menu, self, self.sceneFolder, string.Concat(new string[]
+                {
+            text,
+            " - Flat"
+                }), new Vector2(683f, 384f), false, true));
+                return;
+            }
+            if(sceneID == 1)
+            {
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 1_b - 4", new Vector2(71f, 49f), 2.5f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 1_b - 3", new Vector2(71f, 49f), 2.2f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 1_b - 2", new Vector2(71f, 49f), 1.8f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 1_b - 1", new Vector2(71f, 49f), 1.6f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+            }
+            if(sceneID == 2)
+            {
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 2_b - 5", new Vector2(71f, 49f), 4.5f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 2_b - 4", new Vector2(71f, 49f), 2.5f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 2_b - 3", new Vector2(71f, 49f), 2.5f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 2_b - 2", new Vector2(71f, 49f), 1.5f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+                self.AddIllustration(new Menu.MenuDepthIllustration(self.menu, self, self.sceneFolder, "Outro Gravelslug 2_b - 1", new Vector2(71f, 49f), 1.0f, Menu.MenuDepthIllustration.MenuShader.LightEdges));
+            }
+        }
+
+        private void MenuSceneID_UnregisterValues(On.MoreSlugcats.MoreSlugcatsEnums.MenuSceneID.orig_UnregisterValues orig)
+        {
+            orig();
+            GravelSceneID.UnregisterValues();
+        }
+
+        private void MenuSceneID_RegisterValues(On.MoreSlugcats.MoreSlugcatsEnums.MenuSceneID.orig_RegisterValues orig)
+        {
+            orig();
+            GravelSceneID.RegisterValues();
+        }
+
+        private void DaddyLongLegs_Update(On.DaddyLongLegs.orig_Update orig, DaddyLongLegs self, bool eu)
+        {
+            orig(self, eu);
+            if (self.room != null && self.room.game.IsStorySession && self.room.game.GetStorySession.saveStateNumber.value == "Gravelslug")
+            {
+                if (!self.isHD || self.room == null || GravelEaten == null || self.room.game.FirstRealizedPlayer == null || self.dead)
+                {
+                    return;
+                }
+
+                if (self.room.game.devToolsActive && Input.GetKey(KeyCode.Backspace))
+                {
+                    GravelEatenBanish();
+                }
+
+                if (!self.tentaclesHoldOn && !self.Stunned)
+                {
+                    self.mainBodyChunk.vel += Custom.DirVec(self.mainBodyChunk.pos, self.room.game.FirstRealizedPlayer.mainBodyChunk.pos) * Mathf.Lerp(0, 1, Custom.Dist(self.mainBodyChunk.pos, self.room.game.FirstRealizedPlayer.mainBodyChunk.pos) / 500) / 4;
+                }
+                self.AI.behavior = DaddyAI.Behavior.Hunt;
+                self.AI.tracker.SeeCreature(self.abstractCreature);
+                self.AI.preyTracker.AddPrey(self.AI.tracker.RepresentationForCreature(self.room.game.FirstRealizedPlayer.abstractCreature, true));
+
+                /*Creature prey = self.room.game.FirstRealizedPlayer;
+                if (!self.dead && !self.Stunned && self.room.world.game.StoryCharacter.value == "Gravelslug" && prey.room == self.room && (prey is Player) && !prey.inShortcut && !self.inShortcut && self.shortcutDelay == 0)
+                {
+                    Vector2 preyPos = prey.firstChunk.pos;
+                    float plyrDist = Vector2.Distance(preyPos, self.firstChunk.pos);
+                    if (plyrDist < 500) return;
+                    Vector2 exit = self.firstChunk.pos;
+                    Vector2 exitcheck = exit;
+                    IntVector2[] index = self.room.shortcutsIndex;
+
+                    //Finds closest shortcut to player
+                    if(index.Length > 1)
+                    {
+                        float closestDistance = float.MaxValue;
+                        for (int i = 0; i < index.Length; i++)
+                        {
+                            Vector2 shortcutPos = index[i].ToVector2();
+                            if (self.room.shortcuts[i].shortCutType == ShortcutData.Type.Normal || self.room.shortcuts[i].shortCutType == ShortcutData.Type.RoomExit)
+                            {
+                                continue;
+                            }
+                            float distanceToPlayer = Vector2.Distance(shortcutPos, preyPos);
+                            if (distanceToPlayer < closestDistance && distanceToPlayer > 150)
+                            {
+                                closestDistance = distanceToPlayer;
+                                exit = shortcutPos;
+                            }
+                        }
+
+                    }
+                    if (exit == exitcheck) return;
+                    if (Vector2.Distance(preyPos, exit) < plyrDist)
+                    {
+                        self.room.AddObject(new ShockWave(new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y), 300f, 0.2f, 15, false));
+                        self.SpitOutOfShortCut(IntVector2.FromVector2(exit), self.room, false);
+                        self.room.AddObject(new ShockWave(new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y), 300f, 0.2f, 15, false));
+                        self.room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y));
+                        Debug.Log("Teleported GLL to " + self.room.shortcutData(exit).shortCutType + " " + (plyrDist - Vector2.Distance(self.firstChunk.pos, preyPos) + " distance towards player"));
+                    }
+                }*/
+            }
+        }
+        private void DaddyLongLegs_Stun(On.DaddyLongLegs.orig_Stun orig, DaddyLongLegs self, int st)
+        {
+            orig(self, st);
+            if (self.room.world.game.GetStorySession.saveState.saveStateNumber.value == "Gravelslug" && self.isHD)
+            {
+                st /= 2;
+                self.stun = st;
+            }
+        }
+        private Challenge PearlHoardChallenge_Generate(On.Expedition.PearlHoardChallenge.orig_Generate orig, PearlHoardChallenge self)
+        {
+            if(ExpeditionData.slugcatPlayer.value == "Gravelslug")
+            {
+                List<string> list = new List<string>();
+                list.AddRange(SlugcatStats.SlugcatStoryRegions(ExpeditionData.slugcatPlayer));
+                list.Remove("HR");
+                string text = list[UnityEngine.Random.Range(0, list.Count)];
+                return new PearlHoardChallenge
+                {
+                    common = true,
+                    amount = (int)Mathf.Lerp(2f, 5f, ExpeditionData.challengeDifficulty),
+                    region = text
+                };
+            }
+            return orig.Invoke(self);
         }
 
         private void SlugcatStats_ctor(On.SlugcatStats.orig_ctor orig, SlugcatStats self, SlugcatStats.Name slugcat, bool malnourished)
@@ -182,29 +513,29 @@ namespace GravelSlug
             orig(self, slugcat, malnourished);
             if (slugcat.value == "Gravelslug")
             {
-                self.runspeedFac = 1.2f;
-                self.bodyWeightFac = 1.12f;
-                self.generalVisibilityBonus = 0.1f;
+                self.bodyWeightFac = 2f;
+                self.generalVisibilityBonus = 0.2f;
                 self.visualStealthInSneakMode = 0.3f;
-                self.loudnessFac = 1.35f;
-                self.throwingSkill = 2;
-                self.poleClimbSpeedFac = 1.25f;
-                self.corridorClimbSpeedFac = 1.2f;
-                if (ModManager.Expedition && RWCustom.Custom.rainWorld.ExpeditionMode && ExpeditionGame.activeUnlocks.Contains("unl-agility"))
+                self.loudnessFac = 1.8f;
+                if (!(ModManager.Expedition && Custom.rainWorld.ExpeditionMode && ExpeditionGame.activeUnlocks.Contains("unl-agility")))
                 {
-                    self.lungsFac = 0.15f;
-                    self.runspeedFac = 1.75f;
-                    self.poleClimbSpeedFac = 1.8f;
-                    self.corridorClimbSpeedFac = 1.6f;
+                    self.runspeedFac = 0.85f;
+                    self.lungsFac = (ModManager.MMF && MMF.cfgMonkBreathTime.Value) ? 0.8f : 1f;
+                    self.poleClimbSpeedFac = 1.1f;
+                    self.corridorClimbSpeedFac = 0.85f;
+                    
                 }
                 if (malnourished)
                 {
-                    if (ModManager.Expedition && RWCustom.Custom.rainWorld.ExpeditionMode && ExpeditionGame.activeUnlocks.Contains("unl-agility"))
+                    self.bodyWeightFac = 1.3f;
+                    self.visualStealthInSneakMode = 0.15f;
+                    self.loudnessFac = 1.4f;
+                    self.throwingSkill = 1;
+                    if (!(ModManager.Expedition && Custom.rainWorld.ExpeditionMode && ExpeditionGame.activeUnlocks.Contains("unl-agility")))
                     {
-                        self.runspeedFac = 1.27f;
+                        self.runspeedFac = 1.1f;
                         self.poleClimbSpeedFac = 1.1f;
-                        self.corridorClimbSpeedFac = 1.2f;
-                        return;
+                        self.corridorClimbSpeedFac = 1.05f;
                     }
                 }
             }
@@ -258,9 +589,9 @@ namespace GravelSlug
             GravelTickerID.RegisterValues();
         }
 
-        private RWCustom.IntVector2 SlugcatStats_SlugcatFoodMeter(On.SlugcatStats.orig_SlugcatFoodMeter orig, SlugcatStats.Name slugcat)
+        private IntVector2 SlugcatStats_SlugcatFoodMeter(On.SlugcatStats.orig_SlugcatFoodMeter orig, SlugcatStats.Name slugcat)
         {
-            RWCustom.IntVector2 result = orig.Invoke(slugcat);
+            IntVector2 result = orig.Invoke(slugcat);
             if (slugcat.value == "Gravelslug")
             {
                 //min
@@ -274,9 +605,9 @@ namespace GravelSlug
         private void ProcessManager_Update(On.ProcessManager.orig_Update orig, ProcessManager self, float deltaTime)
         {
             orig(self, deltaTime);
-            if (ModManager.MSC && self.currentMainLoop != null && self.rainWorld.progression != null && self.rainWorld.progression.miscProgressionData.currentlySelectedSinglePlayerSlugcat.value == "Gravelslug")
+            if (self.currentMainLoop != null && self.rainWorld.progression != null && self.rainWorld.progression.miscProgressionData.currentlySelectedSinglePlayerSlugcat.value == "Gravelslug")
             {
-                AudioSource[] array = UnityEngine.Object.FindObjectsOfType<AudioSource>();
+                AudioSource[] array = FindObjectsOfType<AudioSource>();
                 for (int i = 0; i < array.Length; i++)
                 {
                     if (array[i].clip != null && array[i].pitch != 0.5f && (array[i].clip.name.StartsWith("RW_") || array[i].clip.name.StartsWith("NA_")) && self.currentMainLoop.ID == MoreSlugcatsEnums.ProcessID.DatingSim)
@@ -290,27 +621,67 @@ namespace GravelSlug
         private void SlideShow_ctor(On.Menu.SlideShow.orig_ctor orig, Menu.SlideShow self, ProcessManager manager, Menu.SlideShow.SlideShowID slideShowID)
         {
             orig(self, manager, slideShowID);
-            if(slideShowID == GravelSlideshowID.GravelOutro)
+            if (slideShowID == GravelSlideshowID.GravelOutro || slideShowID == GravelSlideshowID.GravelAltEnd)
             {
-                if(manager.oldProcess.ID == ProcessManager.ProcessID.Game && (manager.oldProcess as RainWorldGame).GetStorySession.saveState.deathPersistentSaveData.theMark)
+                self.slideShowID = slideShowID;
+                self.pages.Add(new Menu.Page(self, null, "main", 0));
+                self.playList = new List<Menu.SlideShow.Scene>();
+                if (slideShowID == GravelSlideshowID.GravelOutro)
                 {
+                    if (manager.oldProcess.ID == ProcessManager.ProcessID.Game && (manager.oldProcess as RainWorldGame).GetStorySession.saveState.deathPersistentSaveData.theMark)
+                    {
 
+                    }
+                    else
+                    {
+
+                    }
                 }
-                else
+                else if (slideShowID == GravelSlideshowID.GravelAltEnd)
                 {
+                    if (manager.musicPlayer != null)
+                    {
+                        self.waitForMusic = "RW_Outro_Theme_B";
+                        self.stall = true;
+                        manager.musicPlayer.MenuRequestsSong(self.waitForMusic, 1.5f, 10f);
+                    }
+                    self.playList.Add(new Menu.SlideShow.Scene(Menu.MenuScene.SceneID.Empty, 0f, 0f, 0f));
+                    self.playList.Add(new Menu.SlideShow.Scene(GravelSceneID.GravelApproach, self.ConvertTime(0, 1, 20), self.ConvertTime(0, 4, 0), self.ConvertTime(0, 16, 2)));
+                    self.playList.Add(new Menu.SlideShow.Scene(GravelSceneID.GravelWeary, self.ConvertTime(0, 18, 20), self.ConvertTime(0, 22, 0), self.ConvertTime(0, 34, 2)));
+                    self.playList.Add(new Menu.SlideShow.Scene(Menu.MenuScene.SceneID.Empty, self.ConvertTime(0, 35, 0), self.ConvertTime(0, 35, 0), self.ConvertTime(0, 39, 0)));
+                    for (int num7 = 1; num7 < self.playList.Count; num7++)
+                        for (int num8 = 1; num8 < self.playList.Count; num8++)
+                    {
+                        self.playList[num8].startAt -= 1.1f;
+                        self.playList[num8].fadeInDoneAt -= 1.1f;
+                        self.playList[num8].fadeOutStartAt -= 1.1f;
+                    }
+                    self.manager.desiredCreditsSong = "RW_64 - Daze";
+                    self.processAfterSlideShow = ProcessManager.ProcessID.Credits;
+                    //manager.statsAfterCredits = true;
+                    /*if (manager.oldProcess.ID == ProcessManager.ProcessID.Game && (manager.oldProcess as RainWorldGame).GetStorySession.saveState.deathPersistentSaveData.theMark)
+                    {
 
+                    }
+                    else
+                    {
+                        self.playList.Add(new Menu.SlideShow.Scene(GravelSceneID.GravelApproach, 0f, 0f, 0f));
+                    }*/
                 }
-            }else if (slideShowID == GravelSlideshowID.GravelAltEnd)
-            {
-                if (manager.oldProcess.ID == ProcessManager.ProcessID.Game && (manager.oldProcess as RainWorldGame).GetStorySession.saveState.deathPersistentSaveData.theMark)
+                self.preloadedScenes = new Menu.SlideShowMenuScene[self.playList.Count];
+                if (Application.platform != RuntimePlatform.Switch)
                 {
-
+                    for (int num10 = 0; num10 < self.preloadedScenes.Length; num10++)
+                    {
+                        self.preloadedScenes[num10] = new Menu.SlideShowMenuScene(self, self.pages[0], self.playList[num10].sceneID);
+                        self.preloadedScenes[num10].Hide();
+                    }
                 }
-                else
-                {
-
-                }
+                manager.RemoveLoadingLabel();
+                self.NextScene();
+                return;
             }
+            //orig(self, manager, slideShowID);
         }
 
         private void SlideShowID_UnregisterValues(On.MoreSlugcats.MoreSlugcatsEnums.SlideShowID.orig_UnregisterValues orig)
@@ -342,7 +713,7 @@ namespace GravelSlug
             {
                 return;
             }
-            if (!GravelOptionsMenu.DisableTimer.Value && !room.game.IsArenaSession && !(room.IsGateRoom() && (room.regionGate.mode == RegionGate.Mode.ClosingAirLock || room.regionGate.mode == RegionGate.Mode.Waiting || room.regionGate.mode == RegionGate.Mode.ClosingMiddle)) && room.abstractRoom.shelter == false && room.abstractRoom.name != "HR_FINAL" && room.abstractRoom.name != "HR_AI" && room.abstractRoom.name != "SB_A06GRAV" && !room.game.devToolsActive)
+            if (!GravelOptionsMenu.DisableTimer.Value && !room.game.IsArenaSession && !self.world.game.GameOverModeActive && !(room.IsGateRoom() && (room.regionGate.mode == RegionGate.Mode.ClosingAirLock || room.regionGate.mode == RegionGate.Mode.Waiting || room.regionGate.mode == RegionGate.Mode.ClosingMiddle)) && room.abstractRoom.shelter == false && room.abstractRoom.name != "HR_FINAL" && room.abstractRoom.name != "HR_AI" && room.abstractRoom.name != "SB_A06GRAV" && !room.game.devToolsActive)
             {
                 GravelDissolveUpdate(self.world.game);
             }
@@ -352,7 +723,7 @@ namespace GravelSlug
         {
             if (slugName.value == "Gravelslug")
             {
-                if (RWCustom.Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && RWCustom.Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM))
+                if (Custom.rainWorld.options.jollyColorMode == Options.JollyColorMode.DEFAULT || (playerNumber == 0 && Custom.rainWorld.options.jollyColorMode != Options.JollyColorMode.CUSTOM))
                 {
                     return new Color(0.7098f, 0.80784f, 0.78823f);
                 }
@@ -394,6 +765,7 @@ namespace GravelSlug
             if (manager.oldProcess.ID == ProcessManager.ProcessID.Game && (manager.oldProcess as RainWorldGame).session.characterStats.name.value == "Gravelslug")
             {
                 self.InitNextFile("gravelstart.txt");
+                GravelOptionsMenu.BeatGravelDate.Value = true;
             }
         }
 
@@ -411,126 +783,147 @@ namespace GravelSlug
 
         private void GravelCough(Creature player, bool big)
         {
-            if (player is Player && (player as Player).lungsExhausted)
+            if (player != null && player.room != null)
             {
-                return;
-            }
-            if (!big && !(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.IsStorySession && player.room.game.GetStorySession.characterStats.name.value == "Gravelslug" && player.room.game.GetStorySession.saveState.cycleNumber != 0 && player.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] < -4)
-            {
-                if (UnityEngine.Random.value <= 0.25 * (-player.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] - 4))
+                if (player is Player && ((player as Player).lungsExhausted || (player as Player).inShortcut))
                 {
                     return;
                 }
-            }
-            bool flag = false;
-            bool isplr = false;
-            Color color = new Color(0f, 1f, 1f);
-            if (player.Submersion == 1f)
-            {
-                flag = true;
-                player.room.AddObject(new Bubble(player.firstChunk.pos, player.firstChunk.vel + RWCustom.Custom.DegToVec(UnityEngine.Random.value * 360f) * (big ? 8f : 6f), false, false));
-            }
-            if (player is Player)
-            {
-                isplr = true;
-                color = GravelFireColor(player as Player);
-                Fire_Breath(player as Player, true, true);
-            }
-            if (isplr && !player.room.game.IsArenaSession)
-            {
-                GravelDissolveSubtract(big ? 3.2f : 0.08f, player.room.game, true);
-            }
-            player.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.Throw_FireSpear, player.firstChunk.pos, big ? 1f: 0.8f, UnityEngine.Random.Range(big ? 0.8f : 1.2f, big ? 1.2f : 1.6f));
-            player.room.AddObject(new Explosion.ExplosionLight(player.firstChunk.pos, big ? 280f : 80f, 1f, 7, Color.white));
-            player.room.AddObject(new ExplosionSpikes(player.room, player.firstChunk.pos, big ? 14 : 7, big ? 15f : 10f, 9f, big ? 5f : 4f, big ? 90f :45f, color));
-            //player.room.InGameNoise(new Noise.InGameNoise(player.firstChunk.pos, big ? 6000f : 4500f, player, 1f));
-            float num = big ? 20f : 10f * (float)(player as Player).playerState.permanentDamageTracking;
-            for (int m = 0; m < player.room.physicalObjects.Length; m++)
-            {
-                foreach (PhysicalObject physicalObject in player.room.physicalObjects[m])
+                if (!big && !(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.IsStorySession && player.room.game.StoryCharacter.value == "Gravelslug" && GravelQuestProgress(player.room.game) > 4)
                 {
-                    if (physicalObject != player && !(physicalObject is Weapon && (physicalObject as Weapon).thrownBy == player && (physicalObject as Weapon).mode == Weapon.Mode.Thrown && physicalObject is not ScavengerBomb))
+                    if (UnityEngine.Random.value <= 0.25 * (GravelQuestProgress(player.room.game) - 4))
                     {
-                        foreach (BodyChunk bodyChunk in physicalObject.bodyChunks)
+                        return;
+                    }
+                }
+                bool flag = false;
+                Color color = new Color(0f, 1f, 1f);
+                if (player.Submersion == 1f)
+                {
+                    flag = true;
+                    player.room.AddObject(new Bubble(player.firstChunk.pos, player.firstChunk.vel + Custom.DegToVec(UnityEngine.Random.value * 360f) * (big ? 8f : 6f), false, false));
+                }
+                if (player is Player)
+                {
+                    color = GravelFireColor(player as Player);
+                    if (GravelOptionsMenu.RainbowFire.Value)
+                    {
+                        color = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
+                    }
+                    Fire_Breath(player as Player, false, true);
+
+                    if (!player.room.game.IsArenaSession)
+                    {
+                        GravelDissolveSubtract(big ? 3.2f : 0.08f, player.room.game, true);
+                    }
+                }
+                player.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.Throw_FireSpear, player.firstChunk.pos, big ? 1f : 0.8f, UnityEngine.Random.Range(big ? 0.8f : 1.2f, big ? 1.2f : 1.6f));
+                player.room.AddObject(new Explosion.ExplosionLight(player.firstChunk.pos, big ? 280f : 80f, 1f, 7, Color.white));
+                player.room.AddObject(new ExplosionSpikes(player.room, player.firstChunk.pos, big ? 14 : 7, big ? 15f : 10f, 9f, big ? 5f : 4f, big ? 90f : 45f, color));
+
+                (player.graphicsModule as PlayerGraphics).head.vel += Custom.DirVec((player.graphicsModule as PlayerGraphics).head.pos, (player.graphicsModule as PlayerGraphics).lookDirection) * 2f;
+
+                player.room.InGameNoise(new Noise.InGameNoise(player.firstChunk.pos, big ? 6000f : 4500f, (player as PhysicalObject), big ? 4f : 3f));
+
+                if (player is Player plr && (plr.bodyMode == Player.BodyModeIndex.ZeroG || plr.room.gravity == 0f || plr.gravity == 0f))
+                {
+                    float num3 = (float)plr.input[0].x;
+                    float num4 = (float)plr.input[0].y;
+                    while (num3 == 0f && num4 == 0f)
+                    {
+                        num3 = (float)(((double)UnityEngine.Random.value <= 0.33) ? 0 : (((double)UnityEngine.Random.value <= 0.5) ? 1 : -1));
+                        num4 = (float)(((double)UnityEngine.Random.value <= 0.33) ? 0 : (((double)UnityEngine.Random.value <= 0.5) ? 1 : -1));
+                    }
+                    plr.bodyChunks[0].vel.x = (big ? 2.2f : 1.5f) * num3;
+                    plr.bodyChunks[0].vel.y = (big ? 2.2f : 1.5f) * num4;
+                }
+
+                float num = big ? 20f : 10f * (float)(player as Player).playerState.permanentDamageTracking;
+                for (int m = 0; m < player.room.physicalObjects.Length; m++)
+                {
+                    foreach (PhysicalObject physicalObject in player.room.physicalObjects[m])
+                    {
+                        if (physicalObject != player && !(physicalObject is Weapon && (physicalObject as Weapon).thrownBy == player && (physicalObject as Weapon).mode == Weapon.Mode.Thrown && physicalObject is not ScavengerBomb))
                         {
-                            float num2 = 1f + bodyChunk.submersion * player.firstChunk.submersion * 4.5f;
-                            if (RWCustom.Custom.DistLess(bodyChunk.pos, player.firstChunk.pos, num * num2 + bodyChunk.rad + player.firstChunk.rad) && player.room.VisualContact(bodyChunk.pos, player.firstChunk.pos))
+                            foreach (BodyChunk bodyChunk in physicalObject.bodyChunks)
                             {
-                                float num3 = Mathf.InverseLerp(num * num2 + bodyChunk.rad + player.firstChunk.rad, (num * num2 + bodyChunk.rad + player.firstChunk.rad) / 2f, Vector2.Distance(bodyChunk.pos, player.firstChunk.pos));
-                                bodyChunk.vel += RWCustom.Custom.DirVec(player.firstChunk.pos + new Vector2(0f, player.IsTileSolid(1, 0, -1) ? -20f : 0f), bodyChunk.pos) * num3 * num2 * 3f / bodyChunk.mass;
-                                if (ModManager.MSC && physicalObject is Player && (physicalObject as Player).SlugCatClass == MoreSlugcatsEnums.SlugcatStatsName.Saint)
+                                float num2 = 1f + bodyChunk.submersion * player.firstChunk.submersion * 4.5f;
+                                if (Custom.DistLess(bodyChunk.pos, player.firstChunk.pos, num * num2 + bodyChunk.rad + player.firstChunk.rad) && player.room.VisualContact(bodyChunk.pos, player.firstChunk.pos))
                                 {
-                                    (physicalObject as Player).SaintStagger(big ? 300 : 80);
-                                }
-                                else if (physicalObject is Player)
-                                {
-                                    (physicalObject as Player).Stun((int)(10f * num3));
-                                }
-                                else if (physicalObject is Creature)
-                                {
-                                    if (physicalObject is TubeWorm)
+                                    float num3 = Mathf.InverseLerp(num * num2 + bodyChunk.rad + player.firstChunk.rad, (num * num2 + bodyChunk.rad + player.firstChunk.rad) / 2f, Vector2.Distance(bodyChunk.pos, player.firstChunk.pos));
+                                    bodyChunk.vel += Custom.DirVec(player.firstChunk.pos + new Vector2(0f, player.IsTileSolid(1, 0, -1) ? -20f : 0f), bodyChunk.pos) * num3 * num2 * 3f / bodyChunk.mass;
+                                    if (ModManager.MSC && physicalObject is Player && (physicalObject as Player).SlugCatClass == MoreSlugcatsEnums.SlugcatStatsName.Saint)
                                     {
-                                        for (int i = 0; i < (physicalObject as TubeWorm).grabbedBy.Count; i++)
+                                        (physicalObject as Player).SaintStagger(big ? 300 : 80);
+                                    }
+                                    else if (physicalObject is Player)
+                                    {
+                                        (physicalObject as Player).Stun((int)(10f * num3));
+                                    }
+                                    else if (physicalObject is Creature)
+                                    {
+                                        if (physicalObject is TubeWorm grapple)
                                         {
-                                            if ((physicalObject as TubeWorm).grabbedBy[i].grabber is Player)
+                                            for (int i = 0; i < (physicalObject as TubeWorm).grabbedBy.Count; i++)
                                             {
-                                                return;
+                                                if (grapple.grabbedBy[i].grabber is Player)
+                                                {
+                                                    return;
+                                                }
                                             }
                                         }
+                                        (physicalObject as Creature).Stun((int)(((ModManager.MMF && MMF.cfgIncreaseStuns.Value) ? 100f : 10f) * num3));
                                     }
-                                    (physicalObject as Creature).Stun((int)(((ModManager.MMF && MMF.cfgIncreaseStuns.Value) ? 100f : 10f) * num3));
-                                }
-                                if (physicalObject is Leech)
-                                {
-                                    if ((UnityEngine.Random.value < 0.033333335f || !flag) || RWCustom.Custom.DistLess(player.firstChunk.pos, bodyChunk.pos, player.firstChunk.rad + bodyChunk.rad + 2f))
+                                    if (physicalObject is Leech leech)
                                     {
-                                        (physicalObject as Leech).Die();
-                                    }
-                                    else
-                                    {
-                                        (physicalObject as Leech).Stun((int)(num3 * bodyChunk.submersion * Mathf.Lerp(800f, 900f, UnityEngine.Random.value)));
-                                    }
-                                }
-                                if (!flag)
-                                {
-                                    if (physicalObject is ScavengerBomb && (UnityEngine.Random.value < 0.35f || big))
-                                    {
-                                        //(physicalObject as ScavengerBomb).ignited = true;
-                                        (physicalObject as ScavengerBomb).InitiateBurn();
-                                    }
-                                    if (physicalObject is ExplosiveSpear && (UnityEngine.Random.value < 0.35f || big))
-                                    {
-                                        (physicalObject as ExplosiveSpear).Ignite();
-                                    }
-                                    if (physicalObject is Spear && (physicalObject as Spear).IsNeedle && (UnityEngine.Random.value < 0.35f || big))
-                                    {
-                                        physicalObject.room.AddObject(new ExplosiveSpear.SpearFragment(physicalObject.firstChunk.pos, physicalObject.firstChunk.vel));
-                                        physicalObject.room.AddObject(new Smolder(physicalObject.room, physicalObject.firstChunk.pos, physicalObject.firstChunk, null));
-                                        (physicalObject as Spear).Destroy();
-                                    }
-                                    if (physicalObject is FirecrackerPlant && (UnityEngine.Random.value < 0.35f || big))
-                                    {
-                                        (physicalObject as FirecrackerPlant).Ignite();
-                                    }
-                                    if (physicalObject is SporePlant && (UnityEngine.Random.value < 0.35f || big))
-                                    {
-                                        (physicalObject as SporePlant).BeeTrigger();
-                                    }
-                                    if (physicalObject is SporePlant.AttachedBee)
-                                    {
-                                        (physicalObject as SporePlant.AttachedBee).BreakStinger();
-                                    }
-                                    if (physicalObject is Spider || physicalObject is Fly)
-                                    {
-                                        if (RWCustom.Custom.DistLess(player.firstChunk.pos, bodyChunk.pos, player.firstChunk.rad + bodyChunk.rad + 2f))
+                                        if ((UnityEngine.Random.value < 0.033333335f || !flag) || Custom.DistLess(player.firstChunk.pos, bodyChunk.pos, player.firstChunk.rad + bodyChunk.rad + 2f))
                                         {
-                                            (physicalObject as Creature).Die();
+                                            leech.Die();
+                                        }
+                                        else
+                                        {
+                                            leech.Stun((int)(num3 * bodyChunk.submersion * Mathf.Lerp(800f, 900f, UnityEngine.Random.value)));
                                         }
                                     }
-                                    if (physicalObject is BubbleGrass)
+                                    if (ModManager.Watcher && physicalObject is Barnacle barnacle)
                                     {
-                                        (physicalObject as BubbleGrass).AbstrBubbleGrass.oxygenLeft -= big ? 0.4f : 0.04f;
-                                        physicalObject.room.AddObject(new Smolder(physicalObject.room, physicalObject.firstChunk.pos, physicalObject.firstChunk, null));
+                                        barnacle.LoseShell();
+                                    }
+                                    if (!flag)
+                                    {
+                                        if (physicalObject is ScavengerBomb bomb && (UnityEngine.Random.value < 0.35f || big))
+                                        {
+                                            //(physicalObject as ScavengerBomb).ignited = true;
+                                            bomb.InitiateBurn();
+                                        }
+                                        if (physicalObject is ExplosiveSpear boomstick && (UnityEngine.Random.value < 0.35f || big))
+                                        {
+                                            boomstick.Ignite();
+                                        }
+                                        if (physicalObject is FirecrackerPlant cracker && (UnityEngine.Random.value < 0.35f || big))
+                                        {
+                                            cracker.Ignite();
+                                        }
+                                        if (physicalObject is SporePlant hive && (UnityEngine.Random.value < 0.35f || big))
+                                        {
+                                            hive.BeeTrigger();
+                                        }
+                                        if (physicalObject is SporePlant.AttachedBee bee)
+                                        {
+                                            bee.BreakStinger();
+                                        }
+                                        if (physicalObject is Spider || physicalObject is Fly)
+                                        {
+                                            if (Custom.DistLess(player.firstChunk.pos, bodyChunk.pos, player.firstChunk.rad + bodyChunk.rad + 2f))
+                                            {
+                                                (physicalObject as Creature).Die();
+                                            }
+                                        }
+                                        if (physicalObject is BubbleGrass)
+                                        {
+                                            (physicalObject as BubbleGrass).AbstrBubbleGrass.oxygenLeft -= big ? 0.4f : 0.04f;
+                                            physicalObject.room.AddObject(new Smolder(physicalObject.room, physicalObject.firstChunk.pos, physicalObject.firstChunk, null));
+                                        }
                                     }
                                 }
                             }
@@ -553,7 +946,7 @@ namespace GravelSlug
         {
             if(self.oracle.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
-                if (ModManager.MSC && testItem is Spear && (testItem as Spear).bugSpear)
+                if (ModManager.MSC && testItem is Spear spear && spear.bugSpear)
                 {
                     return MoreSlugcatsEnums.MiscItemType.MoonCloak;
                 }
@@ -571,7 +964,7 @@ namespace GravelSlug
             }
         }
 
-        private GravelConfig GravelOptionsMenu;
+        public GravelConfig GravelOptionsMenu;
         public static bool GravelFatty = false;
         public static bool GravelFoodBar = false;
         public static bool GravelVinki = false;
@@ -588,8 +981,8 @@ namespace GravelSlug
             catch (Exception ex)
             {
                 Debug.Log(string.Format("Remix Menu Gravelslug: Hook_OnModsInit options failed init error {0}{1}", this.GravelOptionsMenu, ex));
-                base.Logger.LogError(ex);
-                base.Logger.LogMessage("WHOOPS");
+                Logger.LogError(ex);
+                Logger.LogMessage("WHOOPS");
             }
 
             for (int i = 0; i < ModManager.ActiveMods.Count; i++)
@@ -623,7 +1016,6 @@ namespace GravelSlug
                         GhostWorldPresence.GhostID ghostID = CheckForRegionSlugcatGhost(self.room.world.region.name);
                         if (!(self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo.ContainsKey(ghostID) || (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[ghostID] < 1 || self.room.world.region.name == "MS")
                         {
-                            //self.room.AddObject(new GhostPing(self.room));
                             self.room.AddObject(new SlugcatGhostPing(self.room));
                         }
                     }
@@ -670,15 +1062,6 @@ namespace GravelSlug
             return GhostWorldPresence.GhostID.NoGhost;
         }
 
-        /*private Color CreatureSymbol_ColorOfCreature(On.CreatureSymbol.orig_ColorOfCreature orig, IconSymbol.IconSymbolData iconData)
-        {
-            if (iconData.critType == MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy)
-            {
-                return Color.Lerp(PlayerGraphics.DefaultSlugcatColor("Gravelslug"), Color.gray, 0.4f);
-            }
-            return orig.Invoke(iconData);
-        }*/
-
         private void Player_MaulingUpdate(On.Player.orig_MaulingUpdate orig, Player self, int graspIndex)
         {
             orig(self, graspIndex);
@@ -686,13 +1069,13 @@ namespace GravelSlug
             {
                 return;
             }
-            if (self.maulTimer > 15 && self.grasps[graspIndex].grabbed is Oracle)
+            if (self.maulTimer > 15 && self.grasps[graspIndex].grabbed is Oracle && GravelHasAbilities(self))
             {
                 self.standing = false;
                 self.Blink(5);
                 if (self.maulTimer % 3 == 0)
                 {
-                    Vector2 b = RWCustom.Custom.RNV() * 3f;
+                    Vector2 b = Custom.RNV() * 3f;
                     self.mainBodyChunk.pos += b;
                     self.mainBodyChunk.vel += b;
                 }
@@ -712,25 +1095,25 @@ namespace GravelSlug
                     }
                 }
                 vector /= num;
-                self.mainBodyChunk.vel += RWCustom.Custom.DirVec(self.mainBodyChunk.pos, vector) * 0.5f;
-                self.bodyChunks[1].vel -= RWCustom.Custom.DirVec(self.mainBodyChunk.pos, vector) * 0.6f;
+                self.mainBodyChunk.vel += Custom.DirVec(self.mainBodyChunk.pos, vector) * 0.5f;
+                self.bodyChunks[1].vel -= Custom.DirVec(self.mainBodyChunk.pos, vector) * 0.6f;
                 if (self.graphicsModule != null)
                 {
-                    if (!RWCustom.Custom.DistLess(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos, self.grasps[graspIndex].grabbedChunk.rad))
+                    if (!Custom.DistLess(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos, self.grasps[graspIndex].grabbedChunk.rad))
                     {
-                        (self.graphicsModule as PlayerGraphics).head.vel += RWCustom.Custom.DirVec(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos) * (self.grasps[graspIndex].grabbedChunk.rad - Vector2.Distance(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos));
+                        (self.graphicsModule as PlayerGraphics).head.vel += Custom.DirVec(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos) * (self.grasps[graspIndex].grabbedChunk.rad - Vector2.Distance(self.grasps[graspIndex].grabbedChunk.pos, (self.graphicsModule as PlayerGraphics).head.pos));
                     }
                     else if (self.maulTimer % 5 == 3)
                     {
-                        (self.graphicsModule as PlayerGraphics).head.vel += RWCustom.Custom.RNV() * 4f;
+                        (self.graphicsModule as PlayerGraphics).head.vel += Custom.RNV() * 4f;
                     }
                     if (self.maulTimer > 10 && self.maulTimer % 8 == 3)
                     {
-                        self.mainBodyChunk.pos += RWCustom.Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * 4f;
-                        self.grasps[graspIndex].grabbedChunk.vel += RWCustom.Custom.DirVec(vector, self.mainBodyChunk.pos) * 0.9f / self.grasps[graspIndex].grabbedChunk.mass;
+                        self.mainBodyChunk.pos += Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * 4f;
+                        self.grasps[graspIndex].grabbedChunk.vel += Custom.DirVec(vector, self.mainBodyChunk.pos) * 0.9f / self.grasps[graspIndex].grabbedChunk.mass;
                         for (int j = UnityEngine.Random.Range(0, 3); j >= 0; j--)
                         {
-                            self.room.AddObject(new WaterDrip(Vector2.Lerp(self.grasps[graspIndex].grabbedChunk.pos, self.mainBodyChunk.pos, UnityEngine.Random.value) + self.grasps[graspIndex].grabbedChunk.rad * RWCustom.Custom.RNV() * UnityEngine.Random.value, RWCustom.Custom.RNV() * 6f * UnityEngine.Random.value + RWCustom.Custom.DirVec(vector, (self.mainBodyChunk.pos + (self.graphicsModule as PlayerGraphics).head.pos) / 2f) * 7f * UnityEngine.Random.value + RWCustom.Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * UnityEngine.Random.value * self.EffectiveRoomGravity * 7f, false));
+                            self.room.AddObject(new WaterDrip(Vector2.Lerp(self.grasps[graspIndex].grabbedChunk.pos, self.mainBodyChunk.pos, UnityEngine.Random.value) + self.grasps[graspIndex].grabbedChunk.rad * Custom.RNV() * UnityEngine.Random.value, Custom.RNV() * 6f * UnityEngine.Random.value + Custom.DirVec(vector, (self.mainBodyChunk.pos + (self.graphicsModule as PlayerGraphics).head.pos) / 2f) * 7f * UnityEngine.Random.value + Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * UnityEngine.Random.value * self.EffectiveRoomGravity * 7f, false));
                         }
                         return;
                     }
@@ -740,19 +1123,19 @@ namespace GravelSlug
 
         private Player.ObjectGrabability Player_Grabability(On.Player.orig_Grabability orig, Player self, PhysicalObject obj)
         {
-            if (obj is Oracle)
+            if (obj is Oracle oracle)
             {
-                if((obj as Oracle).ID == Oracle.OracleID.SL)
+                if(oracle.ID == Oracle.OracleID.SL)
                 {
-                    if(!RWCustom.Custom.DistLess(self.bodyChunks[1].pos, new Vector3(1555,145), 475f))
+                    if(!Custom.DistLess(self.bodyChunks[1].pos, new Vector3(1555,145), 475f))
                     {
                         self.ReleaseGrasp(0);
                     }
                     return Player.ObjectGrabability.TwoHands;
                 }
-                if ((obj as Oracle).ID == MoreSlugcatsEnums.OracleID.CL)
+                if (oracle.ID == MoreSlugcatsEnums.OracleID.CL)
                 {
-                    if (!RWCustom.Custom.DistLess(self.bodyChunks[1].pos, new Vector3(2555, 155), 150f))
+                    if (!Custom.DistLess(self.bodyChunks[1].pos, new Vector3(2555, 155), 150f))
                     {
                         self.ReleaseGrasp(0);
                     }
@@ -766,7 +1149,7 @@ namespace GravelSlug
         private bool TubeWorm_JumpButton(On.TubeWorm.orig_JumpButton orig, TubeWorm self, Player plr)
         {
             orig(self, plr);
-            if(plr.SlugCatClass.value == "Gravelslug" && IsGravelFeral(plr) && self.tongues[0].Attached && plr.canJump < 1 && plr.bodyMode == Player.BodyModeIndex.Default)
+            if(GravelHasAbilities(plr) && plr.SlugCatClass.value == "Gravelslug" && IsGravelFeral(plr) && self.tongues[0].Attached && plr.canJump < 1 && plr.bodyMode == Player.BodyModeIndex.Default)
             {
                 if(plr.bodyChunks[0].vel.y < 0 && plr.bodyChunks[1].vel.y < 0)
                 {
@@ -786,7 +1169,7 @@ namespace GravelSlug
         private void World_SpawnGhost(On.World.orig_SpawnGhost orig, World self)
         {
             orig(self);
-            if(self.game.StoryCharacter.value == "Gravelslug" && self.worldGhost == null)
+            if (self.game.StoryCharacter.value == "Gravelslug" && self.worldGhost == null)
             {
                 if (self.game.setupValues.ghosts < 0)
                 {
@@ -814,11 +1197,16 @@ namespace GravelSlug
                 {
                     if (!flag)
                     {
-                        if (!(self.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo.ContainsKey(ghostID) || (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[ghostID] != 1)
+                        if (!(self.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo.ContainsKey(ghostID) || (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[ghostID] != 1 || ((self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap < 8 && ghostID == MoreSlugcatsEnums.GhostID.CL))
                         {
                             flag = false;
                         }
-                        else if (((self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karma == (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap && (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.reinforcedKarma && ghostID != MoreSlugcatsEnums.GhostID.CL) || (ModManager.Expedition && self.game.rainWorld.ExpeditionMode && (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karma == (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap))
+                        else if (((self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karma == (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap && (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.reinforcedKarma && ghostID != MoreSlugcatsEnums.GhostID.CL)
+                            || (ModManager.Expedition && self.game.rainWorld.ExpeditionMode && (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karma == (self.game.session as StoryGameSession).saveState.deathPersistentSaveData.karmaCap))
+                        {
+                            flag = true;
+                        }
+                        if ((self.game.session as StoryGameSession).saveState.cycleNumber < 0 && ghostID == MoreSlugcatsEnums.GhostID.CL)
                         {
                             flag = true;
                         }
@@ -839,7 +1227,7 @@ namespace GravelSlug
             }
         }
 
-        private bool PearlDeliveryChallenge_ValidForThisSlugcat(On.Expedition.PearlDeliveryChallenge.orig_ValidForThisSlugcat orig, Expedition.PearlDeliveryChallenge self, SlugcatStats.Name slugcat)
+        private bool PearlDeliveryChallenge_ValidForThisSlugcat(On.Expedition.PearlDeliveryChallenge.orig_ValidForThisSlugcat orig, PearlDeliveryChallenge self, SlugcatStats.Name slugcat)
         {
             if(slugcat.value == "Gravelslug")
             {
@@ -878,7 +1266,16 @@ namespace GravelSlug
                 {
                     if (self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.halcyonStolen || self.oracle.room.game.GetStorySession.saveState.miscWorldSaveData.SSaiThrowOuts > 0)
                     {
+                        if (!GravelHasAbilities(self.oracle.room.game.FirstRealizedPlayer))
+                        {
+                            return;
+                        }
                         self.dialogBox.Interrupt(self.Translate("..."), 60);
+                        return;
+                    }
+                    if (!GravelHasAbilities(self.oracle.room.game.FirstRealizedPlayer))
+                    {
+                        self.AirVoice(SoundID.SS_AI_Talk_1);
                         return;
                     }
                     float value = UnityEngine.Random.value;
@@ -909,6 +1306,11 @@ namespace GravelSlug
                 {
                     return;
                 }
+                if (!GravelHasAbilities(self.oracle.room.game.FirstRealizedPlayer))
+                {
+                    self.AirVoice(SoundID.SS_AI_Talk_5);
+                    return;
+                }
                 if (UnityEngine.Random.value < 0.15f)
                 {
                     self.dialogBox.Interrupt(self.Translate("You should leave quickly before the rain crushes you."), 60);
@@ -936,9 +1338,9 @@ namespace GravelSlug
 
         private void Creature_Violence(On.Creature.orig_Violence orig, Creature self, BodyChunk source, Vector2? directionAndMomentum, BodyChunk hitChunk, PhysicalObject.Appendage.Pos hitAppendage, Creature.DamageType type, float damage, float stunBonus)
         {
-            if(self is Player && (self as Player).SlugCatClass.value == "Gravelslug")
+            if(self is Player player && player.SlugCatClass.value == "Gravelslug" && GravelHasAbilities(player))
             {
-                if(!IsGravelFeral(self as Player))
+                if(!IsGravelFeral(player))
                 {
                     if(damage < 1.2)
                     {
@@ -946,16 +1348,16 @@ namespace GravelSlug
                         if (damage >= 1)
                         {
                             fatal = true;
-                            GravelRetaliate(self as Player);
+                            GravelRetaliate(player);
                         }
                         damage *= .4f;
                         if (fatal)
                         {
-                            (self as Player).playerState.permanentDamageTracking += damage;
+                            (player).playerState.permanentDamageTracking += damage;
                         }
-                        if((self as Player).playerState.permanentDamageTracking >= 1f)
+                        if((player).playerState.permanentDamageTracking >= 1f)
                         {
-                            (self as Player).Die();
+                            (player).Die();
                         }
                     }
                 }
@@ -982,17 +1384,18 @@ namespace GravelSlug
             {
                 if(self.room.game.cameras[0].hud != null && self.room.game.cameras[0].hud.foodMeter.survivalLimit != self.slugcatStats.foodToHibernate)
                 {
+                    bool flag = GravelQuestProgress(self.room.world.game) >= 8 && GravelOptionsMenu.KeepAbilities.Value;
+                    int food = self.slugcatStats.foodToHibernate - (flag ? 1 : 0);
                     FoodMeter foodbar = self.room.game.cameras[0].hud.foodMeter;
-                    foodbar.survivalLimit = self.slugcatStats.foodToHibernate;
-                    foodbar.MoveSurvivalLimit(foodbar.maxFood, true);
-                    //self.room.game.cameras[0].hud.foodMeter = new FoodMeter(foodbar.hud, self.slugcatStats.maxFood, self.slugcatStats.foodToHibernate);
+                    foodbar.survivalLimit = food;
+                    foodbar.MoveSurvivalLimit(foodbar.maxFood - (flag ? 1 : 0), true);
                 }
             }
         }
 
         public int GravelQuestProgress(RainWorldGame game)
         {
-            if(game.IsStorySession && !(ModManager.Expedition && game.rainWorld.ExpeditionMode) && game.GetStorySession.characterStats.name.value == "Gravelslug")
+            if(game.IsStorySession && game.GetStorySession.saveState.cycleNumber > 0 && !(ModManager.Expedition && game.rainWorld.ExpeditionMode) && game.StoryCharacter.value == "Gravelslug")
             {
                 DeathPersistentSaveData e = game.GetStorySession.saveState.deathPersistentSaveData;
                 return e.ghostsTalkedTo[GravelGhostID.GEWhite] + e.ghostsTalkedTo[GravelGhostID.GEYellow] + 
@@ -1003,25 +1406,38 @@ namespace GravelSlug
             return 0;
         }
 
-        private bool GravelHasAbilities(Player player) => player.room.game.IsArenaSession || (player.room.game.IsStorySession && IsGravelFeral(player) && !GravelOptionsMenu.KeepAbilities.Value);
-
-        private static bool IsGravelFeral(Player player)
+        private bool GravelHasAbilities(Player player)
         {
-            //return player.SlugCatClass.value == "Gravelslug" && player.Malnourished;
+            if (player.SlugCatClass.value == "Gravelslug" && player.room != null) 
+            {
+                if (player.room.game.IsArenaSession || (player.room.game.IsStorySession && (ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode)))
+                {
+                    return true;
+                }
+                return player.room.game.IsStorySession && (player.room.game.GetStorySession.characterStats.name.value != "Gravelslug" || player.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark || GravelOptionsMenu.KeepAbilities.Value);
+            }
+            return false;
+        }
+
+        private bool IsGravelFeral(Player player)
+        {
             if (player.SlugCatClass.value == "Gravelslug")
             {
+                if (!GravelHasAbilities(player))
+                {
+                    return false;
+                }
                 if(player.room != null && player.room.game.IsStorySession)
                 {
-                    return player.Malnourished || (player.room.world.region != null && player.room.world.name == "HR");
+                    return player.Malnourished/* || (player.room.world.region != null && player.room.world.name == "HR")*/;
                 }
-                else if(player.room != null && player.room.game.IsArenaSession)
+                if(player.room != null && player.room.game.IsArenaSession)
                 {
                     return player.playerState.permanentDamageTracking >= 0.05;
                 }
                 return false;
             }
             return false;
-            //return player.SlugCatClass.value == "Gravelslug" && (player.Malnourished || (player.playerState.permanentDamageTracking >= 0.05 && player.room.game.IsArenaSession) || (player.room.game.IsStorySession && player.room.world.region != null && player.room.world.name == "HR"));
         }
         private void GravelRetaliate(Player player)
         {
@@ -1029,16 +1445,16 @@ namespace GravelSlug
             {
                 Vector2 pos = player.firstChunk.pos;
                 //Color color = (player.graphicsModule as PlayerGraphics).CharacterForColor
-                player.room.AddObject(new Explosion(player.room, player, pos, 5, 200f, 10f, 0.25f, 60f, 0.3f, player, 0.8f, 0f, 0.7f));
+                player.room.AddObject(new Explosion(player.room, player, pos, 5, 200f, 10f, 0.25f, 60f, 0.5f, player, 0.8f, 0f, 0.7f));
                 for (int i = 0; i < 14; i++)
                 {
-                    player.room.AddObject(new Explosion.ExplosionSmoke(pos, RWCustom.Custom.RNV() * 5f * UnityEngine.Random.value, 1f));
+                    player.room.AddObject(new Explosion.ExplosionSmoke(pos, Custom.RNV() * 5f * UnityEngine.Random.value, 1f));
                 }
                 player.room.AddObject(new Explosion.ExplosionLight(pos, 160f, 1f, 3, Color.white));
                 player.room.AddObject(new ShockWave(pos, 300f, 0.165f, 4, false));
                 for (int j = 0; j < 20; j++)
                 {
-                    Vector2 a = RWCustom.Custom.RNV();
+                    Vector2 a = Custom.RNV();
                     player.room.AddObject(new Spark(pos + a * UnityEngine.Random.value * 40f, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), Color.white, null, 4, 18));
                 }
                 player.room.ScreenMovement(new Vector2?(pos), default(Vector2), 0.7f);
@@ -1047,13 +1463,15 @@ namespace GravelSlug
                     player.abstractPhysicalObject.stuckObjects[k].Deactivate();
                 }
                 player.room.PlaySound(SoundID.Fire_Spear_Explode, pos);
-                //player.room.InGameNoise(new Noise.InGameNoise(pos, 8000f, player, 1f));
+                player.room.PlaySound(SoundID.Coral_Circuit_Break, pos, 1f, 0.5f);
+                player.room.InGameNoise(new Noise.InGameNoise(pos, 8000f, player, 5f));
                 player.Stun(80);
                 for (int i = 0; i < player.room.abstractRoom.creatures.Count; i++)
                 {
-                    if (player.room.abstractRoom.creatures[i].realizedCreature != null && (player.room.abstractRoom.creatures[i].creatureTemplate.type == CreatureTemplate.Type.BrotherLongLegs || player.room.abstractRoom.creatures[i].creatureTemplate.type == CreatureTemplate.Type.DaddyLongLegs || player.room.abstractRoom.creatures[i].creatureTemplate.type == MoreSlugcatsEnums.CreatureTemplateType.TerrorLongLegs))
+                    if (player.room.abstractRoom.creatures[i].realizedCreature != null && player.room.abstractRoom.creatures[i].realizedCreature is DaddyLongLegs daddy)
                     {
-                        player.room.abstractRoom.creatures[i].realizedCreature.stun = Math.Max(player.room.abstractRoom.creatures[i].realizedCreature.stun, 100 + (int)(UnityEngine.Random.value * 200));
+                        //player.room.abstractRoom.creatures[i].realizedCreature.stun = Math.Max(player.room.abstractRoom.creatures[i].realizedCreature.stun, 100 + (int)(UnityEngine.Random.value * 200));
+                        daddy.room.AddObject(new Explosion(daddy.room, daddy, daddy.mainBodyChunk.pos, 1, 50f, 0f, 0.01f, 260f, 1f, player, 0.6f, 100f, 0f));
                     }
                 }
                 if (player.room.game.IsStorySession)
@@ -1061,16 +1479,17 @@ namespace GravelSlug
                     player.SetMalnourished(true);
                 }
             }
-            player.playerState.permanentDamageTracking += 0.1f;
+            SpookBoom(player);
+            GravelTakeDamage(player);
         }
 
         private int SlugcatStats_NourishmentOfObjectEaten(On.SlugcatStats.orig_NourishmentOfObjectEaten orig, SlugcatStats.Name slugcatIndex, IPlayerEdible eatenobject)
         {
-            if(slugcatIndex.value == "Gravelslug" && !(ModManager.Expedition && (eatenobject as PhysicalObject).room.game.rainWorld.ExpeditionMode) && !(eatenobject as PhysicalObject).room.game.IsArenaSession && (eatenobject as PhysicalObject).room.game.GetStorySession.saveState.cycleNumber != 0 && (eatenobject as PhysicalObject).room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] < -4)
+            if(slugcatIndex.value == "Gravelslug" && !(ModManager.Expedition && (eatenobject as PhysicalObject).room.game.rainWorld.ExpeditionMode) && !(eatenobject as PhysicalObject).room.game.IsArenaSession && GravelQuestProgress((eatenobject as PhysicalObject).room.game) > 4)
             {
                 if (eatenobject is not FireEgg){
                     int num = orig.Invoke(slugcatIndex, eatenobject);
-                    num *= 2 * (-(eatenobject as PhysicalObject).room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] - 4);
+                    num *= 2 * (GravelQuestProgress((eatenobject as PhysicalObject).room.game) - 4);
                     return num;
                 }
             }
@@ -1079,7 +1498,7 @@ namespace GravelSlug
 
         public Color SlugGhostColor(SlugcatGhost self)
         {
-            if(self.room.game.IsStorySession && self.room.game.GetStorySession.characterStats.name.value == "Gravelslug")
+            if(self.room.game.IsStorySession && self.room.game.StoryCharacter.value == "Gravelslug")
             {
                 name = self.room.abstractRoom.name;
                 if (name == "SI_A07")
@@ -1134,6 +1553,17 @@ namespace GravelSlug
                         //sLeaser.sprites[9].color = RainWorld.GoldRGB;
                         Color eyeColor = new Color(0.7098f, 0.80784f, 0.78823f);
                         Color fireColor = GravelFireColor(self.player);
+                        /*if (GravelOptionsMenu.RainbowFire.Value)
+                        {
+                            if(UnityEngine.Random.value > 0.2)
+                            {
+                                fireColor = sLeaser.sprites[9].color;
+                            }
+                            else
+                            {
+                                fireColor = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
+                            }
+                        }*/
                         if (!self.player.room.game.setupValues.arenaDefaultColors && !ModManager.CoopAvailable)
                         {
                             switch (self.player.playerState.playerNumber)
@@ -1163,9 +1593,14 @@ namespace GravelSlug
                         {
                             eyeColor = PlayerGraphics.CustomColorSafety(1);
                         }
+                        if (!GravelHasAbilities(self.player))
+                        {
+                            sLeaser.sprites[9].color = Color.white;
+                            return;
+                        }
                         eyeColor = Color.Lerp(eyeColor, fireColor, self.player.dead ? 0 : (float)self.player.playerState.permanentDamageTracking/2 + (float)self.player.playerState.permanentDamageTracking / 4 + (float)self.player.playerState.permanentDamageTracking / 8);
                         sLeaser.sprites[9].color = eyeColor;
-                        if (rCam.ghostMode > 0f && self.player.room.world.worldGhost.ghostID != MoreSlugcatsEnums.GhostID.CL)
+                        if (rCam.ghostMode > 0f && self.player.room.world.region.name != "CL")
                         {
                             //sLeaser.sprites[9].color = RainWorld.GoldRGB;
                             sLeaser.sprites[9].color = Color.Lerp(eyeColor, RainWorld.GoldRGB, rCam.ghostMode);
@@ -1197,7 +1632,7 @@ namespace GravelSlug
             {
                 List<string> list = new List<string>();
                 Color col = PlayerGraphics.DefaultSlugcatColor(slugcatID);
-                list.Add(RWCustom.Custom.colorToHex(col));
+                list.Add(Custom.colorToHex(col));
                 //list.Add("FFFFFF");
                 list.Add("b5cec9");
                 list.Add("00FFFF");
@@ -1224,6 +1659,10 @@ namespace GravelSlug
             if (self.slugcatStats.name.value == "Gravelslug" && self.objectInStomach == null && IsGravelFeral(self) && !self.dead)
             {
                 Color color = GravelFireColor(self);
+                if (GravelOptionsMenu.RainbowFire.Value)
+                {
+                    color = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
+                }
                 color.a = 0.22f;
                 return new Color?(color);
             }
@@ -1247,14 +1686,13 @@ namespace GravelSlug
                     self.ExitGame(false, false);
                 }
                 //self.manager.nextSlideshow = MoreSlugcatsEnums.SlideShowID.;
+                GravelOptionsMenu.BeatGravel.Value = true;
                 RainWorldGame.ForceSaveNewDenLocation(self, "SB_S01", true);
                 self.manager.statsAfterCredits = true;
                 self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.Credits);
+                return;
             }
-            else
-            {
-                orig(self);
-            }
+            orig(self);
         }
 
         private void RainWorldGame_GoToRedsGameOver(On.RainWorldGame.orig_GoToRedsGameOver orig, RainWorldGame self)
@@ -1265,14 +1703,15 @@ namespace GravelSlug
             }
             if (self.GetStorySession.saveState.saveStateNumber.value == "Gravelslug")
             {
-                if (self.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] == -8)
+                GravelOptionsMenu.BeatGravel.Value = true;
+                if (GravelQuestProgress(self) >= 8)
                 {
-                    self.manager.desiredCreditsSong = "RW_64 - Daze";
+                    GravelOptionsMenu.BeatGravelAlt.Value = true;
+                    self.manager.nextSlideshow = GravelSlideshowID.GravelAltEnd;
+                    RainWorldGame.ForceSaveNewDenLocation(self, "OE_SEXTRA", true);
+                    self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.SlideShow);
+                    return;
                 }
-                self.manager.statsAfterCredits = true;
-                //self.manager.nextSlideshow = MoreSlugcats.MoreSlugcatsEnums.SlideShowID.InvOutro;
-                self.manager.RequestMainProcessSwitch(ProcessManager.ProcessID.Credits);
-                return;
             }
             orig(self);
         }
@@ -1337,7 +1776,7 @@ namespace GravelSlug
         private void SSOracleRubicon_Update(On.SSOracleBehavior.SSOracleRubicon.orig_Update orig, SSOracleBehavior.SSOracleRubicon self)
         {
             orig(self);
-            if (self.oracle.room.game.GetStorySession.characterStats.name.value == "Gravelslug")
+            if (self.oracle.room.game.StoryCharacter.value == "Gravelslug")
             {
                 if (self.noticedPlayer && self.player != null && self.finalGhostFade < 34)
                 {
@@ -1366,7 +1805,7 @@ namespace GravelSlug
 
         private void PebblesConversation_AddEvents(On.SSOracleBehavior.PebblesConversation.orig_AddEvents orig, SSOracleBehavior.PebblesConversation self)
         {
-            if (self.owner.oracle.room.game.GetStorySession.characterStats.name.value == "Gravelslug" && self.id == MoreSlugcatsEnums.ConversationID.Pebbles_HR)
+            if (self.owner.oracle.room.game.StoryCharacter.value == "Gravelslug" && self.id == MoreSlugcatsEnums.ConversationID.Pebbles_HR)
             {
                 self.events = new List<Conversation.DialogueEvent>();
                 self.events.Add(new Conversation.TextEvent(self, 0, "Why won't you wake up?", 8));
@@ -1384,7 +1823,7 @@ namespace GravelSlug
         private void DaddyGraphics_ctor(On.DaddyGraphics.orig_ctor orig, DaddyGraphics self, PhysicalObject ow)
         {
             orig(self, ow);
-            if (self.daddy.room.game.IsStorySession && self.daddy.room.game.GetStorySession.characterStats.name.value == "Gravelslug" && self.daddy.room.world.name == "HR")
+            if (self.daddy.room.game.IsStorySession && self.daddy.room.game.StoryCharacter.value == "Gravelslug" && (self.daddy.room.world.name == "HR" || self.daddy.HDmode))
             {
                 if (self.daddy.HDmode)
                 {
@@ -1394,57 +1833,66 @@ namespace GravelSlug
             }
         }
 
-        private void DaddyLongLegs_ctor(On.DaddyLongLegs.orig_ctor orig, DaddyLongLegs self, AbstractCreature abstractCreature, World world)
-        {
-            orig(self, abstractCreature, world);
-            if (world.game.IsStorySession && world.game.GetStorySession.characterStats.name.value == "Gravelslug" && world.name == "HR")
-            {
-                if (self.HDmode)
-                {
-                    self.effectColor = Color.cyan;
-                }
-            }
-        }
-
         Creature GravelEaten;
-        private IEnumerator GravelPursuer(Room room, RWCustom.IntVector2 pos)
-        {
-            yield return new WaitForSeconds(2f);
-            if (GravelEaten != null && (GravelEaten.room != room || room.abstractRoom.name == "HR_AI" || room.abstractRoom.shelter))
-            {
 
-                GravelEaten.Destroy();
-                //GravelEaten.PlaceInRoom(newRoom);
-            }
-            if (GravelEaten == null || (GravelEaten.room != room && room.abstractRoom.name != "HR_AI" && !room.abstractRoom.shelter))
+        private void GravelEatenBanish()
+        {
+            (GravelEaten as DaddyLongLegs).eatObjects.Add(new DaddyLongLegs.EatObject(GravelEaten.mainBodyChunk, Vector2.Distance((GravelEaten as DaddyLongLegs).MiddleOfBody, GravelEaten.mainBodyChunk.pos)));
+            (GravelEaten as DaddyLongLegs).room.PlaySound(SoundID.Daddy_Digestion_LOOP, (GravelEaten as DaddyLongLegs).mainBodyChunk, false, 1f, 2f);
+        }
+        private IEnumerator GravelPursuer(Room room, IntVector2 pos)
+        {
+            bool roomFlag = room.abstractRoom.shelter || room.abstractRoom.gate || room.abstractRoom.name.Contains("_AI")/* || room.abstractRoom.altSubregionName.Contains("Depths") || room.abstractRoom.altSubregionName.Contains("Deep Reservoir")*/;
+
+            if (GravelEaten != null && (GravelEaten.room != room || roomFlag))
             {
-                AbstractCreature abstractCreature = new AbstractCreature(room.world, StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy), null, room.GetWorldCoordinate(pos), room.game.GetNewID());
-                abstractCreature.saveCreature = false;
-                abstractCreature.ignoreCycle = true;
-                abstractCreature.voidCreature = true;
-                abstractCreature.lavaImmune = true;
+                GravelEaten.Destroy();
+                GravelEaten = null;
+            }
+
+            yield return new WaitForSeconds(2f);
+
+            if (GravelEaten == null && !roomFlag)
+            {
+                AbstractCreature abstractCreature = new AbstractCreature
+                    (
+                    room.world,
+                    StaticWorld.GetCreatureTemplate(MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy),
+                    null,
+                    room.GetWorldCoordinate(pos),
+                    room.game.GetNewID()
+                    )
+                {
+                    saveCreature = false,
+                    ignoreCycle = true,
+                    voidCreature = true,
+                    HypothermiaImmune = true,
+                    lavaImmune = true,
+                    tentacleImmune = true
+
+                };
                 room.abstractRoom.AddEntity(abstractCreature);
                 abstractCreature.RealizeInRoom();
-                (abstractCreature.realizedCreature as DaddyLongLegs).SpitOutOfShortCut(pos, room, false);
-                //(abstractCreature.realizedCreature as DaddyLongLegs).Stun(20);
                 GravelEaten = abstractCreature.realizedCreature;
+                GravelEaten.SetLocalGravity(0);
+                (GravelEaten as DaddyLongLegs).squeezeFac = 0f;
+                (GravelEaten as DaddyLongLegs).SpitOutOfShortCut(pos, room, false);
                 room.AddObject(new ShockWave(new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y), 300f, 0.2f, 15, false));
                 room.PlaySound(SoundID.SS_AI_Give_The_Mark_Boom, new Vector2(GravelEaten.mainBodyChunk.pos.x, GravelEaten.mainBodyChunk.pos.y));
                 Debug.Log("Teleported GLL to " + room.abstractRoom.name);
             }
         }
-        private void Player_SpitOutOfShortCut(On.Player.orig_SpitOutOfShortCut orig, Player self, RWCustom.IntVector2 pos, Room newRoom, bool spitOutAllSticks)
+        private void Player_SpitOutOfShortCut(On.Player.orig_SpitOutOfShortCut orig, Player self, IntVector2 pos, Room newRoom, bool spitOutAllSticks)
         {
             orig(self, pos, newRoom, spitOutAllSticks);
             if (newRoom.dustStorm && DustStormSound != null)
             {
                 CurrentDustSoundRoom = newRoom;
             }
-            if (newRoom.game.IsStorySession && newRoom.game.GetStorySession.characterStats.name.value == "Gravelslug")
+            if (newRoom.game.IsStorySession && newRoom.game.StoryCharacter.value == "Gravelslug" && !newRoom.game.devToolsActive)
             {
-                if (newRoom.world.name == "HR" && newRoom.abstractRoom.name != "HR_FINAL")
+                if ((newRoom.world.name == "HR" /*|| newRoom.world.rainCycle.dayNightCounter > 2640*/) && newRoom.abstractRoom.name != "HR_FINAL")
                 {
-                    //self.SetMalnourished(true);
                     StartCoroutine(GravelPursuer(newRoom, pos));
                 }
             }
@@ -1452,7 +1900,7 @@ namespace GravelSlug
 
         private void VoidSeaScene_ArtificerEndUpdate(On.VoidSea.VoidSeaScene.orig_ArtificerEndUpdate orig, VoidSea.VoidSeaScene self, Player player, int timer)
         {
-            if (self.room.game.GetStorySession.characterStats.name.value == "Gravelslug")
+            if (self.room.game.StoryCharacter.value == "Gravelslug")
             {
                 /*if (timer == 720)
                 {
@@ -1500,7 +1948,7 @@ namespace GravelSlug
                             }
                             if (UnityEngine.Random.value < 0.5f)
                             {
-                                player.firstChunk.vel += RWCustom.Custom.DegToVec(UnityEngine.Random.value * 360f) * UnityEngine.Random.value;
+                                player.firstChunk.vel += Custom.DegToVec(UnityEngine.Random.value * 360f) * UnityEngine.Random.value;
                             }
                             if (player.input[0].y < 1)
                             {
@@ -1508,7 +1956,7 @@ namespace GravelSlug
                             }
                             if ((UnityEngine.Random.value > num3 * 2f || num3 == 0f) && UnityEngine.Random.value > 0.5f)
                             {
-                                player.room.AddObject(new Bubble(player.firstChunk.pos, player.firstChunk.vel + RWCustom.Custom.DegToVec(UnityEngine.Random.value * 360f) * Mathf.Lerp(6f, 0f, num3), false, false));
+                                player.room.AddObject(new Bubble(player.firstChunk.pos, player.firstChunk.vel + Custom.DegToVec(UnityEngine.Random.value * 360f) * Mathf.Lerp(6f, 0f, num3), false, false));
                             }
                         }
                         player.submerged = true;
@@ -1555,17 +2003,9 @@ namespace GravelSlug
             orig();
             GravelGhostID.RegisterValues();
         }
-        /*private void StoryGameSession_ctor(On.StoryGameSession.orig_ctor orig, StoryGameSession self, SlugcatStats.Name saveStateNumber, RainWorldGame game)
-        {
-            orig(self, saveStateNumber, game);
-            if (saveStateNumber.value == "Gravelslug" && game. && !(self.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] > 0))
-            {
-                self.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] = 0;
-            }
-        }*/
         DisembodiedDynamicSoundLoop DustStormSound;
         Room CurrentDustSoundRoom;
-        private void DustWave_Update(On.MoreSlugcats.DustWave.orig_Update orig, MoreSlugcats.DustWave self, bool eu)
+        private void DustWave_Update(On.MoreSlugcats.DustWave.orig_Update orig, DustWave self, bool eu)
         {
             orig(self, eu);
             if (self.room.ViewedByAnyCamera(self.pos, 3000f))
@@ -1584,7 +2024,7 @@ namespace GravelSlug
                 else
                 {
                     DustStormSound.Update();
-                    DustStormSound.Volume = 0.2f + Mathf.InverseLerp((float)self.room.world.rainCycle.cycleLength, 0f, (float)self.room.world.rainCycle.TimeUntilRain) * (self.room.roomSettings.RainIntensity * self.room.roomSettings.GetEffectAmount(MoreSlugcats.MoreSlugcatsEnums.RoomEffectType.DustWave));
+                    DustStormSound.Volume = 0.2f + Mathf.InverseLerp((float)self.room.world.rainCycle.cycleLength, 0f, (float)self.room.world.rainCycle.TimeUntilRain) * (self.room.roomSettings.RainIntensity * self.room.roomSettings.GetEffectAmount(DLCSharedEnums.RoomEffectType.DustWave));
                 }
             }
         }
@@ -1596,10 +2036,10 @@ namespace GravelSlug
             {
                 foreach (BodyChunk bodyChunk in self.bodyChunks)
                 {
-                    float x = self.room.game.globalRain.OutsidePushAround * self.room.roomSettings.GetEffectAmount(MoreSlugcats.MoreSlugcatsEnums.RoomEffectType.DustWave) * UnityEngine.Random.Range(6f, 8f);
-                    float y = self.room.game.globalRain.OutsidePushAround * self.room.roomSettings.GetEffectAmount(MoreSlugcats.MoreSlugcatsEnums.RoomEffectType.DustWave) * UnityEngine.Random.Range(10f, -10f);
+                    float x = self.room.game.globalRain.OutsidePushAround * self.room.roomSettings.GetEffectAmount(DLCSharedEnums.RoomEffectType.DustWave) * UnityEngine.Random.Range(6f, 8f);
+                    float y = self.room.game.globalRain.OutsidePushAround * self.room.roomSettings.GetEffectAmount(DLCSharedEnums.RoomEffectType.DustWave) * UnityEngine.Random.Range(10f, -10f);
                     Vector2 a = new Vector2(-4f * UnityEngine.Random.Range(0.75f, 1.25f) - x, 0.1f + y);
-                    a *= Mathf.InverseLerp((float)self.room.world.rainCycle.cycleLength, 0f, (float)self.room.world.rainCycle.TimeUntilRain) * (self.room.roomSettings.RainIntensity * self.room.roomSettings.GetEffectAmount(MoreSlugcats.MoreSlugcatsEnums.RoomEffectType.DustWave));
+                    a *= Mathf.InverseLerp((float)self.room.world.rainCycle.cycleLength, 0f, (float)self.room.world.rainCycle.TimeUntilRain) * (self.room.roomSettings.RainIntensity * self.room.roomSettings.GetEffectAmount(DLCSharedEnums.RoomEffectType.DustWave));
                     bodyChunk.vel += Vector2.Lerp(a, a * 0.08f, self.Submersion) * Mathf.InverseLerp(40f, 1f, self.TotalMass);
                     if (bodyChunk.owner is Creature && self.room.world.rainCycle.deathRainHasHit && self.room.game.globalRain.Intensity >= 1)
                     {
@@ -1619,12 +2059,7 @@ namespace GravelSlug
                     if (bodyChunk.owner is Player)
                     {
                         (bodyChunk.owner as Player).Blink(80);
-                        //(bodyChunk.owner as Player).playerState.permanentDamageTracking += 0.01;
                     }
-                    /*if (bodyChunk.owner is Creature && self.room.world.rainCycle.sunDownStartTime >= self.room.world.rainCycle.timer)
-                    {
-                        (bodyChunk.owner as Creature).Die();
-                    }*/
                 }
             }
         }
@@ -1650,12 +2085,55 @@ namespace GravelSlug
         {
             orig(self);
             GravelGutDissolveTimer = 120f;
+            GravelEaten = null;
         }
-
+        private void DaddyCorruption_InitiateSprites(On.DaddyCorruption.orig_InitiateSprites orig, DaddyCorruption self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
+        {
+            if (rCam.room.world.game.IsStorySession && rCam.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
+            {
+                sLeaser.sprites = new FSprite[self.totalSprites];
+                if (rCam.room.world.name == "HR")
+                {
+                    self.effectColor = Color.cyan;
+                    self.eyeColor = self.effectColor;
+                }
+                else if (rCam.room.world.region != null)
+                {
+                    self.effectColor = rCam.room.world.region.regionParams.corruptionEffectColor;
+                    self.eyeColor = rCam.room.world.region.regionParams.corruptionEyeColor;
+                }
+                else
+                {
+                    self.effectColor = new Color(0f, 0f, 1f);
+                    self.eyeColor = self.effectColor;
+                }
+                foreach (DaddyCorruption.Bulb bulb in self.allBulbs)
+                {
+                    bulb.InitiateSprites(sLeaser, rCam);
+                }
+                for (int i = 0; i < self.climbTubes.Count; i++)
+                {
+                    self.climbTubes[i].graphic.InitiateSprites(sLeaser, rCam);
+                }
+                for (int j = 0; j < self.restrainedDaddies.Count; j++)
+                {
+                    self.restrainedDaddies[j].graphic.InitiateSprites(sLeaser, rCam);
+                }
+                if (ModManager.MSC)
+                {
+                    for (int k = 0; k < self.neuronLegs.Count; k++)
+                    {
+                        self.neuronLegs[k].graphic.InitiateSprites(sLeaser, rCam);
+                    }
+                }
+                self.AddToContainer(sLeaser, rCam, null);
+                self.ApplyPalette(sLeaser, rCam, rCam.currentPalette);
+            }
+        }
         private void DaddyCorruption_ctor(On.DaddyCorruption.orig_ctor orig, DaddyCorruption self, Room room)
         {
             orig(self, room);
-            if (room.game.IsStorySession && room.world.region != null && room.game.GetStorySession.saveStateNumber.value == "Gravelslug" && room.world.name == "HR")
+            if (room.game.IsStorySession && room.world.region != null && room.game.GetStorySession.saveStateNumber.value == "Gravelslug" && (room.world.name == "HR"))
             {
                 self.effectColor = room.world.region.regionParams.corruptionEffectColor;
                 self.eyeColor = room.world.region.regionParams.corruptionEyeColor;
@@ -1692,47 +2170,6 @@ namespace GravelSlug
                         self.voidSea.fadeOutLights = true;
                     }
                 }
-
-                /*if (self.phase == VoidSea.VoidWorm.MainWormBehavior.Phase.SwimUp)
-                    {
-                        self.goalPos = new UnityEngine.Vector2(self.voidSea.sceneOrigo.x, self.voidSea.voidWormsAltitude + 7000f);
-                        if (self.worm.chunks[0].pos.y > self.voidSea.voidWormsAltitude + 7000f)
-                        {
-                            self.SwitchPhase(VoidSea.VoidWorm.MainWormBehavior.Phase.SwimDown);
-                        }
-                    }
-                    if (self.phase == VoidSea.VoidWorm.MainWormBehavior.Phase.SwimDown)
-                    {
-                        self.goalPos = self.worm.chunks[0].pos + new UnityEngine.Vector2(0f, 100000f);
-                        if (!self.voidSea.secondSpace)
-                        {
-                            if (self.worm.chunks[0].pos.y > 17000f && (int)self.voidSea.deepDivePhase > (int)VoidSea.VoidSeaScene.DeepDivePhase.CeilingDestroyed)
-                            {
-                                self.voidSea.DestroyCeiling();
-                            }
-                            if (self.worm.chunks[0].pos.y > 35000f && (int)self.voidSea.deepDivePhase > (int)VoidSea.VoidSeaScene.DeepDivePhase.CloseWormsDestroyed)
-                            {
-                                self.voidSea.DestroyAllWormsExceptMainWorm();
-                            }
-                            if (self.worm.chunks[0].pos.y > 200000f && (int)self.voidSea.deepDivePhase > (int)VoidSea.VoidSeaScene.DeepDivePhase.DistantWormsDestroyed)
-                            {
-                                self.voidSea.DestroyDistantWorms();
-                            }
-                            if (self.worm.chunks[0].pos.y > 440000f && (int)self.voidSea.deepDivePhase > (int)VoidSea.VoidSeaScene.DeepDivePhase.MovedIntoSecondSpace)
-                            {
-                                self.voidSea.MovedToSecondSpace();
-                            }
-                        }
-                        else if (self.worm.chunks[0].pos.y > 11000f)
-                        {
-                            self.SwitchPhase(VoidSea.VoidWorm.MainWormBehavior.Phase.DepthReached);
-                        }
-                        if (self.worm.chunks[0].pos.y > 35000f)
-                        {
-                            self.voidSea.fadeOutLights = true;
-                        }
-
-                    }*/
             }
         }
 
@@ -1753,7 +2190,7 @@ namespace GravelSlug
         }
         private void Player_GrabUpdate(On.Player.orig_GrabUpdate orig, Player self, bool eu)
         {
-            if (self.slugcatStats.name.value == "Gravelslug")
+            if (self.slugcatStats.name.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 if (self.spearOnBack != null)
                 {
@@ -1886,7 +2323,7 @@ namespace GravelSlug
                     }
                     if (self.input[0].pckp)
                     {
-                        if (ModManager.MSC && (self.FreeHand() == -1 || self.SlugCatClass == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Artificer) && self.GraspsCanBeCrafted())
+                        if (ModManager.MSC && (self.FreeHand() == -1 || self.SlugCatClass == MoreSlugcatsEnums.SlugcatStatsName.Artificer) && self.GraspsCanBeCrafted())
                         {
                             self.craftingObject = true;
                             flag3 = true;
@@ -1906,7 +2343,7 @@ namespace GravelSlug
                             flag4 = true;
                         }
                     }
-                    if (num5 > -1 && self.wantToPickUp < 1 && (self.input[0].pckp || self.eatCounter <= 15) && self.Consious && RWCustom.Custom.DistLess(self.mainBodyChunk.pos, self.mainBodyChunk.lastPos, 3.6f))
+                    if (num5 > -1 && self.wantToPickUp < 1 && (self.input[0].pckp || self.eatCounter <= 15) && self.Consious && Custom.DistLess(self.mainBodyChunk.pos, self.mainBodyChunk.lastPos, 3.6f))
                     {
                         if (self.graphicsModule != null)
                         {
@@ -1985,7 +2422,7 @@ namespace GravelSlug
                         self.maulTimer++;
                         if(UnityEngine.Random.value > 0.75)
                         {
-                            Fire_Breath(self, true, true);
+                            Fire_Breath(self, false, true);
                         }
                         if(UnityEngine.Random.value > 0.95)
                         {
@@ -2035,13 +2472,13 @@ namespace GravelSlug
                                 {
                                     for (int num12 = UnityEngine.Random.Range(8, 14); num12 >= 0; num12--)
                                     {
-                                        self.room.AddObject(new WaterDrip(UnityEngine.Vector2.Lerp(self.grasps[num11].grabbedChunk.pos, self.mainBodyChunk.pos, UnityEngine.Random.value) + self.grasps[num11].grabbedChunk.rad * RWCustom.Custom.RNV() * UnityEngine.Random.value, RWCustom.Custom.RNV() * 6f * UnityEngine.Random.value + RWCustom.Custom.DirVec(self.grasps[num11].grabbed.firstChunk.pos, (self.mainBodyChunk.pos + (self.graphicsModule as PlayerGraphics).head.pos) / 2f) * 7f * UnityEngine.Random.value + RWCustom.Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * UnityEngine.Random.value * self.EffectiveRoomGravity * 7f, false));
+                                        self.room.AddObject(new WaterDrip(Vector2.Lerp(self.grasps[num11].grabbedChunk.pos, self.mainBodyChunk.pos, UnityEngine.Random.value) + self.grasps[num11].grabbedChunk.rad * Custom.RNV() * UnityEngine.Random.value, Custom.RNV() * 6f * UnityEngine.Random.value + Custom.DirVec(self.grasps[num11].grabbed.firstChunk.pos, (self.mainBodyChunk.pos + (self.graphicsModule as PlayerGraphics).head.pos) / 2f) * 7f * UnityEngine.Random.value + Custom.DegToVec(Mathf.Lerp(-90f, 90f, UnityEngine.Random.value)) * UnityEngine.Random.value * self.EffectiveRoomGravity * 7f, false));
                                     }
                                     Creature creature = self.grasps[num11].grabbed as Creature;
                                     creature.SetKillTag(self.abstractCreature);
-                                    creature.Violence(self.bodyChunks[0], new UnityEngine.Vector2?(new UnityEngine.Vector2(0f, 0f)), self.grasps[num11].grabbedChunk, null, Creature.DamageType.Bite, 1f, 15f);
+                                    creature.Violence(self.bodyChunks[0], new UnityEngine.Vector2?(new Vector2(0f, 0f)), self.grasps[num11].grabbedChunk, null, Creature.DamageType.Bite, 1f, 15f);
                                     creature.stun = 5;
-                                    if (creature.abstractCreature.creatureTemplate.type == MoreSlugcats.MoreSlugcatsEnums.CreatureTemplateType.Inspector)
+                                    if (creature.abstractCreature.creatureTemplate.type == DLCSharedEnums.CreatureTemplateType.Inspector)
                                     {
                                         creature.Die();
                                     }
@@ -2106,8 +2543,8 @@ namespace GravelSlug
                     self.standing = true;
                     return;
                 }
-                self.eatMeat = RWCustom.Custom.IntClamp(self.eatMeat - 1, 0, 50);
-                self.maulTimer = RWCustom.Custom.IntClamp(self.maulTimer - 1, 0, 20);
+                self.eatMeat = Custom.IntClamp(self.eatMeat - 1, 0, 50);
+                self.maulTimer = Custom.IntClamp(self.maulTimer - 1, 0, 20);
                 if (!ModManager.MMF || self.input[0].y == 0)
                 {
                     if (flag2 && self.eatCounter > 0)
@@ -2233,7 +2670,7 @@ namespace GravelSlug
                                     //self.Regurgitate();
                                     self.SetMalnourished(true);
                                 }
-                                self.firstChunk.vel += new UnityEngine.Vector2(UnityEngine.Random.Range(-1f, 1f), 0f);
+                                self.firstChunk.vel += new Vector2(UnityEngine.Random.Range(-1f, 1f), 0f);
                                 self.Stun(20);
                             }
                             if (self.spearOnBack != null)
@@ -2252,7 +2689,7 @@ namespace GravelSlug
                             {
                                 if (self.grasps[num13] != null && self.CanBeSwallowed(self.grasps[num13].grabbed))
                                 {
-                                    self.bodyChunks[0].pos += RWCustom.Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
+                                    self.bodyChunks[0].pos += Custom.DirVec(self.grasps[num13].grabbed.firstChunk.pos, self.bodyChunks[0].pos) * 2f;
                                     self.SwallowObject(num13);
                                     if (self.spearOnBack != null)
                                     {
@@ -2327,13 +2764,13 @@ namespace GravelSlug
                 }
                 if (self.wantToThrow > 0)
                 {
-                    if (ModManager.MSC && MoreSlugcats.MMF.cfgOldTongue.Value && self.grasps[0] == null && self.grasps[1] == null && self.SaintTongueCheck())
+                    if (ModManager.MSC && MMF.cfgOldTongue.Value && self.grasps[0] == null && self.grasps[1] == null && self.SaintTongueCheck())
                     {
-                        UnityEngine.Vector2 vector2 = new UnityEngine.Vector2((float)self.flipDirection, 0.7f);
-                        UnityEngine.Vector2 normalized = vector2.normalized;
+                        Vector2 vector2 = new Vector2((float)self.flipDirection, 0.7f);
+                        Vector2 normalized = vector2.normalized;
                         if (self.input[0].y > 0)
                         {
-                            normalized = new UnityEngine.Vector2(0f, 1f);
+                            normalized = new Vector2(0f, 1f);
                         }
                         normalized = (normalized + self.mainBodyChunk.vel.normalized * 0.2f).normalized;
                         self.tongue.Shoot(normalized);
@@ -2419,13 +2856,13 @@ namespace GravelSlug
                     }
                     if (ModManager.MSC)
                     {
-                        if (self.grasps[0] != null && self.grasps[0].grabbed is MoreSlugcats.EnergyCell && self.mainBodyChunk.submersion > 0f)
+                        if (self.grasps[0] != null && self.grasps[0].grabbed is EnergyCell && self.mainBodyChunk.submersion > 0f)
                         {
                             flag7 = false;
                         }
-                        else if (self.grasps[0] != null && self.grasps[0].grabbed is MoreSlugcats.EnergyCell && self.canJump <= 0 && self.bodyMode != Player.BodyModeIndex.Crawl && self.bodyMode != Player.BodyModeIndex.CorridorClimb && self.bodyMode != Player.BodyModeIndex.ClimbIntoShortCut && self.animation != Player.AnimationIndex.HangFromBeam && self.animation != Player.AnimationIndex.ClimbOnBeam && self.animation != Player.AnimationIndex.AntlerClimb && self.animation != Player.AnimationIndex.VineGrab && self.animation != Player.AnimationIndex.ZeroGPoleGrab)
+                        else if (self.grasps[0] != null && self.grasps[0].grabbed is EnergyCell && self.canJump <= 0 && self.bodyMode != Player.BodyModeIndex.Crawl && self.bodyMode != Player.BodyModeIndex.CorridorClimb && self.bodyMode != Player.BodyModeIndex.ClimbIntoShortCut && self.animation != Player.AnimationIndex.HangFromBeam && self.animation != Player.AnimationIndex.ClimbOnBeam && self.animation != Player.AnimationIndex.AntlerClimb && self.animation != Player.AnimationIndex.VineGrab && self.animation != Player.AnimationIndex.ZeroGPoleGrab)
                         {
-                            (self.grasps[0].grabbed as MoreSlugcats.EnergyCell).Use(false);
+                            (self.grasps[0].grabbed as EnergyCell).Use(false);
                         }
                     }
                     if (!ModManager.MMF && self.grasps[0] != null && self.HeavyCarry(self.grasps[0].grabbed))
@@ -2446,7 +2883,7 @@ namespace GravelSlug
                         if (num20 > -1)
                         {
                             self.wantToPickUp = 0;
-                            if (!ModManager.MSC || self.SlugCatClass != MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Artificer || !(self.grasps[num20].grabbed is Scavenger))
+                            if (!ModManager.MSC || self.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Artificer || !(self.grasps[num20].grabbed is Scavenger))
                             {
                                 self.pyroJumpDropLock = 0;
                             }
@@ -2474,11 +2911,11 @@ namespace GravelSlug
                             if (ModManager.MSC && self.room != null && self.room.game.IsStorySession && self.room.game.GetStorySession.saveState.wearingCloak && self.AI == null)
                             {
                                 self.room.game.GetStorySession.saveState.wearingCloak = false;
-                                AbstractConsumable abstractConsumable = new AbstractConsumable(self.room.game.world, MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType.MoonCloak, null, self.room.GetWorldCoordinate(self.mainBodyChunk.pos), self.room.game.GetNewID(), -1, -1, null);
+                                AbstractConsumable abstractConsumable = new AbstractConsumable(self.room.game.world, MoreSlugcatsEnums.AbstractObjectType.MoonCloak, null, self.room.GetWorldCoordinate(self.mainBodyChunk.pos), self.room.game.GetNewID(), -1, -1, null);
                                 self.room.abstractRoom.AddEntity(abstractConsumable);
                                 abstractConsumable.pos = self.abstractCreature.pos;
                                 abstractConsumable.RealizeInRoom();
-                                (abstractConsumable.realizedObject as MoreSlugcats.MoonCloak).free = true;
+                                (abstractConsumable.realizedObject as MoonCloak).free = true;
                                 for (int num22 = 0; num22 < abstractConsumable.realizedObject.bodyChunks.Length; num22++)
                                 {
                                     abstractConsumable.realizedObject.bodyChunks[num22].HardSetPosition(self.mainBodyChunk.pos);
@@ -2606,7 +3043,7 @@ namespace GravelSlug
                 i => i.MatchLdarg(0),
                 i => i.MatchLdfld<PlayerGraphics>("player"),
                 i => i.MatchLdfld<Player>("SlugCatClass"),
-                i => i.MatchLdsfld<MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName>("Gourmand"),
+                i => i.MatchLdsfld<MoreSlugcatsEnums.SlugcatStatsName>("Gourmand"),
                 i => i.Match(OpCodes.Call), // this is a mess of generics; not matching this, but it's the equation call
                 i => i.Match(OpCodes.Brtrue_S)
             );
@@ -2617,88 +3054,19 @@ namespace GravelSlug
             c.Emit(OpCodes.Ldarg_0);
             c.EmitDelegate<Func<PlayerGraphics, bool>>(playerGraphics =>
             {
-                return playerGraphics.player.SlugCatClass.value == "Gravelslug";
+                return (playerGraphics.player.SlugCatClass.value == "Gravelslug");
             });
             // if it's true, proceed as usual
             c.Emit(OpCodes.Brtrue_S, proceedCond);
         }
-        private void DaddyDeadLeg_ApplyPalette(On.DaddyGraphics.DaddyDeadLeg.orig_ApplyPalette orig, DaddyGraphics.DaddyDeadLeg self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
-        {
-            orig(self, sLeaser, rCam, palette);
-            Color color = palette.blackColor;
-            if (self.owner.owner.room.game.IsStorySession && self.owner.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
-            {
-                if (self.owner.daddy.HDmode)
-                {
-                    color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.owner.owner.room.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
-                }
-                for (int i = 0; i < (sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length; i++)
-                {
-                    float floatPos = Mathf.InverseLerp(0.3f, 1f, (float)i / (float)((sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length - 1));
-                    (sLeaser.sprites[self.firstSprite] as TriangleMesh).verticeColors[i] = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(floatPos));
-                }
-                int num = 0;
-                for (int j = 0; j < self.bumps.Length; j++)
-                {
-                    sLeaser.sprites[self.firstSprite + 1 + j].color = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(self.bumps[j].pos.y));
-                    if (self.bumps[j].eyeSize > 0f)
-                    {
-                        sLeaser.sprites[self.firstSprite + 1 + self.bumps.Length + num].color = (self.owner.colorClass ? (self.owner.EffectColor * Mathf.Lerp(0.5f, 0.2f, self.deadness)) : color);
-                        num++;
-                    }
-                }
-            }
-        }
 
-        private void DaddyDangleTube_ApplyPalette(On.DaddyGraphics.DaddyDangleTube.orig_ApplyPalette orig, DaddyGraphics.DaddyDangleTube self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
+        private Color DaddyGraphics_RotBodyColor(On.DaddyGraphics.orig_RotBodyColor orig, DaddyGraphics self)
         {
-            orig(self, sLeaser, rCam, palette);
-            Color color = palette.blackColor;
-            if (self.owner.owner.room.game.IsStorySession && self.owner.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
+            if (self.owner.room != null && self.owner.room.game.IsStorySession && self.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug" && self.daddy.HDmode)
             {
-                if (self.owner.daddy.HDmode)
-                {
-                    color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.owner.owner.room.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
-                }
-                for (int i = 0; i < (sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length; i++)
-                {
-                    float floatPos = Mathf.InverseLerp(0.3f, 1f, (float)i / (float)((sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length - 1));
-                    (sLeaser.sprites[self.firstSprite] as TriangleMesh).verticeColors[i] = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(floatPos));
-                }
-                sLeaser.sprites[self.firstSprite].color = color;
-                for (int j = 0; j < self.bumps.Length; j++)
-                {
-                    sLeaser.sprites[self.firstSprite + 1 + j].color = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(self.bumps[j].pos.y));
-                }
+                return Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.owner.room.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
             }
-        }
-
-        private void DaddyTubeGraphic_ApplyPalette(On.DaddyGraphics.DaddyTubeGraphic.orig_ApplyPalette orig, DaddyGraphics.DaddyTubeGraphic self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
-        {
-            orig(self, sLeaser, rCam, palette);
-            Color color = palette.blackColor;
-            if (self.owner.owner.room.game.IsStorySession && self.owner.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
-            {
-                if (self.owner.daddy.HDmode)
-                {
-                    color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.owner.owner.room.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
-                }
-                for (int i = 0; i < (sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length; i++)
-                {
-                    float floatPos = Mathf.InverseLerp(0.3f, 1f, (float)i / (float)((sLeaser.sprites[self.firstSprite] as TriangleMesh).vertices.Length - 1));
-                    (sLeaser.sprites[self.firstSprite] as TriangleMesh).verticeColors[i] = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(floatPos));
-                }
-                int num = 0;
-                for (int j = 0; j < self.bumps.Length; j++)
-                {
-                    sLeaser.sprites[self.firstSprite + 1 + j].color = Color.Lerp(color, self.owner.EffectColor, self.OnTubeEffectColorFac(self.bumps[j].pos.y));
-                    if (self.bumps[j].eyeSize > 0f)
-                    {
-                        sLeaser.sprites[self.firstSprite + 1 + self.bumps.Length + num].color = (self.owner.colorClass ? self.owner.EffectColor : color);
-                        num++;
-                    }
-                }
-            }
+            return orig.Invoke(self);
         }
 
         private void DaddyGraphics_ApplyPalette(On.DaddyGraphics.orig_ApplyPalette orig, DaddyGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
@@ -2742,12 +3110,12 @@ namespace GravelSlug
             }
         }
 
-        private void OverWorld_WorldLoaded(On.OverWorld.orig_WorldLoaded orig, OverWorld self)
+        private void OverWorld_WorldLoaded(On.OverWorld.orig_WorldLoaded orig, OverWorld self, bool warpUsed)
         {
-            orig(self);
+            orig(self, warpUsed);
             if (self.currentSpecialWarp == OverWorld.SpecialWarpType.WARP_VS_HR && self.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
-                MoreSlugcats.MSCRoomSpecificScript.RoomWarp(self.game.FirstRealizedPlayer, self.game.FirstRealizedPlayer.room, "HR_GRAVINTRO", default(WorldCoordinate), true);
+                MSCRoomSpecificScript.RoomWarp(self.game.FirstRealizedPlayer, self.game.FirstRealizedPlayer.room, "HR_GRAVINTRO", default(WorldCoordinate), true);
             }
         }
 
@@ -2760,10 +3128,10 @@ namespace GravelSlug
             return orig.Invoke(self);
         }
 
-        private void Weapon_Thrown(On.Weapon.orig_Thrown orig, Weapon self, Creature thrownBy, UnityEngine.Vector2 thrownPos, UnityEngine.Vector2? firstFrameTraceFromPos, RWCustom.IntVector2 throwDir, float frc, bool eu)
+        private void Weapon_Thrown(On.Weapon.orig_Thrown orig, Weapon self, Creature thrownBy, Vector2 thrownPos, Vector2? firstFrameTraceFromPos, IntVector2 throwDir, float frc, bool eu)
         {
             orig(self, thrownBy, thrownPos, firstFrameTraceFromPos, throwDir, frc, eu);
-            if (thrownBy is Player)
+            if (thrownBy is Player && GravelHasAbilities(thrownBy as Player))
             {
                 if (IsGravelFeral(thrownBy as Player))
                 {
@@ -2776,10 +3144,6 @@ namespace GravelSlug
                     }
                 }
             }
-            else
-            {
-                return;
-            }
         }
 
         private void Player_UpdateBodyMode(On.Player.orig_UpdateBodyMode orig, Player self)
@@ -2788,14 +3152,6 @@ namespace GravelSlug
             orig(self);
             if (IsGravelFeral(self) && self.bodyMode == Player.BodyModeIndex.CorridorClimb)
             {
-                /*if(self.bodyMode == Player.BodyModeIndex.ZeroG && self.animation == Player.AnimationIndex.ZeroGSwim)
-                {
-                    if(self.canJump < 5 && self.input[0].jmp && !self.input[1].jmp)
-                    {
-                        self.mainBodyChunk.vel = self.mainBodyChunk.vel * 2f;
-                        GravelCough(self, true);
-                    }
-                }*/
                 if((self.horizontalCorridorSlideCounter == 25 || self.verticalCorridorSlideCounter == 22) && flag && self.input[0].jmp && !self.input[1].jmp)
                 {
                     self.mainBodyChunk.vel = self.mainBodyChunk.vel * 1.6f;
@@ -2812,7 +3168,7 @@ namespace GravelSlug
                 if (self.jumpBoost == 6)
                 {
                     self.mainBodyChunk.vel *= 1.5f;
-                    self.mainBodyChunk.vel.x *= 2.6f;
+                    self.mainBodyChunk.vel.x *= 2.2f;
                     GravelCough(self, true);
                 }
 
@@ -2823,10 +3179,6 @@ namespace GravelSlug
                     {
                         self.mainBodyChunk.vel *= 1.6f;
                     }
-                    /*if (self.animation == Player.AnimationIndex.ZeroGSwim)
-                    {
-                        self.mainBodyChunk.vel *= 1.1f;
-                    }*/
                     GravelCough(self, true);
                 }
 
@@ -2864,9 +3216,7 @@ namespace GravelSlug
 
             orig(self);
 
-            if (!wasDead && self.dead
-                && GravelGut.TryGet(self, out bool explode)
-                && explode)
+            if (!wasDead && GravelHasAbilities(self))
             {
                 /*if(self.abstractCreature != null)
                 {
@@ -2875,20 +3225,24 @@ namespace GravelSlug
                 StartCoroutine(VoidFireSpasm(self, true, false));
                 if (GravelEaten != null && !GravelEaten.dead)
                 {
-                    GravelEaten.Die();
+                    GravelEatenBanish();
                 }
             }
         }
         private void Player_SwallowObject(On.Player.orig_SwallowObject orig, Player self, int grasp)
         {
             orig(self, grasp);
+            if (self.SlugCatClass.value == "Gravelslug" && !GravelHasAbilities(self))
+            {
+                return;
+            }
             bool flag = false;
             bool flag2 = false;
-            if (GravelGut.TryGet(self, out bool tum) && tum && self.input[0].y > 0 && self.FoodInStomach > 0)
+            if (self.SlugCatClass.value == "Gravelslug" && self.input[0].y > 0 && self.FoodInStomach > 0)
             {
                 if (self.objectInStomach.type != AbstractPhysicalObject.AbstractObjectType.ScavengerBomb
                     && self.objectInStomach.type != AbstractPhysicalObject.AbstractObjectType.Spear
-                    && self.objectInStomach.type != MoreSlugcatsEnums.AbstractObjectType.SingularityBomb)
+                    && self.objectInStomach.type != DLCSharedEnums.AbstractObjectType.SingularityBomb)
                 {
                     GravelDissolveCraft(self);
                     return;
@@ -2899,7 +3253,7 @@ namespace GravelSlug
                 }
                 flag2 = true;
             }
-            if (tum && ((self.FoodInStomach < self.MaxFoodInStomach) || (ModManager.ModdingEnabled && GravelFatty)) || flag2)
+            if (self.SlugCatClass.value == "Gravelslug" && ((self.FoodInStomach < self.MaxFoodInStomach) || (ModManager.ModdingEnabled && GravelFatty)) || flag2)
             {
                 if(self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.NSHSwarmer
                     || self.objectInStomach.type == MoreSlugcatsEnums.AbstractObjectType.Spearmasterpearl)
@@ -2917,7 +3271,7 @@ namespace GravelSlug
                     || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.WaterNut)
                     {
                         //self.AddFood(1);
-                        self.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.Duck_Pop, self.firstChunk.pos, 1f, 1f + UnityEngine.Random.value);
+                        self.room.PlaySound(DLCSharedEnums.SharedSoundID.Duck_Pop, self.firstChunk.pos, 1f, 1f + UnityEngine.Random.value);
                         GravelBiteParticle(self, 1);
                         if (self.room.game.IsArenaSession)
                         {
@@ -2984,9 +3338,9 @@ namespace GravelSlug
                                 GravelDissolveCraft(self);
                                 return;
                             }
-                            else
+                            if (s.poison > 0f)
                             {
-
+                                self.room.AddObject(new PoisonInjecter(self, 0.22f, (10f + UnityEngine.Random.value * 8f) * (4.4f -(s.poison * 3.4f)), new HSLColor(s.poisonHue, 1f, 0.5f).rgb));
                             }
                             if (!s.needle)
                             {
@@ -3007,7 +3361,7 @@ namespace GravelSlug
                                         float num = self.room.game.session.creatureCommunities.LikeOfPlayer(CreatureCommunities.CommunityID.Scavengers, self.room.game.world.RegionNumber, self.playerState.playerNumber);
                                         if (num < 0.9f)
                                         {
-                                            self.room.game.session.creatureCommunities.InfluenceLikeOfPlayer(CreatureCommunities.CommunityID.Scavengers, self.room.game.world.RegionNumber, self.playerState.playerNumber, RWCustom.Custom.LerpMap(num, -0.5f, 0.9f, -0.3f, 0f), 0.5f, 0f);
+                                            self.room.game.session.creatureCommunities.InfluenceLikeOfPlayer(CreatureCommunities.CommunityID.Scavengers, self.room.game.world.RegionNumber, self.playerState.playerNumber, Custom.LerpMap(num, -0.5f, 0.9f, -0.3f, 0f), 0.5f, 0f);
                                             Debug.Log("pearl desecration noticed!");
                                         }
                                     }
@@ -3018,17 +3372,17 @@ namespace GravelSlug
                     }
                     else if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.ScavengerBomb
                         || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.FirecrackerPlant
-                        || self.objectInStomach.type == MoreSlugcatsEnums.AbstractObjectType.SingularityBomb)
+                        || self.objectInStomach.type == DLCSharedEnums.AbstractObjectType.SingularityBomb)
                     {
                         if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.ScavengerBomb
-                        || self.objectInStomach.type == MoreSlugcatsEnums.AbstractObjectType.SingularityBomb)
+                        || self.objectInStomach.type == DLCSharedEnums.AbstractObjectType.SingularityBomb)
                         {
-                            self.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.Duck_Pop, self.firstChunk.pos, 1f, 1f + UnityEngine.Random.value);
+                            self.room.PlaySound(DLCSharedEnums.SharedSoundID.Duck_Pop, self.firstChunk.pos, 1f, 1f + UnityEngine.Random.value);
                             GravelBiteParticle(self, 1);
                         }
-                        if (self.objectInStomach.type == MoreSlugcatsEnums.AbstractObjectType.SingularityBomb)
+                        if (self.objectInStomach.type == DLCSharedEnums.AbstractObjectType.SingularityBomb)
                         {
-                            AbstractPhysicalObject abstractPhysicalObject = new(self.abstractCreature.Room.world, MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, null, self.room.GetWorldCoordinate(self.mainBodyChunk.pos), self.abstractCreature.Room.world.game.GetNewID());
+                            AbstractPhysicalObject abstractPhysicalObject = new(self.abstractCreature.Room.world, DLCSharedEnums.AbstractObjectType.SingularityBomb, null, self.room.GetWorldCoordinate(self.mainBodyChunk.pos), self.abstractCreature.Room.world.game.GetNewID());
                             abstractPhysicalObject.RealizeInRoom();
                             if (self.room != null)
                             {
@@ -3057,14 +3411,18 @@ namespace GravelSlug
                     else if (self.objectInStomach is AbstractCreature)
                     {
                         self.room.PlaySound(SoundID.Vulture_Tentacle_Grab_Terrain, self.firstChunk.pos, 1f, 1.5f + UnityEngine.Random.value);
-                        if (!self.room.game.rainWorld.ExpeditionMode && !self.room.game.IsArenaSession && self.room.game.GetStorySession.saveState.cycleNumber != 0 && self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] < -4)
+                        if (self.room.game.IsArenaSession && self.room.game.GetStorySession.playerSessionRecords != null)
                         {
-                            for (int i = 0; i > (self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] + 4); i--)
+                            self.room.game.GetStorySession.playerSessionRecords[self.playerState.playerNumber].AddEat(self.objectInStomach.realizedObject);
+                        }
+                        if (!self.room.game.rainWorld.ExpeditionMode && !self.room.game.IsArenaSession && GravelQuestProgress(self.room.game) > 4)
+                        {
+                            for (int i = 0; i < (GravelQuestProgress(self.room.game) - 4); i++)
                             {
                                 self.AddQuarterFood();
                             }
                         }
-                        else
+                        else if (self.room.game.IsArenaSession)
                         {
                             self.AddFood(1);
                         }
@@ -3082,13 +3440,27 @@ namespace GravelSlug
                             (abstractPhysicalObject.realizedObject as PuffBall).Explode();
                             self.Stun(15);
                         }
-                        /*if (GravelVinki && self.objectInStomach.type == )
+                        if (GravelVinki && self.objectInStomach.type.value == "SprayCan")
                         {
-                            AbstractPhysicalObject abstractPhysicalObject = new AbstractPhysicalObject(self.abstractCreature.Room.world, AbstractPhysicalObject.AbstractObjectType.PuffBall, null, self.room.GetWorldCoordinate(self.mainBodyChunk.pos), self.abstractCreature.Room.world.game.GetNewID());
-                            abstractPhysicalObject.RealizeInRoom();
-                            (abstractPhysicalObject.realizedObject as Spraycan).Explode();
+                            /*self.room.abstractRoom.AddEntity(self.objectInStomach);
+                            self.objectInStomach.RealizeInRoom();
+                            self.objectInStomach.pos = self.abstractCreature.pos;
+                            (self.objectInStomach.realizedObject as Weapon).HitByWeapon((self.objectInStomach.realizedObject as Weapon));*/
+                            self.room.PlaySound(SoundID.Firecracker_Disintegrate, self.firstChunk.pos, 0.6f, UnityEngine.Random.Range(0.8f, 1.2f));
+                            int amount = UnityEngine.Random.Range(2, 5);
+                            if (GravelOptionsMenu.AteVinkiCan.Value != true)
+                            {
+                                GravelOptionsMenu.AteVinkiCan.Value = true;
+                                GravelOptionsMenu.RainbowFire.Value = true;
+                                self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("Unlocked new config for Gravel Eater!"), 40, 240, false, false);
+                            }
+                            for (int i = 0; i < amount; i++)
+                            {
+                                Fire_Breath(self, true, true);
+                            }
+                            self.AddQuarterFood();
                             self.Stun(15);
-                        }*/
+                        }
                         if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.NeedleEgg)
                         {
                             AbstractCreature abstractCreature;
@@ -3127,16 +3499,16 @@ namespace GravelSlug
                 int amount = UnityEngine.Random.Range(1, 4);
                 for (int i = 0; i < amount; i++)
                 {
-                    player.room.AddObject(new ScavengerBomb.BombFragment(player.firstChunk.pos, RWCustom.Custom.RNV() * Mathf.Lerp(1f, 5f, UnityEngine.Random.value)));
+                    player.room.AddObject(new ScavengerBomb.BombFragment(player.firstChunk.pos, Custom.RNV() * Mathf.Lerp(1f, 5f, UnityEngine.Random.value)));
                 }
             }
             else if (type == 2)
             {
-                player.room.AddObject(new ExplosiveSpear.SpearFragment(player.firstChunk.pos, RWCustom.Custom.RNV() * Mathf.Lerp(1f, 5f, UnityEngine.Random.value)));
+                player.room.AddObject(new ExplosiveSpear.SpearFragment(player.firstChunk.pos, Custom.RNV() * Mathf.Lerp(1f, 5f, UnityEngine.Random.value)));
             }
             for (int i = 0; i < 3; i++)
             {
-                player.room.AddObject(new WaterDrip(player.firstChunk.pos, RWCustom.Custom.DegToVec(UnityEngine.Random.value * 360f) * Mathf.Lerp(1f, 10f, UnityEngine.Random.value), false));
+                player.room.AddObject(new WaterDrip(player.firstChunk.pos, Custom.DegToVec(UnityEngine.Random.value * 360f) * Mathf.Lerp(1f, 10f, UnityEngine.Random.value), false));
             }
         }
         private void SLOracleBehaviorHasMark_SpecialEvent(On.SLOracleBehaviorHasMark.orig_SpecialEvent orig, SLOracleBehaviorHasMark self, string eventName)
@@ -3150,8 +3522,13 @@ namespace GravelSlug
                 }
             }
         }
-        private void CLOracleBehavior_InitateConversation(On.MoreSlugcats.CLOracleBehavior.orig_InitateConversation orig, MoreSlugcats.CLOracleBehavior self)
+        private void CLOracleBehavior_InitateConversation(On.MoreSlugcats.CLOracleBehavior.orig_InitateConversation orig, CLOracleBehavior self)
         {
+            if (self.oracle.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug" && !GravelHasAbilities(self.oracle.room.game.FirstRealizedPlayer))
+            {
+                self.AirVoice(SoundID.SS_AI_Talk_2);
+                return;
+            }
             orig(self);
             if (self.oracle.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
@@ -3314,7 +3691,8 @@ namespace GravelSlug
                 return new string[]
                 {
                 "OE",
-                "MS"
+                "MS",
+                "HR"
                 };
             }
             else
@@ -3325,7 +3703,7 @@ namespace GravelSlug
         private void Player_SleepUpdate(On.Player.orig_SleepUpdate orig, Player self)
         {
             orig(self);
-            if (self.slugcatStats.name.value == "Gravelslug")
+            if (self.slugcatStats.name.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 if (self.sleepCounter == 10)
                 {
@@ -3336,20 +3714,20 @@ namespace GravelSlug
         private void PlayerGraphics_Update(On.PlayerGraphics.orig_Update orig, PlayerGraphics self)
         {
             orig(self);
-            if (self.player.slugcatStats.name.value == "Gravelslug")
+            if (self.player.slugcatStats.name.value == "Gravelslug" && self.player.room != null)
             {
                 self.markAlpha = 0f;
-                if(self.player.room.game.IsStorySession && self.player.room.game.GetStorySession.characterStats.name.value == "Gravelslug")
+                if (self.player.room.game.IsStorySession && self.player.room.game.StoryCharacter.value == "Gravelslug")
                 {
                     self.lastMarkAlpha = 0f;
                 }
                 if (IsGravelFeral(self.player) && !self.player.dead && self.player.stun < 10)
                 {
-                    self.drawPositions[0, 0] += RWCustom.Custom.RNV() * UnityEngine.Random.value * 0.4f * 2f;
-                    self.drawPositions[0, 1] += RWCustom.Custom.RNV() * UnityEngine.Random.value * 0.4f * 2f;
-                    self.head.pos += RWCustom.Custom.RNV() * UnityEngine.Random.value * 0.4f * 1f;
+                    self.drawPositions[0, 0] += Custom.RNV() * UnityEngine.Random.value * 0.4f * 2f;
+                    self.drawPositions[0, 1] += Custom.RNV() * UnityEngine.Random.value * 0.4f * 2f;
+                    self.head.pos += Custom.RNV() * UnityEngine.Random.value * 0.4f * 1f;
                 }
-                if (!self.player.dead && self.player.FoodInStomach < self.player.MaxFoodInStomach && self.objectLooker.currentMostInteresting != null && !(self.player.bodyMode == Player.BodyModeIndex.Crawl || self.player.bodyMode == Player.BodyModeIndex.WallClimb || self.player.animation == Player.AnimationIndex.StandOnBeam || self.player.animation == Player.AnimationIndex.AntlerClimb) && self.objectLooker.currentMostInteresting is Rock && RWCustom.Custom.DistLess(self.player.mainBodyChunk.pos, self.objectLooker.mostInterestingLookPoint, 80f) && self.player.room.VisualContact(self.player.mainBodyChunk.pos, self.objectLooker.mostInterestingLookPoint))
+                if (GravelHasAbilities(self.player) && !self.player.dead && self.player.FoodInStomach < self.player.MaxFoodInStomach && self.objectLooker.currentMostInteresting != null && !(self.player.bodyMode == Player.BodyModeIndex.Crawl || self.player.bodyMode == Player.BodyModeIndex.WallClimb || self.player.animation == Player.AnimationIndex.StandOnBeam || self.player.animation == Player.AnimationIndex.AntlerClimb) && self.objectLooker.currentMostInteresting is Rock && Custom.DistLess(self.player.mainBodyChunk.pos, self.objectLooker.mostInterestingLookPoint, 80f) && self.player.room.VisualContact(self.player.mainBodyChunk.pos, self.objectLooker.mostInterestingLookPoint))
                 {
                     int num19 = -1;
                     for (int n = 0; n < 2; n++)
@@ -3369,8 +3747,8 @@ namespace GravelSlug
                         self.hands[num19].absoluteHuntPos = self.objectLooker.mostInterestingLookPoint;
                         if (self.player.Consious && self.objectLooker.currentMostInteresting != null && !(self.objectLooker.currentMostInteresting is Creature && self.objectLooker.currentMostInteresting is not Fly))
                         {
-                            self.drawPositions[0, 0] += RWCustom.Custom.DirVec(self.drawPositions[0, 0], self.objectLooker.mostInterestingLookPoint) * 5f;
-                            self.head.vel += RWCustom.Custom.DirVec(self.drawPositions[0, 0], self.objectLooker.mostInterestingLookPoint) * 2f;
+                            self.drawPositions[0, 0] += Custom.DirVec(self.drawPositions[0, 0], self.objectLooker.mostInterestingLookPoint) * 5f;
+                            self.head.vel += Custom.DirVec(self.drawPositions[0, 0], self.objectLooker.mostInterestingLookPoint) * 2f;
                         }
                     }
                 }
@@ -3378,7 +3756,7 @@ namespace GravelSlug
         }
         public bool GravelThreatCheck(RainCycle self)
         {
-            return self.world.game.IsArenaSession || self.TimeUntilRain >= 2400 || (ModManager.MSC && self.world.game.IsStorySession && (self.world.game.GetStorySession.saveStateNumber == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Saint || self.world.game.GetStorySession.saveStateNumber == MoreSlugcats.MoreSlugcatsEnums.SlugcatStatsName.Rivulet || self.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")) || (self.world.game.IsStorySession && self.world.region != null && (self.world.region.name == "SS" || (ModManager.MSC && (self.world.region.name == "RM" || self.world.region.name == "DM" || self.world.region.name == "LC" || self.world.region.name == "OE"))));
+            return self.world.game.IsArenaSession || self.TimeUntilRain >= 2400 || (ModManager.MSC && self.world.game.IsStorySession && (self.world.game.GetStorySession.saveStateNumber == MoreSlugcatsEnums.SlugcatStatsName.Saint || self.world.game.GetStorySession.saveStateNumber == MoreSlugcatsEnums.SlugcatStatsName.Rivulet || self.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")) || (self.world.game.IsStorySession && self.world.region != null && (self.world.region.name == "SS" || (ModManager.MSC && (self.world.region.name == "RM" || self.world.region.name == "DM" || self.world.region.name == "LC" || self.world.region.name == "OE"))));
         }
         private static void MoonOverride(On.SLOracleBehaviorHasMark.MoonConversation.orig_AddEvents orig, SLOracleBehaviorHasMark.MoonConversation self)
         {
@@ -3534,12 +3912,34 @@ namespace GravelSlug
                 if (self.id == MoreSlugcatsEnums.ConversationID.Ghost_CL) //check for which ghost this is
                 {
                     self.events = new List<Conversation.DialogueEvent>(); //remove all events already existing
-                    self.events.Add(new Conversation.TextEvent(self, 0, "My presence has been revealed to you now, little one.", 7));
-                    self.events.Add(new Conversation.TextEvent(self, 0, "Your attunement has become much closer to my own.", 7));
-                    self.events.Add(new Conversation.TextEvent(self, 0, "Through awakening you, I have seen through your eyes and met your grievances.", 8));
-                    self.events.Add(new Conversation.TextEvent(self, 0, "And here I am again, to set forth another simple creature.", 7));
-                    self.events.Add(new Conversation.TextEvent(self, 0, "I will continue to be alongside you until the time is right.", 7));
-                    self.events.Add(new Conversation.TextEvent(self, 0, "What you decide to do with your new chance at life is yours alone.", 8));
+                    if (self.ghost.room.game.GetStorySession.saveState.deathPersistentSaveData.GoExploreMessage == false)
+                    {
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Hello, little one.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "I have awakened you from your deep slumber.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "A being such as I cannot get another chance such as this.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Here I am again, to set forth another simple creature.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "I will continue to be alongside you until the time is right.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "What you decide to do with your new chance at life is yours alone.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Return to me when you need me most.", 8));
+                        //self.ghost.room.game.GetStorySession.saveState.deathPersistentSaveData.GoExploreMessage = true;
+                    }
+                    else if (self.ghost.room.game.GetStorySession.saveState.deathPersistentSaveData.karma < 8)
+                    {
+
+                        self.events.Add(new Conversation.TextEvent(self, 0, "My presence has been revealed to you once again, little one.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "I will help you to the best of my abilities.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Seek memories of your kind, visions of times beyond your own.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "I have your sight, and you have mine.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Use it well.", 7));
+                    }
+                    else
+                    {
+                        self.events.Add(new Conversation.TextEvent(self, 0, "My full presence has been revealed to you now, little one.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Your attunement has become much closer to our own.", 7));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Through awakening you, I have seen through your eyes and met your grievances.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "And here I am again, to set you forth to a world beyond my reach.", 8));
+                        self.events.Add(new Conversation.TextEvent(self, 0, "Take care of yourself little one.", 8));
+                    }
                 }
                 /*if (self.id == MoreSlugcats.MoreSlugcatsEnums.ConversationID.Ghost_UG) //check for which ghost this is
                 {
@@ -3556,7 +3956,7 @@ namespace GravelSlug
         private void Player_ObjectEaten(On.Player.orig_ObjectEaten orig, Player self, IPlayerEdible edible)
         {
             orig(self, edible);
-            if (self.slugcatStats.name.value == "Gravelslug")
+            if (self.slugcatStats.name.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 if (edible.GetType() == typeof(KarmaFlower))
                 {
@@ -3577,57 +3977,6 @@ namespace GravelSlug
                     return;
                 }
             }
-            /*if (self.room.dustStorm && self.dangerType == RoomRain.DangerType.Thunder && self.room.world.name == "SI")
-            {
-                Debug.Log("gabbagoo");
-                for (int i = 0; i < self.room.physicalObjects.Length; i++)
-                {
-                    for (int j = 0; j < self.room.physicalObjects[i].Count; j++)
-                    {
-                        for (int k = 0; k < self.room.physicalObjects[i][j].bodyChunks.Length; k++)
-                        {
-                            BodyChunk bodyChunk = self.room.physicalObjects[i][j].bodyChunks[k];
-                            RWCustom.IntVector2 tilePosition = self.room.GetTilePosition(bodyChunk.pos + new Vector2(Mathf.Lerp(-bodyChunk.rad, bodyChunk.rad, UnityEngine.Random.value), Mathf.Lerp(-bodyChunk.rad, bodyChunk.rad, UnityEngine.Random.value)));
-                            float num = self.room.blizzardGraphics.blizzardIntensity;
-                            bool flag = false;
-                            if (self.rainReach[RWCustom.Custom.IntClamp(tilePosition.x, 0, self.room.TileWidth - 1)] < tilePosition.y)
-                            {
-                                flag = true;
-                                num = Mathf.Max(self.intensity);
-                            }
-                            if (num > 0f)
-                            {
-                                if (bodyChunk.ContactPoint.y < 0)
-                                {
-                                    bodyChunk.vel += RWCustom.Custom.DegToVec(Mathf.Lerp(-30f, 0f, UnityEngine.Random.value) + (float)(num * 16)) * UnityEngine.Random.value * (flag ? 9f : 4f) * num / bodyChunk.mass;
-                                }
-                                else
-                                {
-                                    BodyChunk bodyChunk2 = bodyChunk;
-                                    bodyChunk2.vel.y = bodyChunk2.vel.y - Mathf.Pow(UnityEngine.Random.value, 5f) * 16.5f * num / bodyChunk.mass;
-                                }
-                                if (bodyChunk.owner is Creature)
-                                {
-                                    if (Mathf.Pow(UnityEngine.Random.value, 1.2f) * 2f * (float)bodyChunk.owner.bodyChunks.Length < num)
-                                    {
-                                        (bodyChunk.owner as Creature).Stun(UnityEngine.Random.Range(1, 1 + (int)(9f * num)));
-                                    }
-                                    if (bodyChunk == (bodyChunk.owner as Creature).mainBodyChunk)
-                                    {
-                                        (bodyChunk.owner as Creature).rainDeath += num / 20f;
-                                    }
-                                    if (num > 0.5f && (bodyChunk.owner as Creature).rainDeath > 1f && UnityEngine.Random.value < 0.025f)
-                                    {
-                                        (bodyChunk.owner as Creature).Die();
-                                    }
-                                }
-                                bodyChunk.vel += RWCustom.Custom.DegToVec(Mathf.Lerp(90f, 270f, UnityEngine.Random.value)) * UnityEngine.Random.value * 5f * num;
-                            }
-                        }
-                    }
-                }
-                return;
-            }*/
             orig(self);
         }
         private void SLOrcacleState_ctor(On.SLOrcacleState.orig_ctor orig, SLOrcacleState self, bool isDebugState, SlugcatStats.Name saveStateNumber)
@@ -3654,7 +4003,7 @@ namespace GravelSlug
 
             for (int i = 0; i < self.room.abstractRoom.creatures.Count; i++)
             {
-                if (self.room.abstractRoom.creatures[i].creatureTemplate.type == CreatureTemplate.Type.Slugcat && (player.slugcatStats.name.value == "Gravelslug") && !self.State.angryAt.Contains(self.room.abstractRoom.creatures[i].ID))
+                if (self.room.abstractRoom.creatures[i].creatureTemplate.type == CreatureTemplate.Type.Slugcat && (player.slugcatStats.name.value == "Gravelslug" && GravelHasAbilities(player)) && !self.State.angryAt.Contains(self.room.abstractRoom.creatures[i].ID))
                 {
                     self.State.angryAt.Add(self.room.abstractRoom.creatures[i].ID);
                 }
@@ -3664,23 +4013,22 @@ namespace GravelSlug
         private void Player_Destroy(On.Player.orig_Destroy orig, Player self)
         {
             orig(self);
-            if (GravelGut.TryGet(self, out bool explode)
-                && explode)
+            if (self.SlugCatClass.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 GravelKaboom(self, true);
                 if (GravelEaten != null && !GravelEaten.dead)
                 {
-                    GravelEaten.Die();
+                    GravelEatenBanish();
                 }
             }
             
         }
-        float GravelGutDissolveTimer = 120f;
+        static float GravelGutDissolveTimer = 120f;
 
         private void GravelDissolveUpdate(RainWorldGame game)
         {
             AbstractCreature firstAlivePlayer = game.FirstAlivePlayer;
-            if (!(game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null))
+            if (!(game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null) && !(game.IsStorySession && game.StoryCharacter.value == "Gravelslug" && !game.GetStorySession.saveState.deathPersistentSaveData.theMark))
             {
                 return;
             }
@@ -3710,36 +4058,13 @@ namespace GravelSlug
                         else 
                         {
                             GravelDissolveReset(player.room.game);
-                            if (!(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.GetStorySession.characterStats.name.value == "Gravelslug" && player.room.game.GetStorySession.saveState.cycleNumber != 0 && (player.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] == -8 && !player.Malnourished)
+                            if (!(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.StoryCharacter.value == "Gravelslug" && GravelQuestProgress(game) >= 8 && !player.Malnourished)
                             {
                                 player.Stun(60);
                             }
                             else
                             {
-                                if (IsGravelFeral(player))
-                                {
-                                    player.playerState.permanentDamageTracking += 0.2;
-                                }
-                                else
-                                {
-                                    if (player.room.game.IsStorySession)
-                                    {
-                                        player.SetMalnourished(true);
-                                    }
-                                    else
-                                    {
-                                        player.playerState.permanentDamageTracking += 0.1;
-                                    }
-                                }
-                                player.aerobicLevel = 0.6f + ((float)player.playerState.permanentDamageTracking);
-
-                                player.room.game.cameras[0].hud.foodMeter.refuseCounter += 80;
-                                StartCoroutine(VoidFireSpasm(player, false, false));
-                                player.room.PlaySound(SoundID.Fire_Spear_Ignite, player.firstChunk.pos, 0.4f, UnityEngine.Random.Range(0.8f, 1.2f));
-                                if (player.playerState.permanentDamageTracking >= 1.0)
-                                {
-                                    player.Die();
-                                }
+                                GravelTakeDamage(player);
                             }
                         }
                     }
@@ -3815,8 +4140,44 @@ namespace GravelSlug
             StartCoroutine(VoidFireSpasm(player, false, false));
             player.room.PlaySound(SoundID.Fire_Spear_Ignite, player.firstChunk.pos, 0.3f, UnityEngine.Random.Range(1.0f, 1.4f));
             GravelDissolveReset(player.room.game);
-            TummyItem(player);
-            player.SubtractFood(1);
+            if (player.FoodInStomach > 0)
+            {
+                TummyItem(player);
+                player.SubtractFood(1);
+            }
+            else
+            {
+                GravelTakeDamage(player);
+            }
+            
+        }
+
+        private void GravelTakeDamage(Player player)
+        {
+            if (IsGravelFeral(player))
+            {
+                player.playerState.permanentDamageTracking += 0.2;
+            }
+            else
+            {
+                if (player.room.game.IsStorySession)
+                {
+                    player.SetMalnourished(true);
+                }
+                else
+                {
+                    player.playerState.permanentDamageTracking += 0.1;
+                }
+            }
+            player.aerobicLevel = 0.6f + ((float)player.playerState.permanentDamageTracking);
+
+            player.room.game.cameras[0].hud.foodMeter.refuseCounter += 80;
+            StartCoroutine(VoidFireSpasm(player, false, false));
+            player.room.PlaySound(SoundID.Fire_Spear_Ignite, player.firstChunk.pos, 0.4f, UnityEngine.Random.Range(0.8f, 1.2f));
+            if (player.playerState.permanentDamageTracking >= 1.0)
+            {
+                player.Die();
+            }
         }
 
         private void GravelDissolveReset(RainWorldGame game)
@@ -3862,6 +4223,13 @@ namespace GravelSlug
             if (player.FoodInStomach <= 0)
             {
                 player.playerState.permanentDamageTracking += 0.35f;
+                player.slugcatStats.bodyWeightFac = 1.3f;
+                player.slugcatStats.visualStealthInSneakMode = 0.15f;
+                player.slugcatStats.loudnessFac = 1.4f;
+                player.slugcatStats.throwingSkill = 1;
+                player.slugcatStats.runspeedFac = 1.1f;
+                player.slugcatStats.poleClimbSpeedFac = 1.1f;
+                player.slugcatStats.corridorClimbSpeedFac = 1.05f;
                 if (player.playerState.permanentDamageTracking >= 1f)
                 {
                     player.Die();
@@ -3874,7 +4242,7 @@ namespace GravelSlug
         }
         private void GravelDissolveSubtract(float amount, RainWorldGame game, bool ignoreReduction)
         {
-            if (GravelOptionsMenu.DisableTimer.Value)
+            if (GravelOptionsMenu.DisableTimer.Value || GravelQuestProgress(game) >= 8)
             {
                 return;
             }
@@ -3883,7 +4251,7 @@ namespace GravelSlug
                 GravelGutDissolveTimer = 0;
                 return;
             }
-            if (game.GetStorySession.characterStats.name.value == "Gravelslug" && game.GetStorySession.saveState.cycleNumber != 0 && !(ModManager.Expedition && game.rainWorld.ExpeditionMode))
+            if (game.StoryCharacter.value == "Gravelslug" && GravelQuestProgress(game) != 0 && !(ModManager.Expedition && game.rainWorld.ExpeditionMode))
             {
                 if (ignoreReduction)
                 {
@@ -3891,7 +4259,7 @@ namespace GravelSlug
                 }
                 else
                 {
-                    GravelGutDissolveTimer -= amount - (amount * (-game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] / 8));
+                    GravelGutDissolveTimer -= amount - (amount * (GravelQuestProgress(game) / 8));
                 }
             }
             else
@@ -3908,38 +4276,39 @@ namespace GravelSlug
             }
         }
 
-        private void Fire_Breath(Player player, bool reset, bool eu)
+        private void Fire_Breath(Player player, bool rainbow, bool eu)
         {
             Color FireColor = GravelFireColor(player);
-            FireSmoke coughSmoke = new FireSmoke(player.room);
-            if (reset)
+            if (rainbow || GravelOptionsMenu.RainbowFire.Value)
             {
-                player.Blink(30);
+                FireColor = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
             }
+            FireSmoke coughSmoke = new FireSmoke(player.room);
+            player.Blink(30);
             if (coughSmoke != null)
             {
                 coughSmoke.Update(eu);
 
                 if (player.room.ViewedByAnyCamera(player.firstChunk.pos, 300f) && player.Submersion != 1f)
                 {
-                    coughSmoke.EmitSmoke(player.firstChunk.pos, RWCustom.Custom.RNV(), FireColor, 20);
+                    coughSmoke.EmitSmoke(player.firstChunk.pos, Custom.RNV(), FireColor, 20);
                 }
-                //coughSmoke.Destroy();
             }
         }
         private void Player_Update(On.Player.orig_Update orig, Player self, bool eu)
         {
             orig(self, eu);
-            if (self.SlugCatClass.value == "Gravelslug")
+            if (self.SlugCatClass.value == "Gravelslug" && self.room != null)
             {
-                /*if(self.playerState.permanentDamageTracking >= 5 && self.abstractCreature.tentacleImmune)
-                {
-                    self.abstractCreature.tentacleImmune = false;
-                }else if (!self.abstractCreature.tentacleImmune)
-                {
-                    self.abstractCreature.tentacleImmune = true;
-                }*/
-                if (self.room.game.IsStorySession && !(ModManager.Expedition && self.room.game.rainWorld.ExpeditionMode) && self.abstractCreature.world.game.StoryCharacter.value == "Gravelslug" && self.AI == null && self.room.game.session is StoryGameSession && (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerMaulTutorial && !(self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage && !self.Malnourished)
+
+                //Nourishment tutorial
+
+                if (!GravelOptionsMenu.SkipTutorial.Value && self.room.game.IsStorySession && 
+                    !(ModManager.Expedition && self.room.game.rainWorld.ExpeditionMode) && self.abstractCreature.world.game.StoryCharacter.value == "Gravelslug" && 
+                    self.AI == null && self.room.game.session is StoryGameSession && 
+                    (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerMaulTutorial && 
+                    !(self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage && 
+                    !self.Malnourished)
                 {
                     (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage = true;
                     //self.room.AddObject(new GhostHunch(self.room, null));
@@ -3947,7 +4316,12 @@ namespace GravelSlug
                     self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("You are heavier and more durable in this state, you sink in water and can withstand some projectiles."), 0, 240, false, true);
                     self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("You can spit out rocks and empty your stomach to reduce weight and return to the Malnourished state."), 0, 240, false, true);
                 }
-                /*if(self.room.game.IsStorySession && self.room.game.GetStorySession.saveState.cycleNumber != 0 && (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] == 2 && self.wantToJump > 0 && self.input[0].pckp && self.canJump <= 0 && self.input[0].y > 0 && self.KarmaIsReinforced)
+
+                //Mountains Abound ability
+
+                if(GravelOptionsMenu.MountainsAbound.Value && self.room.game.IsStorySession && 
+                    self.KarmaIsReinforced && !IsGravelFeral(self) && self.wantToJump > 0 && 
+                    self.input[0].pckp && self.canJump <= 0 && self.input[0].y > 0)
                 {
                     self.room.game.GetStorySession.saveState.deathPersistentSaveData.reinforcedKarma = false;
                     self.room.game.cameras[0].hud.karmaMeter.reinforceAnimation = 0;
@@ -3962,28 +4336,16 @@ namespace GravelSlug
                             self.room.abstractRoom.creatures[i].realizedCreature.stun = Math.Max(self.room.abstractRoom.creatures[i].realizedCreature.stun, 100 + (int)(UnityEngine.Random.value * 200));
                         }
                     }
-                }*/
-                if (GravelEaten != null && GravelEaten.abstractCreature.abstractAI != null && self != null)
-                {
-                    GravelEaten.abstractCreature.abstractAI.SetDestination(self.room.GetWorldCoordinate(self.mainBodyChunk.pos));
-                    (GravelEaten as DaddyLongLegs).AI.preyTracker.AddPrey((GravelEaten as DaddyLongLegs).AI.tracker.RepresentationForCreature(self.abstractCreature, true));
                 }
-                /*if (IsGravelFeral(self))
+
+
+                if (!GravelHasAbilities(self)) //ability check
                 {
-                    self.dynamicRunSpeed[0] = self.slugcatStats.runspeedFac - (self.FoodInStomach * 0.5f);
-                    self.dynamicRunSpeed[1] = self.slugcatStats.runspeedFac - (self.FoodInStomach * 0.5f);
+                    return;
                 }
-                else
-                {
-                    self.dynamicRunSpeed[0] = self.slugcatStats.runspeedFac + (self.FoodInStomach * 0.5f);
-                    self.dynamicRunSpeed[1] = self.slugcatStats.runspeedFac + (self.FoodInStomach * 0.5f);
-                }*/
-                //float buoy = 1f - (self.FoodInStomach * 0.3f);
-                //self.buoyancy -= self.FoodInStomach;
-                /*if (self.room.game.IsStorySession && !self.dead)
-                {
-                    GravelDissolveUpdate(self);
-                }*/
+
+                //cosmetic flame breath
+
                 if (IsGravelFeral(self) && !self.inShortcut && self.Submersion < 0.5f && self.aerobicLevel > 0.4f)
                 {
                     Vector2 pos = self.firstChunk.pos;
@@ -3997,16 +4359,23 @@ namespace GravelSlug
                             Vector2 vector = playerGraphics.lookDirection * 8f;
                             Vector2 b = new Vector2(0f, 5f);
                             Color color = GravelFireColor(self);
-                            if ((self as Player).bodyMode == Player.BodyModeIndex.Crawl)
+                            if (GravelOptionsMenu.RainbowFire.Value)
+                            {
+                                color = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
+                            }
+                            if (self.bodyMode == Player.BodyModeIndex.Crawl)
                             {
                                 vector = playerGraphics.lookDirection * 16f;
-                                b.x = (float)(self as Player).flipDirection * 20f;
+                                b.x = (float)self.flipDirection * 20f;
                             }
-                            GravelFlameBreath firebreath = new GravelFlameBreath(pos + b + vector, RWCustom.Custom.RNV() * 0.2f + vector * 0.1f + self.firstChunk.vel * 0.25f, UnityEngine.Random.value * 20f + 5f, color);
+                            GravelFlameBreath firebreath = new GravelFlameBreath(pos + b + vector, Custom.RNV() * 0.2f + vector * 0.1f + self.firstChunk.vel * 0.25f, UnityEngine.Random.value * 20f + 5f, color);
                             self.room.AddObject(firebreath);
                         }
                     }
                 }
+
+                //Sinking mechanic
+
                 if (self.room.game.IsStorySession)
                 {
                     if (self.Submersion > 0.1f && self.room.abstractRoom.name != "HR_FINAL")
@@ -4025,15 +4394,22 @@ namespace GravelSlug
                             }
                             else
                             {
-                                self.slowMovementStun = Math.Max(self.slowMovementStun, (int)RWCustom.Custom.LerpMap(self.aerobicLevel, 0.7f, 0.4f, 6f, 0f));
+                                self.slowMovementStun = Math.Max(self.slowMovementStun, (int)Custom.LerpMap(self.aerobicLevel, 0.7f, 0.4f, 6f, 0f));
                                 self.mainBodyChunk.vel.y -= ((8 * foodPercentage) * 0.04f);
+                                if(self.airInLungs <= 0 && foodPercentage == 1 && GravelOptionsMenu.Sank.Value != true)
+                                {
+                                    GravelOptionsMenu.Sank.Value = true;
+                                    self.room.game.cameras[0].hud.textPrompt.AddMessage(self.room.game.manager.rainWorld.inGameTranslator.Translate("Unlocked new config for Gravel Eater!"), 40, 240, false, false);
+                                }
                             }
                         }
                     }
                 }
+
+                //Roll Removal for nourished GE
+
                 if (!IsGravelFeral(self) && self.animation == Player.AnimationIndex.Roll)
                 {
-                    //self.animation = Player.AnimationIndex.DownOnFours;
                     self.Stun(40);
                     Debug.Log("Denied roll");
                 }
@@ -4042,49 +4418,62 @@ namespace GravelSlug
         private void Player_ctor(On.Player.orig_ctor orig, Player self, AbstractCreature abstractCreature, World world)
         {
             orig(self, abstractCreature, world);
-            /*if (self.slugcatStats.name.value == "Gravelslug" && world.game.IsArenaSession)
+            if (GravelEaten != null)
             {
-                self.SetMalnourished(true);
-            }*/
+                GravelEaten = null;
+            }
             if(self.slugcatStats.name.value == "Gravelslug")
             {
-                //self.abstractCreature.tentacleImmune = true;
                 if (world.game.IsStorySession && (!ModManager.Expedition || (ModManager.Expedition && !self.room.game.rainWorld.ExpeditionMode)))
                 {
-                    if (world.game.GetStorySession.characterStats.name.value == "Gravelslug")
+                    if (world.game.StoryCharacter.value == "Gravelslug")
                     {
                         GravelDissolveReset(world.game);
-                        if (world.game.GetStorySession.saveState.cycleNumber != 0 && !world.game.GetStorySession.saveState.progression.currentSaveState.malnourished)
+                        if (world.game.GetStorySession.saveState.cycleNumber <= 0)
                         {
-                            if (self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] < -4)
+                            if (GravelQuestProgress(world.game) > 4)
                             {
                                 self.slugcatStats.foodToHibernate = 4;
-                                if (self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] <= -8)
+                                if (GravelQuestProgress(world.game) >= 8)
                                 {
+                                    //temp fix for old quest tracking method
+                                    if (world.game.GetStorySession.saveState.deathPersistentSaveData.karmaCap >= 8 && self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] == 0)
+                                    {
+                                        self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] = 1;
+                                    }
+
+                                    if (self.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark)
+                                    {
+                                        self.room.game.GetStorySession.saveState.deathPersistentSaveData.theMark = false;
+                                    }
+                                    self.slugcatStats.runspeedFac = 1f;
+                                    self.slugcatStats.bodyWeightFac = 1f;
+                                    self.slugcatStats.visualStealthInSneakMode = 0.5f;
+                                    self.slugcatStats.loudnessFac = 1f;
+                                    self.slugcatStats.poleClimbSpeedFac = 1f;
+                                    self.slugcatStats.corridorClimbSpeedFac = 1f;
                                     self.slugcatStats.maxFood -= 1;
+                                    if (world.game.GetStorySession.saveState.progression.currentSaveState.malnourished)
+                                    {
+                                        self.slugcatStats.foodToHibernate = 7;
+                                        self.slugcatStats.throwingSkill = 0;
+                                        self.slugcatStats.corridorClimbSpeedFac = 1f;
+                                        self.slugcatStats.bodyWeightFac = Mathf.Min(self.slugcatStats.bodyWeightFac, 0.9f);
+                                        self.slugcatStats.runspeedFac = 0.875f;
+                                        self.slugcatStats.poleClimbSpeedFac = 0.8f;
+                                        self.slugcatStats.corridorClimbSpeedFac = 0.86f;
+                                    }
                                 }
-                                //self.slugcatStats.maxFood += 5 + self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW];
                             }
                             else
                             {
-                                self.slugcatStats.foodToHibernate += self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW];
+                                self.slugcatStats.foodToHibernate -= GravelQuestProgress(world.game);
                             }
-                            /*if (self.KarmaCap > 5)
-                            {
-                                self.slugcatStats.foodToHibernate -= self.KarmaCap - 5;
-                            }
-                            //self.slugcatStats.foodToHibernate = (9 - self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW]);
-                            //self.slugcatStats.foodToHibernate = (7 + self.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW]);*/
                         }
-                        /*if (self.room.abstractRoom.name == "SL_AI")
-                        {
-                            self.sceneFlag = false;
-                        }*/
-                        //self.sceneFlag = true;
                         if (self.room.world.region.name == "HR")
                         {
                             world.game.GetStorySession.saveState.deathPersistentSaveData.ripPebbles = true;
-                            self.SetMalnourished(true);
+                            //self.SetMalnourished(true);
                         }
                         else if (world.game.GetStorySession.saveState.deathPersistentSaveData.ripPebbles == true)
                         {
@@ -4105,24 +4494,25 @@ namespace GravelSlug
         private void NoStick(On.DartMaggot.orig_ShotUpdate orig, DartMaggot self)
         {
             orig(self);
-            UnityEngine.Vector2 vector = self.firstChunk.pos + self.firstChunk.vel;
-            SharedPhysics.CollisionResult collisionResult = SharedPhysics.TraceProjectileAgainstBodyChunks(null, self.room, self.firstChunk.pos, ref vector, 1f, 1, self.shotBy, false);
-            if (self.Stuck && ((collisionResult.chunk.owner as Player).SlugCatClass.value == "Gravelslug") && !IsGravelFeral(collisionResult.chunk.owner as Player) && self.sleepCounter <= 300)
+            if(self.mode == DartMaggot.Mode.StuckInChunk && self.stuckInChunk.owner is Player player)
             {
-                self.Unstuck();
-                self.firstChunk.vel /= 8;
-                Debug.Log("dart maggot failed to pierce Gravel Eater");
+                if(GravelHasAbilities(player) && (player.SlugCatClass.value == "Gravelslug") && !IsGravelFeral(player))
+                {
+                    self.Unstuck();
+                    self.firstChunk.vel *= Custom.RNV() * Mathf.Lerp(1f, 5f, UnityEngine.Random.value);
+                    Debug.Log("dart maggot failed to pierce Gravel Eater");
+                }
             }
         }
         private bool BoxORocks(On.Player.orig_SlugSlamConditions orig, Player self, PhysicalObject otherObject)
         {
-            if (self.SlugCatClass.value == "Gravelslug")
+            if (self.SlugCatClass.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 if (IsGravelFeral(self))
                 {
                     return false;
                 }
-                if ((otherObject as Creature).abstractCreature.creatureTemplate.type == MoreSlugcats.MoreSlugcatsEnums.CreatureTemplateType.SlugNPC)
+                if ((otherObject as Creature).abstractCreature.creatureTemplate.type == MoreSlugcatsEnums.CreatureTemplateType.SlugNPC)
                 {
                     return false;
                 }
@@ -4158,7 +4548,7 @@ namespace GravelSlug
                 {
                     return false;
                 }
-                UnityEngine.Vector2 vel = self.bodyChunks[0].vel;
+                Vector2 vel = self.bodyChunks[0].vel;
                 if (self.bodyChunks[1].vel.magnitude < vel.magnitude)
                 {
                     vel = self.bodyChunks[1].vel;
@@ -4175,7 +4565,7 @@ namespace GravelSlug
                         return false;
                     }
                 }
-                return !ModManager.CoopAvailable || !(otherObject is Player) || RWCustom.Custom.rainWorld.options.friendlyFire;
+                return !ModManager.CoopAvailable || !(otherObject is Player) || Custom.rainWorld.options.friendlyFire;
             }
             else
             {
@@ -4183,70 +4573,9 @@ namespace GravelSlug
             }
 
         }
-        private static void GravelStart(On.MoreSlugcats.MSCRoomSpecificScript.orig_AddRoomSpecificScript orig, Room room)
-        {
-            orig(room);
-            string name = room.abstractRoom.name;
-            if (name == "CL_GRAVEL" && room.game.IsStorySession && room.abstractRoom.firstTimeRealized && room.game.GetStorySession.saveState.cycleNumber == 0 && room.game.GetStorySession.characterStats.name.value == "Gravelslug" && !(ModManager.Expedition && room.game.manager.rainWorld.ExpeditionMode))
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("It's Gravel-Eatin' Time!");
-                }
-                room.AddObject(new CL_GRAVEL(room));
-            }
-            /*if (name == "SL_AI" && room.game.IsStorySession && room.game.GetStorySession.lastEverMetMoon && room.game.GetStorySession.saveState.denPosition == "SL_AI" && room.game.GetStorySession.characterStats.name.value == "Gravelslug")
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("Tea Time!");
-                }
-                room.AddObject(new SL_AI_GRAVEL(room));
-            }*/
-            if (room.game.IsStorySession && (name == "MS_COMMS" || name == "SI_A07" || name == "LF_H01" || name == "CC_H01SAINT" || name == "GW_A25" || name == "DS_RIVSTART" || name == "OE_CAVE02" || name == "SB_GOR02RIV" || name == "SU_A53") && room.game.GetStorySession.characterStats.name.value == "Gravelslug" && !(ModManager.Expedition && room.game.manager.rainWorld.ExpeditionMode))
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("Slugcat Ghost placed");
-                }
-                room.AddObject(new SlugGhostVision(room));
-            }
-            /*if (name == "DS_C02GRAVEL" && room.game.IsStorySession && room.abstractRoom.firstTimeRealized)
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("Blue Flower Placed");
-                }
-                room.AddObject(new BlueFlower(room));
-            }*/
-            if (name == "SB_A06GRAV" && room.game.IsStorySession && room.game.GetStorySession.characterStats.name.value == "Gravelslug" && !(ModManager.Expedition && room.game.manager.rainWorld.ExpeditionMode))
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("Gravel end room applied");
-                }
-                room.AddObject(new SB_A06GRAV(room));
-            }
-            if (name == "HR_GRAVINTRO" && room.game.IsStorySession && room.game.GetStorySession.saveState.denPosition == "HR_GRAVINTRO" && room.game.GetStorySession.characterStats.name.value == "Gravelslug" && !(ModManager.Expedition && room.game.manager.rainWorld.ExpeditionMode))
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("It's nacho Time!");
-                }
-                room.AddObject(new HR_GravelIntro(room));
-            }
-            /*if (name == "HR_GRAV11" && room.game.IsStorySession)
-            {
-                if (RainWorld.ShowLogs)
-                {
-                    Debug.Log("Gravel Eater Standoff");
-                }
-                room.AddObject(new GRAVEL_FINAL(room));
-            }*/
-        }
         private float ThickSkinned(On.Player.orig_DeathByBiteMultiplier orig, Player self)
         {
-            if ((self.SlugCatClass.value == "Gravelslug") && self.Malnourished == false)
+            if (GravelHasAbilities(self) && !IsGravelFeral(self))
             {
                 return 0.15f;
             }
@@ -4255,12 +4584,8 @@ namespace GravelSlug
         private void NeverGiveUp(On.Player.orig_Grabbed orig, Player self, Creature.Grasp grasp)
         {
             orig(self, grasp);
-            if (self.slugcatStats.name.value == "Gravelslug" && !IsGravelFeral(self))
+            if (GravelHasAbilities(self) && !IsGravelFeral(self))
             {
-                /*if (!IsGravelFeral(self))
-                {
-                    GravelRetaliate(self);
-                }*/
                 if (grasp.grabber is Lizard || grasp.grabber is BigSpider || grasp.grabber is DropBug)
                 {
                     self.dangerGraspTime = -600;
@@ -4276,7 +4601,7 @@ namespace GravelSlug
             if (ModManager.CoopAvailable)
             {
                 Player player = crit as Player;
-                if (player != null && (player.isNPC || !RWCustom.Custom.rainWorld.options.friendlyFire))
+                if (player != null && (player.isNPC || !Custom.rainWorld.options.friendlyFire))
                 {
                     flag = false;
                 }
@@ -4292,6 +4617,10 @@ namespace GravelSlug
                 {
                     GravelEaten.Stun(st);
                 }
+                if (!GravelHasAbilities(self))
+                {
+                    return;
+                }
                 if (IsGravelFeral(self) && (st > 10 || (st > 5 && self.exhausted) || (GravelFatty && st > 3 && self.exhausted)) && self.airInLungs != 0)
                 {
                     StartCoroutine(VoidFireSpasm(self, false, false));
@@ -4306,19 +4635,9 @@ namespace GravelSlug
         public FirecrackerPlant.ScareObject spookyCough;
         private void SpookBoom(Player player)
         {
+            GravelCough(player, true);
             spookyCough = new FirecrackerPlant.ScareObject(player.firstChunk.pos);
             player.room.AddObject(spookyCough);
-
-            /*if (spookyCough == null)
-            {
-                spookyCough = new FirecrackerPlant.ScareObject(player.firstChunk.pos);
-                player.room.AddObject(spookyCough);
-            }
-            else
-            {
-                spookyCough.pos = player.firstChunk.pos;
-            }
-            spookyCough.lifeTime = 300;*/
         }
         private IEnumerator VoidFireSpasm(Player player, bool ded, bool boom)
         {
@@ -4336,14 +4655,10 @@ namespace GravelSlug
                     {
                         GravelCough(GravelEaten, false);
                     }
-                    if (player.Malnourished)
-                    {
-                        SpookBoom(player);
-                    }
                     if (ded)
                     {
                         player.room.AddObject(new CreatureSpasmer(player, true, 100));
-                        player.firstChunk.vel += new UnityEngine.Vector2(UnityEngine.Random.Range(-3f, 3f), 5f);
+                        player.firstChunk.vel += new Vector2(UnityEngine.Random.Range(-3f, 3f), 5f);
                     }
                     else
                     {
@@ -4358,7 +4673,7 @@ namespace GravelSlug
             }
         }
 
-        private Color GravelFireColor(Player player)
+        public static Color GravelFireColor(Player player)
         {
             var color = Color.cyan;
             if (!player.room.game.setupValues.arenaDefaultColors && !ModManager.CoopAvailable)
@@ -4397,11 +4712,15 @@ namespace GravelSlug
             var room = player.room;
             var pos = player.mainBodyChunk.pos;
             var color = GravelFireColor(player);
+            if (GravelOptionsMenu.RainbowFire.Value)
+            {
+                color = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
+            }
             room.AddObject(new Explosion(room, player, pos, 7, 225f, 4.2f, 50f, 280f, 0.25f, player, 0.7f, 160f, 1f));
             room.AddObject(new Explosion.ExplosionLight(pos, 280f, 1f, 7, color));
             room.AddObject(new Explosion.ExplosionLight(pos, 230f, 1f, 3, new Color(1f, 1f, 1f)));
             room.AddObject(new ExplosionSpikes(room, pos, 14, 30f, 9f, 7f, 170f, color));
-            //room.InGameNoise(new Noise.InGameNoise(pos, 9000f, player, 1f));
+            room.InGameNoise(new Noise.InGameNoise(pos, 9000f, player, 5f));
             room.ScreenMovement(pos, default, 1.3f);
             for (int k = 0; k < player.abstractPhysicalObject.stuckObjects.Count; k++)
             {
@@ -4413,17 +4732,17 @@ namespace GravelSlug
             {
                 for (int i = 0; i < 14; i++)
                 {
-                    room.AddObject(new Explosion.ExplosionSmoke(pos, RWCustom.Custom.RNV() * 5f * UnityEngine.Random.value, 1f));
+                    room.AddObject(new Explosion.ExplosionSmoke(pos, Custom.RNV() * 5f * UnityEngine.Random.value, 1f));
                 }
                 for (int j = 0; j < 20; j++)
                 {
-                    Vector2 a = RWCustom.Custom.RNV();
+                    Vector2 a = Custom.RNV();
                     room.AddObject(new Spark(pos + a * UnityEngine.Random.value * 40f, a * Mathf.Lerp(4f, 30f, UnityEngine.Random.value), color, null, 4, 18));
                 }
                 room.AddObject(new SootMark(room, pos, 80f, true));
                 room.AddObject(new ShockWave(pos, 450f, 0.165f, 5, false));
                 room.AddObject(new Smolder(room, pos, player.firstChunk, null));
-                player.firstChunk.vel += new UnityEngine.Vector2(UnityEngine.Random.Range(-15f, 15f), 30f);
+                player.firstChunk.vel += new Vector2(UnityEngine.Random.Range(-15f, 15f), 30f);
                 
             }
             Debug.Log("Gravel KaBOOM!");
@@ -4442,11 +4761,13 @@ namespace GravelSlug
                 {
                     color += 0.5f;
                 }
-                AbstractPhysicalObject craftedObject;
-                if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.Spear
-                    || self.objectInStomach.type == MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType.LillyPuck)
+                if (GravelOptionsMenu.RainbowFire.Value)
                 {
-                    //self.objectInStomach.type = AbstractPhysicalObject.AbstractObjectType.Spear;
+                    color = UnityEngine.Random.Range(0f, 1f);
+                }
+                AbstractPhysicalObject craftedObject;
+                if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.Spear)
+                {
                     craftedObject = new AbstractSpear(self.room.world, null, self.abstractCreature.pos, self.room.game.GetNewID(), false, color);
                 }
                 else if (self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.FirecrackerPlant)
@@ -4465,7 +4786,7 @@ namespace GravelSlug
                         isConsumed = true
                     };
                 }
-                else if (self.objectInStomach.type == MoreSlugcatsEnums.AbstractObjectType.GlowWeed)
+                else if (self.objectInStomach.type == DLCSharedEnums.AbstractObjectType.GlowWeed)
                 {
                     craftedObject = new BubbleGrass.AbstractBubbleGrass(self.room.world, null, self.abstractCreature.pos, self.room.game.GetNewID(), 1f, -1, -1, null)
                     {
@@ -4508,9 +4829,28 @@ namespace GravelSlug
                     || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.SLOracleSwarmer
                     || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.SSOracleSwarmer)
                 {
-                    self.Regurgitate();
-                    Debug.Log("Gravel Eater cannot craft with " + self.objectInStomach.type + "!");
-                    return;
+                    if((self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.NSHSwarmer
+                    || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.SLOracleSwarmer
+                    || self.objectInStomach.type == AbstractPhysicalObject.AbstractObjectType.SSOracleSwarmer) && GravelOptionsMenu.CraftSingularity.Value)
+                    {
+                        craftedObject = new AbstractConsumable(self.room.world, DLCSharedEnums.AbstractObjectType.SingularityBomb, null, self.abstractCreature.pos, self.room.game.GetNewID(), -1, -1, null)
+                        {
+                            isFresh = false,
+                            isConsumed = true
+                        };
+                    }
+                    else //add inv egg crafting
+                    {
+                        Debug.Log("Gravel Eater cannot craft with " + self.objectInStomach.type + "!");
+                        self.Regurgitate();
+                        if(self.objectInStomach.type != AbstractPhysicalObject.AbstractObjectType.NSHSwarmer
+                    && self.objectInStomach.type != AbstractPhysicalObject.AbstractObjectType.SLOracleSwarmer
+                    && self.objectInStomach.type != AbstractPhysicalObject.AbstractObjectType.SSOracleSwarmer)
+                        {
+                            SpookBoom(self);
+                        }
+                        return;
+                    }
                 }
                 else
                 {
@@ -4518,7 +4858,6 @@ namespace GravelSlug
                     {
                         self.objectInStomach = null;
                     }
-                    //self.objectInStomach.type = MoreSlugcats.MoreSlugcatsEnums.AbstractObjectType.FireEgg;
                     craftedObject = new FireEgg.AbstractBugEgg(self.room.world, null, self.abstractCreature.pos, self.room.game.GetNewID(), color);
                 }
                 self.objectInStomach = craftedObject;
@@ -4528,7 +4867,7 @@ namespace GravelSlug
         }
         private bool MoreSwallows(On.Player.orig_CanBeSwallowed orig, Player self, PhysicalObject testObj)
         {
-            if (self.slugcatStats.name.value == "Gravelslug")
+            if (GravelHasAbilities(self))
             {
                 return (testObj is Spear && (self.input[0].y > 0 || self.FoodInStomach < self.MaxFoodInStomach)
                     || (testObj is IPlayerEdible && (self.input[0].y > 0 || (self.FoodInStomach >= self.MaxFoodInStomach && testObj is not Creature)))
@@ -4538,24 +4877,24 @@ namespace GravelSlug
                     || (testObj is SSOracleSwarmer && self.FoodInStomach >= self.MaxFoodInStomach)
                     || (ModManager.MSC && testObj is FireEgg && self.FoodInStomach >= self.MaxFoodInStomach)
                     || testObj is FlyLure || testObj is ScavengerBomb || testObj is PuffBall || testObj is SporePlant || testObj is BubbleGrass || testObj is NSHSwarmer || testObj is OverseerCarcass
-                    || (ModManager.MSC && testObj is SingularityBomb && !(testObj as SingularityBomb).activateSingularity && !(testObj as MoreSlugcats.SingularityBomb).activateSucktion));
+                    || (ModManager.MSC && testObj is SingularityBomb && !(testObj as SingularityBomb).activateSingularity && !(testObj as SingularityBomb).activateSucktion));
             }
             return orig.Invoke(self, testObj);
         }
-        private static string Region_GetProperRegionAcronym(On.Region.orig_GetProperRegionAcronym orig, SlugcatStats.Name character, string baseAcronym)
+        private static string Region_GetProperRegionAcronym(On.Region.orig_GetProperRegionAcronym_Timeline_string orig, SlugcatStats.Timeline time, string baseAcronym)
         {
-            if (character.value == "Gravelslug")
+            if (time.value  == "Gravelslug")
             {
                 if (baseAcronym == "SH") baseAcronym = "CL";
             }
-            return orig(character, baseAcronym);
+            return orig(time, baseAcronym);
         }
 
         //NOT MY CODE!! ↓   ↓
         public void WormGrassPatch_InteractWithCreature(On.WormGrass.WormGrassPatch.orig_InteractWithCreature orig, WormGrass.WormGrassPatch self, WormGrass.WormGrassPatch.CreatureAndPull creatureAndPull)
         {
             Player player = creatureAndPull.creature as Player;
-            bool flag = player == null || !(player.slugcatStats.name.value == "Gravelslug") && !IsGravelFeral(player);
+            bool flag = player == null || !(player.slugcatStats.name.value == "Gravelslug" && GravelHasAbilities(player)) && !IsGravelFeral(player);
             if (flag)
             {
                 orig.Invoke(self, creatureAndPull);
@@ -4567,7 +4906,7 @@ namespace GravelSlug
             for (int i = self.trackedCreatures.Count - 1; i >= 0; i--)
             {
                 Player player = self.trackedCreatures[i].creature as Player;
-                bool flag = player != null && (player.slugcatStats.name.value == "Gravelslug") && !IsGravelFeral(player);
+                bool flag = player != null && GravelHasAbilities(player) && !IsGravelFeral(player);
                 if (flag)
                 {
                     self.trackedCreatures.RemoveAt(i);
@@ -4579,7 +4918,7 @@ namespace GravelSlug
             for (int i = self.trackedCreatures.Count - 1; i >= 0; i--)
             {
                 Player player = self.trackedCreatures[i].creature as Player;
-                bool flag = player != null && (player.slugcatStats.name.value == "Gravelslug") && !IsGravelFeral(player);
+                bool flag = player != null && (GravelHasAbilities(player)) && !IsGravelFeral(player);
                 if (flag)
                 {
                     return true;
@@ -4595,15 +4934,9 @@ namespace GravelSlug
             if (IsGravelFeral(self))
             {
                 spear.spearDamageBonus = 2f;
-                /*BodyChunk firstChunk3 = spear.firstChunk;
-                firstChunk3.vel.x *= 1.17f;
-                self.room.PlaySound(MoreSlugcats.MoreSlugcatsEnums.MSCSoundID.Throw_FireSpear, self.firstChunk.pos, 1f, UnityEngine.Random.Range(0.8f, 1.2f));
-                Fire_Breath(self);
-                self.room.AddObject(new Explosion.ExplosionLight(self.firstChunk.pos, 280f, 1f, 7, Color.white));
-                self.room.AddObject(new ExplosionSpikes(self.room, self.firstChunk.pos, 14, 15f, 9f, 5f, 90f, RWCustom.Custom.HSL2RGB(RWCustom.Custom.Decimal(1f + EggBugGraphics.HUE_OFF), 1f, 0.5f)));*/
             }
         }
-        private static bool Spear_HitSomething(On.Spear.orig_HitSomething orig, Spear self, SharedPhysics.CollisionResult result, bool eu)
+        private bool Spear_HitSomething(On.Spear.orig_HitSomething orig, Spear self, SharedPhysics.CollisionResult result, bool eu)
         {
             bool result2;
             float num = (self.spearDamageBonus);
@@ -4611,25 +4944,29 @@ namespace GravelSlug
             {
                 return orig.Invoke(self, result, eu);
             }
-            if (result.obj is Player && ((result.obj as Player).slugcatStats.name.value == "Gravelslug") && !IsGravelFeral(result.obj as Player))
+            if (result.obj is Player player && (GravelHasAbilities(player)) && !IsGravelFeral(player))
             {
-                (result.obj as Creature).Violence(self.firstChunk, new UnityEngine.Vector2?(self.firstChunk.vel * self.firstChunk.mass * 2f), result.chunk, result.onAppendagePos, Creature.DamageType.Stab, num * 0.4f, 20f);
+                player.Violence(self.firstChunk, new UnityEngine.Vector2?(self.firstChunk.vel * self.firstChunk.mass * 2f), result.chunk, result.onAppendagePos, Creature.DamageType.Stab, num * 0.4f, 20f);
                 self.LodgeInCreature(result, eu);
-                (result.obj as Player).playerState.permanentDamageTracking += (num * 0.4f / (result.obj as Player).Template.baseDamageResistance);
+                player.playerState.permanentDamageTracking += (num * 0.4f / player.Template.baseDamageResistance);
                 self.room.PlaySound(SoundID.Spear_Stick_In_Creature, self.firstChunk);
                 result2 = true;
-                (result.obj as Player).Stun(1);
+                player.Stun(1);
                 return result2;
             }
-            if (self.thrownBy is Player && IsGravelFeral(self.thrownBy as Player) && self.bugSpear)
+            if (self.thrownBy is Player player1 && IsGravelFeral(player1) && self.bugSpear)
             {
                 result2 = orig.Invoke(self, result, eu); ;
-                if (result.obj is Creature && (result.obj as Creature).SpearStick(self, Mathf.Lerp(0.55f, 0.62f, UnityEngine.Random.value), result.chunk, result.onAppendagePos, self.firstChunk.vel))
+                if (result.obj is Creature crit && (crit).SpearStick(self, Mathf.Lerp(0.55f, 0.62f, UnityEngine.Random.value), result.chunk, result.onAppendagePos, self.firstChunk.vel))
                 {
-                    self.room.AddObject(new CreatureSpasmer((result.obj as Creature), false, 100));
+                    self.room.AddObject(new CreatureSpasmer(crit, false, 100));
+                    if (ModManager.Watcher && crit is Barnacle barnacle)
+                    {
+                        barnacle.LoseShell();
+                    }
                     if (result2 == false && result.onAppendagePos == null)
                     {
-                        (result.obj as Creature).Violence(self.firstChunk, new UnityEngine.Vector2?(self.firstChunk.vel * self.firstChunk.mass * 2f), result.chunk, result.onAppendagePos, Creature.DamageType.Stab, (num *= 0.5f), 20f);
+                        crit.Violence(self.firstChunk, new UnityEngine.Vector2?(self.firstChunk.vel * self.firstChunk.mass * 2f), result.chunk, result.onAppendagePos, Creature.DamageType.Stab, (num *= 0.5f), 20f);
                         self.LodgeInCreature(result, true);
                         self.room.PlaySound(SoundID.Seed_Cob_Open, self.firstChunk);
                         self.room.PlaySound(SoundID.Spear_Stick_In_Ground, self.firstChunk);
@@ -4638,10 +4975,10 @@ namespace GravelSlug
                         Debug.Log("Pierced Creature Armor!");
                     }
                 }
-                else if (result.obj is SeedCob)
+                else if (result.obj is SeedCob cob)
                 {
-                    (result.obj as PhysicalObject.IHaveAppendages).ApplyForceOnAppendage(result.onAppendagePos, self.firstChunk.vel * self.firstChunk.mass);
-                    (result.obj as SeedCob).Open();
+                    cob.ApplyForceOnAppendage(result.onAppendagePos, self.firstChunk.vel * self.firstChunk.mass);
+                    cob.Open();
                     self.room.PlaySound(SoundID.Spear_Stick_In_Creature, self.firstChunk);
                     self.LodgeInCreature(result, eu);
                     result2 = true;
@@ -4653,238 +4990,6 @@ namespace GravelSlug
                 return orig.Invoke(self, result, eu);
             }
             return result2;
-        }
-    }
-    /*public class BlueFlower : UpdatableAndDeletable
-    {
-        public BlueFlower(Room room)
-        {
-            this.room = room;
-        }
-        private Player player;
-        private int counter;
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-            if (firstAlivePlayer == null)
-            {
-                return;
-            }
-            if (this.player == null && this.room.game.Players.Count > 0 && firstAlivePlayer.realizedCreature != null && firstAlivePlayer.realizedCreature.room == this.room)
-            {
-                this.player = (firstAlivePlayer.realizedCreature as Player);
-            }
-            if (this.player != null && this.player.room != null && this.player.room.abstractRoom.index == this.room.abstractRoom.index)
-            {
-                this.counter++;
-                if (this.counter == 1)
-                {
-                    AbstractConsumable flower = new AbstractConsumable(this.room.world, AbstractPhysicalObject.AbstractObjectType.KarmaFlower, null, this.room.GetWorldCoordinate(new Vector2(422f, 1075f)), this.room.game.GetNewID(), 0, 0, null);
-                    this.room.abstractRoom.AddEntity(flower);
-                    //flower.RealizeInRoom();
-                    flower.Realize();
-                    (flower.realizedObject as KarmaFlower).color = Color.cyan;
-                    (flower.realizedObject as KarmaFlower).stalkColor = Color.cyan;
-                    (flower.realizedObject as KarmaFlower).PlaceInRoom(this.room);
-                    if (AbstractPhysicalObject.UsesAPersistantTracker(flower))
-                    {
-                        this.room.game.GetStorySession.AddNewPersistentTracker(flower);
-                    }
-                }
-                if (this.counter > 1)
-                {
-                    this.Destroy();
-                }
-            }
-        }
-    }*/
-    public class SlugGhostVision : UpdatableAndDeletable
-    {
-        public SlugGhostVision(Room room)
-        {
-            this.room = room;
-        }
-        private Vector2 pos;
-        private Player player;
-        private bool canSee = false;
-        private bool isInv = false;
-        private string moonPresence;
-        private SlugcatGhost ghost;
-        //private Color BodyColor;
-        //private Color EyeColor;
-        private GhostWorldPresence.GhostID slugcat;
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-            if (firstAlivePlayer == null)
-            {
-                return;
-            }
-            if (this.player == null && this.room.game.Players.Count > 0 && firstAlivePlayer.realizedCreature != null && firstAlivePlayer.realizedCreature.room == this.room)
-            {
-                this.player = (firstAlivePlayer.realizedCreature as Player);
-            }
-            if (this.player != null && this.player.abstractCreature.Room == this.room.abstractRoom && this.player.room != null)
-            {
-                if (!this.canSee)
-                {
-                    /*if (this.room.abstractRoom.name == "CL_D05")
-                    {
-                        // Test
-                        this.pos = new Vector2(790f, 1050f);
-                    }*/
-                    if (this.room.abstractRoom.name == "SI_A07" && this.room.game.cameras[0] != null && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESpear] == 0)
-                    {
-                        // Spearmaster
-                        slugcat = GravelGhostID.GESpear;
-                        this.pos = new Vector2(540f, 147f);
-                        this.moonPresence = "Dutiful";
-                        canSee = true;
-                        /*AbstractSpear abstractSpear = new AbstractSpear(this.room.world, null, room.GetWorldCoordinate(this.pos), room.game.GetNewID(), false);
-                        this.room.abstractRoom.AddEntity(abstractSpear);
-                        (abstractSpear.realizedObject as Spear).Spear_makeNeedle(0, false);
-                        (abstractSpear.realizedObject as Spear).spearmasterNeedle_fadecounter = 0;
-                        /*abstractSpear.RealizeInRoom();
-                        (abstractSpear.realizedObject as Spear).spearmasterNeedle = true;
-                        (abstractSpear.realizedObject as Spear).spearmasterNeedle_hasConnection = false;
-                        (abstractSpear.realizedObject as Spear).spearmasterNeedle_fadecounter = 0;
-                        abstractSpear.needle = true;*/
-                    }
-                    else if (this.room.abstractRoom.name == "LF_H01" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 7 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERed] == 0)
-                    {
-                        // Hunter
-                        slugcat = GravelGhostID.GERed;
-                        this.pos = new Vector2(7760f, 260f);
-                        this.moonPresence = "Skillful";
-                        canSee = true;
-                    }
-                    else if (/*this.room.abstractRoom.name == "SI_SAINTINTRO"*/ this.room.abstractRoom.name == "CC_H01SAINT" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 3 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESaint] == 0)
-                    {
-                        // Saint
-                        slugcat = GravelGhostID.GESaint;
-                        //this.pos = new Vector2(360f, 90f);
-                        this.pos = new Vector2(3270f, 190f);
-                        this.moonPresence = "Kind";
-                        canSee = true;
-                    }
-                    else if (this.room.abstractRoom.name == "GW_A25" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 0 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEArti] == 0)
-                    {
-                        // Artificer
-                        slugcat = GravelGhostID.GEArti;
-                        this.pos = new Vector2(300f, 1790f);
-                        this.moonPresence = "Mournful";
-                        canSee = true;
-                        if (player.glowing)
-                        {
-                            AbstractPhysicalObject abstractPhysicalObject = new AbstractPhysicalObject(this.room.world, MoreSlugcatsEnums.AbstractObjectType.SingularityBomb, null, room.GetWorldCoordinate(this.pos), room.game.GetNewID());
-                            this.room.abstractRoom.AddEntity(abstractPhysicalObject);
-                            abstractPhysicalObject.RealizeInRoom();
-                        }
-                    }
-                    else if (this.room.abstractRoom.name == "DS_RIVSTART" && this.room.game.cameras[0] != null && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERiv] == 0)
-                    {
-                        // Rivulet
-                        slugcat = GravelGhostID.GERiv;
-                        this.pos = new Vector2(2535f, 590f);
-                        this.moonPresence = "Carefree";
-                        canSee = true;
-                    }
-                    else if (this.room.abstractRoom.name == "OE_CAVE02" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 1 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEYellow] == 0)
-                    {
-                        // Monk
-                        slugcat = GravelGhostID.GEYellow;
-                        this.pos = new Vector2(1235f, 245f);
-                        this.moonPresence = "Compassionate";
-                        canSee = true;
-                    }
-                    else if (this.room.abstractRoom.name == "SB_GOR02RIV" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 1 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEGour] == 0)
-                    {
-                        // Gourmand
-                        slugcat = GravelGhostID.GEGour;
-                        this.pos = new Vector2(1055f, 330f);
-                        this.moonPresence = "Brave";
-                        canSee = true;
-                    }
-                    else if (this.room.abstractRoom.name == "SU_A53" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 0 && this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEWhite] == 0)
-                    {
-                        // Survivor
-                        slugcat = GravelGhostID.GEWhite;
-                        this.pos = new Vector2(495f, 85f);
-                        this.moonPresence = "Instinctive";
-                        canSee = true;
-                    }
-                    else if (this.room.abstractRoom.name == "MS_COMMS" && this.room.game.cameras[0] != null && this.room.game.cameras[0].currentCameraPosition == 2)
-                    {
-                        // Survivor
-                        this.isInv = true;
-                        this.pos = new Vector2(173f, 1128f);
-                        this.moonPresence = "Lustful";
-                        canSee = true;
-                    }
-                    else //  ADD INV FOR SECRET DATING SIM ENDING!!!
-                    {
-                        canSee = false;
-                        ghost = null;
-                    }
-                }
-                if (this.canSee && player.glowing)
-                {
-                    if(this.ghost == null)
-                    {
-                        this.ghost = new SlugcatGhost(this.pos, this.room);
-                        this.room.AddObject(this.ghost);
-                    }
-                    if (RWCustom.Custom.DistLess(player.firstChunk.pos, this.pos, 75))
-                    {
-                        if (isInv)
-                        {
-                            this.room.game.manager.RequestMainProcessSwitch(MoreSlugcatsEnums.ProcessID.DatingSim);
-                            this.Destroy();
-                        }
-                        this.room.game.GetStorySession.saveState.deathPersistentSaveData.reinforcedKarma = true;
-                        this.room.game.cameras[0].hud.karmaMeter.reinforceAnimation = 0;
-                        if (player.room.game.devToolsActive)
-                        {
-                            this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[slugcat] += 1;
-                            this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] -= 1;
-                        }
-                        //this.player.PlayHUDSound(SoundID.MENU_Dream_Switch);
-                        this.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.BM_GOR02, 0f, 0.8f, 1f);
-                        if (!this.room.world.game.GetStorySession.saveState.progression.currentSaveState.malnourished)
-                        {
-                            if (this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] >= -4 && !player.room.game.devToolsActive)
-                            {
-                                this.player.slugcatStats.foodToHibernate -= 1;
-                                FoodMeter foodbar = this.room.game.cameras[0].hud.foodMeter;
-                                foodbar.survivalLimit = this.player.slugcatStats.foodToHibernate;
-                                foodbar.MoveSurvivalLimit(this.player.slugcatStats.foodToHibernate, true);
-                            }
-                            if (this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] <= -8)
-                            {
-                                //CUTSCENE!!
-                            }
-                        }
-                        Debug.Log("GE Met Slug Ghost!");
-                        //this.room.AddObject(new GhostHunch(this.room, null));
-                        this.Destroy();
-                    }
-                    else
-                    {
-                        this.ghost.counter = 0;
-                    }
-                }
-                else if(this.canSee && !player.glowing)
-                {
-                    //this.player.PlayHUDSound(MoreSlugcatsEnums.MSCSoundID.DreamDN);
-                    this.room.AddObject(new GhostHunch(this.room, null));
-                    this.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.BM_GOR01, 0f, 0.8f, 1f);
-                    Debug.Log("GE Can't Meet Slug Ghost Without Neuron Glow!");
-                    this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("There is a " + this.moonPresence + " presence here, seek enlightenment little one"), 40, 240, false, true);
-                    this.Destroy();
-                }
-            }
         }
     }
 
@@ -4906,6 +5011,76 @@ namespace GravelSlug
         }
 
         public static Menu.StoryGameStatisticsScreen.TickerID GravelQuestFinished;
+    }
+
+    public class GravelSceneID
+    {
+        public static void RegisterValues()
+        {
+            GravelApproach = new Menu.MenuScene.SceneID("GravelApproach", true);
+            GravelWeary = new Menu.MenuScene.SceneID("GravelWeary", true);
+            GravelOffer = new Menu.MenuScene.SceneID("GravelOffer", true);
+            GravelAccept = new Menu.MenuScene.SceneID("GravelAccept", true);
+        }
+
+        public static void UnregisterValues()
+        {
+            Menu.MenuScene.SceneID Gravelapproach = GravelApproach;
+            if (Gravelapproach != null)
+            {
+                Gravelapproach.Unregister();
+            }
+            GravelApproach = null;
+            Menu.MenuScene.SceneID Gravelweary = GravelWeary;
+            if (Gravelweary != null)
+            {
+                Gravelweary.Unregister();
+            }
+            GravelWeary = null;
+            Menu.MenuScene.SceneID Graveloffer = GravelOffer;
+            if (Graveloffer != null)
+            {
+                Graveloffer.Unregister();
+            }
+            GravelOffer = null;
+            Menu.MenuScene.SceneID Gravelaccept = GravelAccept;
+            if (Gravelaccept != null)
+            {
+                Gravelaccept.Unregister();
+            }
+            GravelAccept = null;
+        }
+
+        public static Menu.MenuScene.SceneID GravelApproach;
+        public static Menu.MenuScene.SceneID GravelWeary;
+        public static Menu.MenuScene.SceneID GravelOffer;
+        public static Menu.MenuScene.SceneID GravelAccept;
+    }
+    public class GravelDreamID
+    {
+        public static void RegisterValues()
+        {
+            GravelIntroDream = new DreamsState.DreamID("GravelIntroDream", true);
+            GravelMemoryDream = new DreamsState.DreamID("GravelMemoryDream", true);
+        }
+
+        public static void UnregisterValues()
+        {
+            DreamsState.DreamID gravelintrodream = GravelIntroDream;
+            if (gravelintrodream != null)
+            {
+                gravelintrodream.Unregister();
+            }
+            GravelIntroDream = null;
+            DreamsState.DreamID gravelmemorydream = GravelMemoryDream;
+            if (gravelmemorydream != null)
+            {
+                gravelmemorydream.Unregister();
+            }
+            GravelIntroDream = null;
+        }
+        public static DreamsState.DreamID GravelIntroDream;
+        public static DreamsState.DreamID GravelMemoryDream;
     }
 
     public class GravelSlideshowID
@@ -5012,508 +5187,6 @@ namespace GravelSlug
         public static GhostWorldPresence.GhostID GESaint;
         public static GhostWorldPresence.GhostID GESpear;
     }
-    /*public class GravelTutorial
-    {
-        // Token: 0x06003E92 RID: 16018 RVA: 0x0046EE68 File Offset: 0x0046D068
-        public static void RegisterValues()
-        {
-            GravelFull = new DeathPersistentSaveData.Tutorial("GravelFull", true);
-            GravelEmpty = new DeathPersistentSaveData.Tutorial("GravelEmpty", true);
-        }
-
-        // Token: 0x06003E93 RID: 16019 RVA: 0x0046EEE8 File Offset: 0x0046D0E8
-        public static void UnregisterValues()
-        {
-            DeathPersistentSaveData.Tutorial gravelFull = GravelFull;
-            if (gravelFull != null)
-            {
-                gravelFull.Unregister();
-            }
-            GravelFull = null;
-            DeathPersistentSaveData.Tutorial gravelEmpty = GravelEmpty;
-            if (gravelEmpty != null)
-            {
-                gravelEmpty.Unregister();
-            }
-            GravelEmpty = null;
-        }
-
-
-        public static DeathPersistentSaveData.Tutorial GravelFull;
-
-        public static DeathPersistentSaveData.Tutorial GravelEmpty;
-    }*/
-    public class CL_GRAVEL : UpdatableAndDeletable
-    {
-
-        public CL_GRAVEL(Room room)
-        {
-            this.room = room;
-            this.timer = 0;
-            this.tutor = false;
-        }
-        private int timer;
-        private int message;
-        private bool tutor;
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-            if (this.room.game.session is StoryGameSession && this.room.game.Players.Count > 0 && firstAlivePlayer != null && firstAlivePlayer.realizedCreature != null && firstAlivePlayer.realizedCreature.room == this.room && this.room.game.GetStorySession.saveState.cycleNumber == 0)
-
-            {
-                Player player = firstAlivePlayer.realizedCreature as Player;
-
-                if (this.timer == 0)
-                {
-                    player.sceneFlag = true;
-                    if (player.controller == null)
-                    {
-                        player.controller = new Player.NullController();
-                    }
-                    player.SuperHardSetPosition(new UnityEngine.Vector2(1625f, 720f));
-                }
-
-                if (this.timer > 0 && this.timer < 500)
-                {
-                    player.Blink(10);
-                }
-
-                if (this.timer == 300)
-                {
-                    player.Stun(20);
-                    player.mainBodyChunk.vel = new UnityEngine.Vector2(-25f, 2f);
-                }
-
-                if (this.timer == 400)
-                {
-                    this.room.AddObject(new MoreSlugcats.GhostPing(this.room));
-                }
-
-                if (this.timer == 500)
-                {
-                    player.sceneFlag = false;
-                    player.ActivateAscension();
-                    player.SetMalnourished(true);
-                    if (player.controller != null)
-                    {
-                        player.controller = null;
-                    } 
-                    player.Stun(15);
-                    player.aerobicLevel = 1f;
-                    player.exhausted = true;
-                    Debug.Log("Arise, Little one!");
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] = 0;
-                    //this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[MoreSlugcatsEnums.GhostID.CL] = 1;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEWhite] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEYellow] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERed] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GERiv] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEGour] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GEArti] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESpear] = 0;
-                    this.room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GravelGhostID.GESaint] = 0;
-                }
-
-                if ((player.mainBodyChunk.pos.y < 500f || tutor) && !(this.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerMaulTutorial)
-                {
-                    tutor = true;
-                    if (this.room.game.session.Players[0].realizedCreature == null || this.room.game.cameras[0].hud == null || this.room.game.cameras[0].hud.textPrompt == null || this.room.game.cameras[0].hud.textPrompt.messages.Count >= 1)
-                    {
-                        return;
-                    }
-                    switch (this.message)
-                    {
-                        case 0:
-                            //this.room.AddObject(new GhostHunch(this.room, null));
-                            this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("You are starving, find rocks and other objects to consume."), 40, 240, false, true);
-                            this.message++;
-                            return;
-                        case 1:
-                            this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("While in the starved state, you have boosts in attacks and movement."), 0, 240, false, true);
-                            this.message++;
-                            return;
-                        case 2:
-                            this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("Holding UP while swallowing or while an object is in your stomach may craft something new."), 0, 240, false, true);
-                            this.message++;
-                            return;
-                        case 3:
-                            this.room.game.GetStorySession.saveState.deathPersistentSaveData.ArtificerMaulTutorial = true;
-                            //this.room.game.rainWorld.progression.miscProgressionData.starvationTutorialCounter = -1;
-                            this.Destroy();
-                            return;
-                        default:
-                            return;
-                    }
-                }
-                else if(this.room.game.GetStorySession.saveState.deathPersistentSaveData.ArtificerMaulTutorial)
-                {
-                    this.Destroy();
-                    return;
-                }
-                if (this.timer < 550)
-                {
-                    this.timer++;
-                }
-            }
-        }
-    }
-    public class SB_A06GRAV : UpdatableAndDeletable
-    {
-        public SB_A06GRAV(Room room)
-        {
-            this.room = room;
-            if(room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] == -8)
-            {
-                room.roomSettings.EffectColorA = 13;
-                for (int i = 0; i < room.roomSettings.effects.Count; i++)
-                {
-                    if (room.roomSettings.effects[i].type == RoomSettings.RoomEffect.Type.FairyParticles)
-                    {
-                        room.roomSettings.effects[i].amount = 0f;
-                    }
-                }
-                for (int i = 0; i < room.roomSettings.ambientSounds.Count; i++)
-                {
-                    if (room.roomSettings.ambientSounds[i].sample == "Weird Deep Hole.wav")
-                    {
-                        room.roomSettings.ambientSounds[i].volume = 0f;
-                    }
-                }
-            }
-            for (int i = 0; i < room.roomSettings.effects.Count; i++)
-            {
-                if (room.roomSettings.effects[i].type == RoomSettings.RoomEffect.Type.VoidSpawn)
-                {
-                    this.StoredEffect = room.roomSettings.effects[i];
-                    return;
-                }
-            }
-            this.clearedSpawn = false;
-        }
-
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            for (int i = 0; i < this.room.game.Players.Count; i++)
-            {
-                if (this.room.game.Players[i].realizedCreature != null && (this.room.game.Players[i].realizedCreature as Player).room == this.room)
-                {
-                    Player player = this.room.game.Players[i].realizedCreature as Player;
-                    player.allowOutOfBounds = true;
-                    if (player.mainBodyChunk.pos.x < -248f)
-                    {
-                        player.SuperHardSetPosition(new UnityEngine.Vector2(this.room.RoomRect.right + 232f, player.mainBodyChunk.pos.y));
-                    }
-                    if (player.mainBodyChunk.pos.x > this.room.RoomRect.right + 248f)
-                    {
-                        player.SuperHardSetPosition(new UnityEngine.Vector2(-232f, player.mainBodyChunk.pos.y));
-                    }
-                    if (player.KarmaCap >= 9)
-                    {
-                        if (this.room.game.cameras[0].paletteBlend != this.target_blend)
-                        {
-                            if (Mathf.Abs(this.room.game.cameras[0].paletteBlend - this.target_blend) < 0.01f)
-                            {
-                                this.room.game.cameras[0].ChangeFadePalette(this.room.game.cameras[0].paletteB, this.target_blend);
-                            }
-                            else
-                            {
-                                this.room.game.cameras[0].ChangeFadePalette(this.room.game.cameras[0].paletteB, Mathf.Lerp(this.room.game.cameras[0].paletteBlend, this.target_blend, 0.1f));
-                            }
-                        }
-                        if (player.mainBodyChunk.pos.y < -118f)
-                        {
-                            if(room.game.GetStorySession.saveState.deathPersistentSaveData.ghostsTalkedTo[GhostWorldPresence.GhostID.UW] == -8)
-                            {
-                                WorldCoordinate newCoord = new WorldCoordinate(this.room.world.GetAbstractRoom("SB_E01GRAV").index, 175, 40, -1);
-                                MSCRoomSpecificScript.RoomWarp(player, room, "SB_E01GRAV", newCoord, false);
-                                return;
-                            }
-                            this.target_blend = Mathf.Clamp(this.target_blend + 0.1f, 0f, 1f);
-                            this.room.game.cameras[0].ChangeFadePalette(this.room.game.cameras[0].paletteB, Mathf.Clamp(this.room.game.cameras[0].paletteBlend + 0.05f, 0f, 1f));
-                            player.SuperHardSetPosition(new UnityEngine.Vector2(player.mainBodyChunk.pos.x, 700f));
-                            if (player.Malnourished == false)
-                            {
-                                player.SetMalnourished(true);
-                            }
-                            player.Stun(300);
-                            this.ClearAllVoidSpawn();
-                            this.StoredEffect.amount = 0f;
-                            for (int j = 0; j < player.bodyChunks.Length; j++)
-                            {
-                                player.bodyChunks[j].vel.y = Mathf.Clamp(player.bodyChunks[j].vel.y, -15f, 15f);
-                            }
-                        }
-                        if (player.mainBodyChunk.pos.y > 730f && this.target_blend > 0f)
-                        {
-                            if (this.target_blend < 1f)
-                            {
-                                this.target_blend = Mathf.Clamp(this.target_blend - 0.1f, 0f, 1f);
-                            }
-                            player.SuperHardSetPosition(new UnityEngine.Vector2(player.mainBodyChunk.pos.x, -102f));
-                            player.Stun(300);
-                            this.ClearAllVoidSpawn();
-                            this.StoredEffect.amount = 0f;
-                        }
-                        if (this.target_blend == 1f && this.fadeObj == null)
-                        {
-                            this.fadeObj = new MoreSlugcats.FadeOut(this.room, Color.cyan, 130f, false);
-                            this.room.AddObject(this.fadeObj);
-                        }
-                        if (this.fadeObj != null && this.fadeObj.IsDoneFading() && !this.loadStarted)
-                        {
-                            this.loadStarted = true;
-                            //this.room.game.overWorld.InitiateSpecialWarp(OverWorld.SpecialWarpType.WARP_VS_HR, this);
-                            //MoreSlugcats.MSCRoomSpecificScript.RoomWarp(player, this.room, "HR_GRAVINTRO", default(WorldCoordinate), true);
-                            //player.Die();
-                            this.room.game.CustomEndGameSaveAndRestart(false);
-                            RainWorldGame.ForceSaveNewDenLocation(this.room.game, "HR_GRAVINTRO", true);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
-        public Room getSourceRoom()
-        {
-            return this.room;
-        }
-
-        public void NewWorldLoaded()
-        {
-        }
-
-        private void ClearAllVoidSpawn()
-        {
-            if (this.clearedSpawn)
-            {
-                return;
-            }
-            this.clearedSpawn = true;
-            for (int i = 0; i < this.room.updateList.Count; i++)
-            {
-                if (this.room.updateList[i] is VoidSpawn)
-                {
-                    this.room.updateList[i].slatedForDeletetion = true;
-                }
-            }
-        }
-
-        public float target_blend;
-
-        public bool loadStarted;
-
-        public MoreSlugcats.FadeOut fadeObj;
-
-        private RoomSettings.RoomEffect StoredEffect;
-
-        private bool clearedSpawn;
-
-        public MoreSlugcats.KarmaVectorX karmaObj;
-
-        public int phaseTimer;
-
-        public int karmaSymbolWait;
-    }
-    public class HR_GravelIntro : UpdatableAndDeletable
-    {
-        public HR_GravelIntro(Room room)
-        {
-            this.room = room;
-        }
-
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            if (this.fadeObj == null)
-            {
-                this.fadeObj = new MoreSlugcats.FadeOut(this.room, Color.cyan, 130f, true);
-                this.room.AddObject(this.fadeObj);
-            }
-            if (this.room.game.AllPlayersRealized)
-            {
-                /*if (firstTimeLoad)
-                {
-                    firstTimeLoad = false;
-                    this.room.world.rainCycle.GetDesiredCycleLength();
-                    this.room.world.game.globalRain.ResetRain();
-                }*/
-                for (int i = 0; i < this.room.game.Players.Count; i++)
-                {
-                    Player player = this.room.game.Players[i].realizedCreature as Player;
-                    if (this.waitBeforeDrop < 45)
-                    {
-                        player.SuperHardSetPosition(new UnityEngine.Vector2(420f, 760f));
-                        for (int j = 0; j < player.bodyChunks.Length; j++)
-                        {
-                            player.bodyChunks[j].vel.y = Mathf.Clamp(player.bodyChunks[j].vel.y, -5f, 5f);
-                            player.bodyChunks[j].vel.x = 0f;
-                        }
-                    }
-                    else if (this.waitBeforeDrop == 45)
-                    {
-                        for (int k = 0; k < player.bodyChunks.Length; k++)
-                        {
-                            player.bodyChunks[k].vel.y = -35f;
-                            player.bodyChunks[k].vel.x = 0f;
-                        }
-                        player.SetMalnourished(true);
-                        player.graphicsModule.Reset();
-                    }
-                }
-                if (this.waitBeforeDrop == 45)
-                {
-                    this.Destroy();
-                }
-                if (this.fadeObj != null && this.fadeObj.IsDoneFading())
-                {
-                    this.waitBeforeDrop++;
-                }
-                if (this.fadeObj != null && this.waitBeforeFade < 30)
-                {
-                    this.fadeObj.fade = 1f;
-                }
-                this.waitBeforeFade++;
-            }
-        }
-
-        public int waitBeforeDrop;
-
-        public int waitBeforeFade;
-
-        public MoreSlugcats.FadeOut fadeObj;
-
-        //public bool firstTimeLoad = true;
-    }
-    public class GRAVEL_FINAL : UpdatableAndDeletable
-    {
-        public GRAVEL_FINAL(Room room)
-        {
-            this.room = room;
-        }
-
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            AbstractCreature firstAlivePlayer = this.room.game.FirstAlivePlayer;
-            if (firstAlivePlayer == null)
-            {
-                return;
-            }
-            if (this.player == null && this.room.game.Players.Count > 0 && firstAlivePlayer.realizedCreature != null && firstAlivePlayer.realizedCreature.room == this.room)
-            {
-                this.player = (firstAlivePlayer.realizedCreature as Player);
-            }
-            if (this.room.game.GetStorySession.saveState.deathPersistentSaveData.altEnding && !this.triggeredBoss && !this.endingTriggered)
-            {
-            }
-            else
-            {
-                if (this.king != null && this.king.dead)
-                {
-                    if (this.player == null && this.room.game.Players.Count > 0 && firstAlivePlayer.realizedCreature != null)
-                    {
-                        this.player = (firstAlivePlayer.realizedCreature as Player);
-                    }
-                    if (this.player != null)
-                    {
-                        this.timeSinceDead++;
-                        for (int i = 0; i < this.player.grasps.Length; i++)
-                        {
-                            if (this.player.grasps[i] != null && this.player.grasps[i].grabbed == this.king)
-                            {
-                                this.TriggerFadeToEnding();
-                            }
-                        }
-                        if (this.player.room == null || this.player.room != this.room)
-                        {
-                            this.TriggerFadeToEnding();
-                        }
-                        if (this.timeSinceDead > 1200)
-                        {
-                            this.TriggerFadeToEnding();
-                        }
-                    }
-                }
-                if (this.player != null && this.player.abstractCreature.Room == this.room.abstractRoom && this.player.room != null)
-                {
-                    if (this.player.room.game.cameras[0] != null && !this.player.sceneFlag)
-                    {
-                        this.TriggerBossFight();
-                    }
-                }
-                else
-                {
-                    this.player = null;
-                }
-                if (this.triggeredBoss && this.king != null)
-                {
-                    this.counter++;
-                    if (this.player != null && this.player.abstractCreature.Room == this.room.abstractRoom && this.player.enteringShortCut != null)
-                    {
-                        Debug.Log("DENY GRAVEL EXIT");
-                        this.player.enteringShortCut = null;
-                        this.player.firstChunk.vel = new Vector2(10f, 2f);
-                        this.player.Stun(5);
-                    }
-                }
-                if (this.endingTriggered)
-                {
-                    this.endingTriggerTime++;
-                    if (this.endingTriggerTime == 80)
-                    {
-                        RainWorldGame.ForceSaveNewDenLocation(this.room.game, "SB_S01", true);
-                        this.room.game.GoToRedsGameOver();
-                        RainWorldGame.BeatGameMode(this.room.game, true);
-                    }
-                }
-            }
-        }
-
-        public void TriggerBossFight()
-        {
-            if (!this.triggeredBoss)
-            {
-                this.triggeredBoss = true;
-                this.player.sceneFlag = true;
-                this.room.TriggerCombatArena();
-                WorldCoordinate pos = new WorldCoordinate(this.room.abstractRoom.index, 41, 13, -1);
-                AbstractCreature abstractCreature = new AbstractCreature(this.room.world, StaticWorld.GetCreatureTemplate(MoreSlugcats.MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy), null, pos, this.room.game.GetNewID());
-                abstractCreature.ignoreCycle = true;
-                abstractCreature.voidCreature = true;
-                this.room.abstractRoom.AddEntity(abstractCreature);
-                abstractCreature.RealizeInRoom();
-                this.king = (abstractCreature.realizedCreature as DaddyLongLegs);
-            }
-        }
-
-        public void TriggerFadeToEnding()
-        {
-            this.player.controller = new Player.NullController();
-            this.room.game.manager.sceneSlot = this.room.game.GetStorySession.saveStateNumber;
-            this.endingTriggered = true;
-        }
-
-        private bool triggeredBoss;
-
-        public Player player;
-
-        public DaddyLongLegs king;
-
-        public bool endingTriggered;
-
-        public int endingTriggerTime;
-
-        public int counter;
-
-        public MoreSlugcats.FadeOut fadeIn;
-
-        public bool firstSummon;
-
-        public int timeSinceDead;
-    }
 
     public class GravelFlameBreath : CosmeticSprite
     {
@@ -5534,11 +5207,6 @@ namespace GravelSlug
             this.velo -= this.velo * 0.1f;
             this.startAlpha = 1f;
             this.life -= 1f;
-            /*if (coughSmoke != null)
-            {
-                coughSmoke.Update(eu);
-                coughSmoke.EmitSmoke(this.pos, RWCustom.Custom.RNV(), RWCustom.Custom.HSL2RGB(RWCustom.Custom.Decimal(1f + EggBugGraphics.HUE_OFF), 1f, 0.5f), 20);
-            }*/
             if (this.life <= 0f)
             {
                 this.Destroy();
@@ -5583,51 +5251,6 @@ namespace GravelSlug
         public float startAlpha;
 
         public Color FireColor;
-    }
-    public class GravelFullTutorial : UpdatableAndDeletable
-    {
-        public GravelFullTutorial(Room room)
-        {
-            this.room = room;
-            if (room.game.session.Players[0].pos.room != room.abstractRoom.index)
-            {
-                this.Destroy();
-            }
-        }
-
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-            if (this.room.game.session.Players[0].realizedCreature == null || this.room.game.cameras[0].hud == null || this.room.game.cameras[0].hud.textPrompt == null || this.room.game.cameras[0].hud.textPrompt.messages.Count >= 1)
-            {
-                return;
-            }
-            switch (this.message)
-            {
-                case 0:
-                    this.room.AddObject(new GhostHunch(this.room, null));
-                    this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("You are now nourished and full of gravel."), 40, 160, false, true);
-                    this.message++;
-                    return;
-                case 1:
-                    this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("You are more heavy and durable in this state, and can withstand some damage."), 0, 160, false, true);
-                    this.message++;
-                    return;
-                case 2:
-                    this.room.game.cameras[0].hud.textPrompt.AddMessage(this.room.game.manager.rainWorld.inGameTranslator.Translate("You can spit out rocks and empty your stomach to return to the Malnourished state."), 0, 160, false, true);
-                    this.message++;
-                    return;
-                case 3:
-                    this.room.game.rainWorld.progression.miscProgressionData.starvationTutorialCounter = -1;
-                    this.Destroy();
-                    return;
-                default:
-                    return;
-            }
-        }
-
-        // Token: 0x04001EE9 RID: 7913
-        public int message;
     }
 
     public class SlugcatGhostPing : GhostPing
@@ -5683,9 +5306,20 @@ namespace GravelSlug
     {
         public GravelConfig(BaseUnityPlugin plugin)
         {
-            this.DisableTimer = this.config.Bind<bool>("Gravelslug_Disable_Timer", false);
-            this.KeepAbilities = this.config.Bind<bool>("Gravelslug_Keep_Abilities", false);
-            this.NoSinking = this.config.Bind<bool>("Gravelslug_No_Sinking", false);
+            this.DisableTimer = this.config.Bind("Gravelslug_Disable_Timer", false);
+            this.TimerMult = this.config.Bind("Gravelslug_Timer_Multiplier", 1f);
+            this.KeepAbilities = this.config.Bind("Gravelslug_Keep_Abilities", false);
+            this.NoSinking = this.config.Bind("Gravelslug_No_Sinking", false);
+            this.MountainsAbound = this.config.Bind("Gravelslug_Secret_Ability", false);
+            this.RainbowFire = this.config.Bind("Gravelslug_Rainbow_Fire", false);
+            this.SkipTutorial = this.config.Bind("Gravelslug_Skip_Tutorial", false);
+            this.CraftSingularity = this.config.Bind("Gravelslug_Neuron_Craft", false);
+
+            this.BeatGravel = this.config.Bind("Gravelslug_End", false);
+            this.BeatGravelAlt = this.config.Bind("Gravelslug_True_End", false);
+            this.BeatGravelDate = this.config.Bind("Gravelslug_Met_Inv", false);
+            this.AteVinkiCan = this.config.Bind("Gravelslug_Vinki", false);
+            this.Sank = this.config.Bind("Gravelslug_Sank", false);
         }
 
         public override void Initialize()
@@ -5700,152 +5334,144 @@ namespace GravelSlug
             {
                 opContainer
             });
-            UIelement[] elements = new UIelement[]
+            UIelement[] elements1 = new UIelement[]
             {
                 new OpLabel(0f, 550f, "Gravel Eater Config", true),
-                new OpCheckBox(this.DisableTimer, 50f, 500f),
-                new OpLabel(80f, 500f, "Disable Dissolve Timer", false),
+                new OpCheckBox(this.SkipTutorial, 50f, 500f),
+                new OpLabel(80f, 500f, "Skip tutorial", false),
+            };
+            opTab.AddItems(elements1);
+            if (Sank.Value)
+            {
+                UIelement[] elements3 = new UIelement[]
+            {
                 new OpCheckBox(this.NoSinking, 50f, 450f),
                 new OpLabel(80f, 450f, "Disable Sinking", false),
-                /*new OpCheckBox(this.KeepAbilities, 50f, 400f),
-                new OpLabel(80f, 400f, "Disable Dissolve Timer", false),*/
             };
-            opTab.AddItems(elements);
+                opTab.AddItems(elements3);
+            }
+            else
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpRect(new Vector2(50f, 450f), new Vector2(25f, 25f), 0.1f)
+                {
+                    doesBump = true,
+                },
+                    new OpLabel(80f, 450f, "LOCKED (Sink like a rock)", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            if (BeatGravel.Value || BeatGravelAlt.Value)
+            {
+                UIelement[] elements2 = new UIelement[]
+            {
+                new OpUpdown(this.TimerMult, new Vector2(50f, 180f), 50f, 1),
+                new OpLabel(110f, 180f, "Dissolve Timer Drain Multiplier", false),
+            };
+                opTab.AddItems(elements2);
+            }
+            if (BeatGravel.Value)
+            {
+                UIelement[] elements3 = new UIelement[]
+            {
+                new OpCheckBox(this.MountainsAbound, 50f, 400f),
+                new OpLabel(80f, 400f, "Unlocks secret cut ability", false),
+            };
+                opTab.AddItems(elements3);
+            }
+            else
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpRect(new Vector2(50f, 400f), new Vector2(25f, 25f), 0.1f)
+                {
+                    doesBump = true,
+                },
+                    new OpLabel(80f, 400f, "LOCKED (beat campain)", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            if (BeatGravelAlt.Value)
+            {
+                UIelement[] elements4 = new UIelement[]
+            {
+                new OpCheckBox(this.KeepAbilities, 50f, 350f),
+                new OpLabel(80f, 350f, "Keep abilities post quest", false),
+            };
+                opTab.AddItems(elements4);
+            }
+            else
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpRect(new Vector2(50f, 350f), new Vector2(25f, 25f), 0.1f)
+                {
+                    doesBump = true,
+                },
+                    new OpLabel(80f, 350f, "LOCKED (unlockable soon...)", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            if (AteVinkiCan.Value)
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpCheckBox(this.RainbowFire, 50f, 300f),
+                    new OpLabel(80f, 300f, "Enables rainbow fire particles", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            else
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpRect(new Vector2(50f, 300f), new Vector2(25f, 25f), 0.1f)
+                {
+                    doesBump = true,
+                },
+                    new OpLabel(80f, 300f, "LOCKED (Da Vinki??)", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            if (BeatGravelDate.Value)
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpCheckBox(this.CraftSingularity, 50f, 250f),
+                    new OpLabel(80f, 250f, "Craft Singularity Bombs with Neurons", false),
+                };
+                opTab.AddItems(elements5);
+            }
+            else
+            {
+                UIelement[] elements5 = new UIelement[]
+                {
+                    new OpRect(new Vector2(50f, 250f), new Vector2(25f, 25f), 0.1f)
+                {
+                    doesBump = true,
+                },
+                    new OpLabel(80f, 250f, "LOCKED (???)", false),
+                };
+                opTab.AddItems(elements5);
+            }
         }
 
         public Configurable<bool> DisableTimer;
+        public Configurable<float> TimerMult;
         public Configurable<bool> NoSinking;
         public Configurable<bool> KeepAbilities;
         public Configurable<bool> MountainsAbound;
         public Configurable<bool> RainbowFire;
+        public Configurable<bool> CraftSingularity;
+        public Configurable<bool> HardMode;
+        public Configurable<bool> SkipTutorial;
+        //unlocks
+        public Configurable<bool> BeatGravel;
+        public Configurable<bool> BeatGravelAlt;
+        public Configurable<bool> BeatGravelDate;
+        public Configurable<bool> Sank;
+        public Configurable<bool> AteVinkiCan;
     }
 
-    /*public class TemplateModOptions : OptionInterface
-    {
-        private readonly ManualLogSource Logger;
-
-        public TemplateModOptions(TemplateMod modInstance, ManualLogSource loggerSource)
-        {
-            Logger = loggerSource;
-            PlayerSpeed = this.config.Bind<float>("PlayerSpeed", 1f, new ConfigAcceptableRange<float>(0f, 100f));
-        }
-
-        public readonly Configurable<float> PlayerSpeed;
-        private UIelement[] UIArrPlayerOptions;
-
-
-        public override void Initialize()
-        {
-            var opTab = new OpTab(this, "Options");
-            this.Tabs = new[]
-            {
-            opTab
-        };
-
-            UIArrPlayerOptions = new UIelement[]
-            {
-            new OpLabel(10f, 550f, "Options", true),
-            new OpLabel(10f, 520f, "Player run speed factor"),
-            new OpUpdown(PlayerSpeed, new Vector2(10f,490f), 100f, 1),
-
-            new OpLabel(10f, 460f, "Gotta go fast!", false){ color = new Color(0.2f, 0.5f, 0.8f) }
-            };
-            opTab.AddItems(UIArrPlayerOptions);
-        }
-
-        public override void Update()
-        {
-            if (((OpUpdown)UIArrPlayerOptions[2]).GetValueFloat() > 10)
-            {
-                ((OpLabel)UIArrPlayerOptions[3]).Show();
-            }
-            else
-            {
-                ((OpLabel)UIArrPlayerOptions[3]).Hide();
-            }
-        }
-
-    }*/
-
-    /*public class FireNut : Rock
-    {
-        // Token: 0x170002DB RID: 731
-        // (get) Token: 0x060011DD RID: 4573 RVA: 0x00126F11 File Offset: 0x00125111
-        public FireNut.AbstractFireNut AbstrNut
-        {
-            get
-            {
-                return this.abstractPhysicalObject as FireNut.AbstractFireNut;
-            }
-        }
-        public override void Update(bool eu)
-        {
-            base.Update(eu);
-        }
-        public override void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
-        {
-            sLeaser.sprites = new FSprite[2];
-            sLeaser.sprites[0] = new FSprite("JetFishEyeA", true);
-            sLeaser.sprites[0].scaleX = 1.2f;
-            sLeaser.sprites[0].scaleY = 1.4f;
-            sLeaser.sprites[1] = new FSprite("tinyStar", true);
-            sLeaser.sprites[1].scaleY = 2f;
-            this.AddToContainer(sLeaser, rCam, null);
-        }
-
-        public override void DrawSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
-        {
-            Vector2 vector = Vector2.Lerp(base.firstChunk.lastPos, base.firstChunk.pos, timeStacker);
-            if (this.vibrate > 0)
-            {
-                vector += Custom.DegToVec(Random.value * 360f) * 2f * Random.value;
-            }
-            sLeaser.sprites[0].x = vector.x - camPos.x;
-            sLeaser.sprites[0].y = vector.y - camPos.y;
-            sLeaser.sprites[1].x = vector.x - camPos.x;
-            sLeaser.sprites[1].y = vector.y - camPos.y;
-            float rotation = Custom.VecToDeg(Vector3.Slerp(this.lastRotation, this.rotation, timeStacker));
-            if (this.blink > 0 && Random.value < 0.5f)
-            {
-                sLeaser.sprites[1].color = base.blinkColor;
-            }
-            else
-            {
-                sLeaser.sprites[1].color = this.color;
-            }
-            sLeaser.sprites[0].rotation = rotation;
-            sLeaser.sprites[1].rotation = rotation;
-            if (base.slatedForDeletetion || this.room != rCam.room)
-            {
-                sLeaser.CleanSpritesAndRemove();
-            }
-        }
-
-        public override void ApplyPalette(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
-        {
-            sLeaser.sprites[0].color = palette.blackColor;
-            this.color = Color.Lerp(new Color(0f, 0.4f, 1f), palette.blackColor, Mathf.Lerp(0f, 0.5f, rCam.PaletteDarkness()));
-        }
-
-        public override void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
-        {
-            if (newContatiner == null)
-            {
-                newContatiner = rCam.ReturnFContainer("Items");
-            }
-            for (int i = 0; i < sLeaser.sprites.Length; i++)
-            {
-                sLeaser.sprites[i].RemoveFromContainer();
-                newContatiner.AddChild(sLeaser.sprites[i]);
-            }
-        }
-
-        public class AbstractFireNut : AbstractConsumable
-        {
-            public AbstractWaterNut(World world, PhysicalObject realizedObject, WorldCoordinate pos, EntityID ID, int originRoom, int consumableIndex, PlacedObject.ConsumableObjectData consumableData, bool swollen) : base(world, AbstractPhysicalObject.AbstractObjectType.Rock, realizedObject, pos, ID, originRoom, consumableIndex, consumableData)
-            {
-                this.swollen = swollen;
-            }
-        }
-    }*/
 }

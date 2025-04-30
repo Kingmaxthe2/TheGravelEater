@@ -13,9 +13,9 @@ Grime: 0.1086956
 BkgDroneVolume: 0
 WaterReflectionAlpha: 0
 Palette: 31
-EffectColorA: 13
-EffectColorB: 15
-Effects: SilenceWater-0.423913-19-130, WaterDepth-0.08695652-17-76, Darkness-0.07608695-20-20, VoidMelt-0.3043478-278-22, FairyParticles-0.326087-270-83, DirtyWater-1-30-30, WaterLights-1-40-40, 
+EffectColorA: 0
+EffectColorB: 0
+Effects: SilenceWater-0.423913-19-130, WaterDepth-0.08695652-17-76, Darkness-0.07608695-20-20, VoidMelt-0.3043478-278-22, FairyParticles-0.326087-270-83, DirtyWater-1-30-30, WaterLights-1-40-40, LavaSurface-1-289-243, ModifyEffectColorA-0.25,0.3695652,0.5978261-512-348, ModifyEffectColorB-0.2065217,0.3043478,0.6086956-491-472, 
 PlacedObjects: NoSpearStickZone><474.3><252.4997><-232~132, FairyParticleSettings><876.151><494.8692><5~8.660254~0~7.065217~35.32609~0~1~2.828388~288.2608~396.7391~32.6087~100.0001~0~19.56522~0~23.47826~0.1086956~0.1413043~0.5217391~0.7717391~0.4347826~0.5217391~0.7065217~0.2717391~9.430216~Leaf~SIN_IO~SIN_IO~27.82606~0.1956522~0.6521739, LightSource><425.364><799.8533><1~EffectColor2~-624~-750~91~-171.3975~0~0~None~0~0, 
 AmbientSounds: OMNI><AM_IND-SuperStructure.ogg><830.6804><648.8125><0.3586957><0.7456522, OMNI><SO_WAT-LilDrips.ogg><470.3357><647.136><0.3043478><1, OMNI><AM_SUB-BlankState.ogg><646.9495><613.2636><0.3913043><0.726087, OMNI><SO_SFX-LakeBottom.ogg><754.2973><246.0557><0.6086956><1, 
 FadePalette: 17, 0.326087

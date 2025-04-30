@@ -1,0 +1,5 @@
+Template: NONE
+Palette: 53
+EffectColorB: 18
+PlacedObjects: DangleFruit><206.6511><392.881><-330~69~2~3, Vine><640.2086><212.3043><-287~266, Vine><180.8><285.2521><319~52, 
+FadePalette: 10, 0.1956522

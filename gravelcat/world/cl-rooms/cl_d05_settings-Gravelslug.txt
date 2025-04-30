@@ -1,4 +1,4 @@
-Template: CL_SettingsTemplate_DarkSun
+Template: cl_settingstemplate_darksun
 DangerType: Rain
 CeilingDrips: 0.5326087
 RumbleIntensity: 0.5760869
@@ -14,6 +14,6 @@ EffectColorA: 18
 Effects: LightRain-0.1086956-34-76, LightBurn-0-17-10, Fog-1-33-127, 
 PlacedObjects: LightSource><2263.52><1422.301><0.1304348~White~-2314~-1352~-469~-12.39746~1~1~None~0~0, DeadSeedCob><688.4012><1138.369><, ExitSymbolHidden><116.8385><1310.07><, GhostSpot><1745.637><1385.104><, 
 AmbientSounds: OMNI><AM_ENV-CityTone.ogg><862.1943><650.2028><0.1956522><1, SPOT><AM_ENV-NatWind.ogg><861.4606><535.554><0.3152174><1><2267.461><1581.554><-798.3553><-614.3553><0><1, OMNI><AM_WIN-StrongWnd2.ogg><686.304><651.2896><0.423913><1, SPOT><AM_IND-SuperStructure.ogg><685.2365><527.9496><0.1413043><1><603.2365><55.94958><541.6447><229.6447><0><0.4260871, 
-Triggers: Spot<tA>event<tB>MusicEvent<eA>songName<eB>RW_82 - Trusted Component<eA>vol<eB>0.3<eA>prio<eB>0.5<eA>mxThrt<eB>1<eA>loop<eB>0<eA>droneTol<eB>0<eA>rooms<eB>-1<eA>rest<eB>5<eA>fadeIn<eB>91.30434<eA>oneSongPerCycle<eB>1<eA>stopAtDeath<eB>1<eA>stopAtGate<eB>0<tA>multiUse<tB>0<tA>toCycle<tB>-1<tA>fromCycle<tB>0<tA>delay<tB>259<tA>panPos<tB>722.8744<tB>211.1566<tA>fireChance<tB>1<tA>entrance<tB>-1<tA>karma<tB>0<tA>slugcats<tB><tA>pos<tB>414.8744<tB>1114.157<tA>handlePos<tB>-215.3553<tB>-181.3553, 
 FadePalette: 15, 0.3804348, 0.5869565, 0.3152174, 0.5434783
+RoomSpecificScriptActive: ON
 WetTerrain: OFF
