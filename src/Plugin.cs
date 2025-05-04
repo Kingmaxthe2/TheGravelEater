@@ -734,7 +734,7 @@ namespace GravelSlug
         private void SleepAndDeathScreen_GetDataFromGame(On.Menu.SleepAndDeathScreen.orig_GetDataFromGame orig, Menu.SleepAndDeathScreen self, Menu.KarmaLadderScreen.SleepDeathScreenDataPackage package)
         {
             orig(self, package);
-            if (package.characterStats.name.value == "Gravelslug" && self.IsSleepScreen)
+            if (package.characterStats.name.value == "Gravelslug" && !self.IsAnyDeath && self.IsSleepScreen)
             {
                 if (package.saveState.denPosition.Contains("CL_") || package.saveState.denPosition.Contains("HR_"))
                 {
@@ -785,11 +785,12 @@ namespace GravelSlug
         {
             if (player != null && player.room != null)
             {
-                if (player is Player && ((player as Player).lungsExhausted || (player as Player).inShortcut))
+                bool flag1 = player is Player;
+                if (flag1 && ((player as Player).lungsExhausted || (player as Player).inShortcut))
                 {
                     return;
                 }
-                if (!big && !(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.IsStorySession && player.room.game.StoryCharacter.value == "Gravelslug" && GravelQuestProgress(player.room.game) > 4)
+                if (flag1 && !big && !(ModManager.Expedition && player.room.game.rainWorld.ExpeditionMode) && player.room.game.IsStorySession && player.room.game.StoryCharacter.value == "Gravelslug" && GravelQuestProgress(player.room.game) > 4)
                 {
                     if (UnityEngine.Random.value <= 0.25 * (GravelQuestProgress(player.room.game) - 4))
                     {
@@ -803,26 +804,23 @@ namespace GravelSlug
                     flag = true;
                     player.room.AddObject(new Bubble(player.firstChunk.pos, player.firstChunk.vel + Custom.DegToVec(UnityEngine.Random.value * 360f) * (big ? 8f : 6f), false, false));
                 }
-                if (player is Player)
+                if (flag1)
                 {
                     color = GravelFireColor(player as Player);
                     if (GravelOptionsMenu.RainbowFire.Value)
                     {
                         color = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
                     }
-                    Fire_Breath(player as Player, false, true);
-
                     if (!player.room.game.IsArenaSession)
                     {
                         GravelDissolveSubtract(big ? 3.2f : 0.08f, player.room.game, true);
                     }
+                    (player.graphicsModule as PlayerGraphics).head.vel += Custom.DirVec((player.graphicsModule as PlayerGraphics).head.pos, (player.graphicsModule as PlayerGraphics).lookDirection) * 2f;
                 }
+                Fire_Breath(player, false, true);
                 player.room.PlaySound(MoreSlugcatsEnums.MSCSoundID.Throw_FireSpear, player.firstChunk.pos, big ? 1f : 0.8f, UnityEngine.Random.Range(big ? 0.8f : 1.2f, big ? 1.2f : 1.6f));
                 player.room.AddObject(new Explosion.ExplosionLight(player.firstChunk.pos, big ? 280f : 80f, 1f, 7, Color.white));
                 player.room.AddObject(new ExplosionSpikes(player.room, player.firstChunk.pos, big ? 14 : 7, big ? 15f : 10f, 9f, big ? 5f : 4f, big ? 90f : 45f, color));
-
-                (player.graphicsModule as PlayerGraphics).head.vel += Custom.DirVec((player.graphicsModule as PlayerGraphics).head.pos, (player.graphicsModule as PlayerGraphics).lookDirection) * 2f;
-
                 player.room.InGameNoise(new Noise.InGameNoise(player.firstChunk.pos, big ? 6000f : 4500f, (player as PhysicalObject), big ? 4f : 3f));
 
                 if (player is Player plr && (plr.bodyMode == Player.BodyModeIndex.ZeroG || plr.room.gravity == 0f || plr.gravity == 0f))
@@ -836,6 +834,11 @@ namespace GravelSlug
                     }
                     plr.bodyChunks[0].vel.x = (big ? 2.2f : 1.5f) * num3;
                     plr.bodyChunks[0].vel.y = (big ? 2.2f : 1.5f) * num4;
+                }
+
+                if (!flag)
+                {
+                    return;
                 }
 
                 float num = big ? 20f : 10f * (float)(player as Player).playerState.permanentDamageTracking;
@@ -1891,7 +1894,9 @@ namespace GravelSlug
             }
             if (newRoom.game.IsStorySession && newRoom.game.StoryCharacter.value == "Gravelslug" && !newRoom.game.devToolsActive)
             {
-                if ((newRoom.world.name == "HR" /*|| newRoom.world.rainCycle.dayNightCounter > 2640*/) && newRoom.abstractRoom.name != "HR_FINAL")
+                float num = 1400f;
+                float num3 = ((float)newRoom.world.rainCycle.dayNightCounter - num) / num;
+                if ((newRoom.world.name == "HR" || num3 >= 1f) && newRoom.abstractRoom.name != "HR_FINAL")
                 {
                     StartCoroutine(GravelPursuer(newRoom, pos));
                 }
@@ -3072,7 +3077,7 @@ namespace GravelSlug
         private void DaddyGraphics_ApplyPalette(On.DaddyGraphics.orig_ApplyPalette orig, DaddyGraphics self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
             orig(self, sLeaser, rCam, palette);
-            if (self.owner.room.game.IsStorySession && self.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
+            if (self.owner.room != null && self.owner.room.game.IsStorySession && self.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
                 for (int i = 0; i < self.daddy.bodyChunks.Length; i++)
                 {
@@ -3091,7 +3096,7 @@ namespace GravelSlug
         private void HunterDummy_ApplyPalette(On.DaddyGraphics.HunterDummy.orig_ApplyPalette orig, DaddyGraphics.HunterDummy self, RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
             orig(self, sLeaser, rCam, palette);
-            if (self.owner.owner.room.game.IsStorySession && self.owner.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
+            if (self.owner.owner.room != null && self.owner.owner.room.game.IsStorySession && self.owner.owner.room.world.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
                 Color color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.owner.owner.room.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
                 for (int i = 0; i < self.numberOfSprites - 1; i++)
@@ -4276,22 +4281,27 @@ namespace GravelSlug
             }
         }
 
-        private void Fire_Breath(Player player, bool rainbow, bool eu)
+        private void Fire_Breath(Creature crit, bool rainbow, bool eu)
         {
-            Color FireColor = GravelFireColor(player);
+            Color FireColor = Color.cyan;
+            if (crit is Player player)
+            {
+                FireColor = GravelFireColor(player);
+                player.Blink(30);
+            }
             if (rainbow || GravelOptionsMenu.RainbowFire.Value)
             {
                 FireColor = Color.HSVToRGB(UnityEngine.Random.Range(0f, 1f), 1f, 1f);
             }
-            FireSmoke coughSmoke = new FireSmoke(player.room);
-            player.Blink(30);
+            FireSmoke coughSmoke = new FireSmoke(crit.room);
+            
             if (coughSmoke != null)
             {
                 coughSmoke.Update(eu);
 
-                if (player.room.ViewedByAnyCamera(player.firstChunk.pos, 300f) && player.Submersion != 1f)
+                if (crit.room.ViewedByAnyCamera(crit.firstChunk.pos, 300f) && crit.Submersion != 1f)
                 {
-                    coughSmoke.EmitSmoke(player.firstChunk.pos, Custom.RNV(), FireColor, 20);
+                    coughSmoke.EmitSmoke(crit.firstChunk.pos, Custom.RNV(), FireColor, 20);
                 }
             }
         }

@@ -8,6 +8,9 @@
     <ItemGroup>
       <Compile Remove="hooks\CreatureHooks.cs" />
       <Compile Remove="hooks\PlayerHooks.cs" />
+      <Compile Remove="placedobjects\SpaceView.cs" />
+      <Compile Remove="Space.cs" />
+      <Compile Remove="StellarOutpost.cs" />
     </ItemGroup>
     
     <ItemGroup>
@@ -65,6 +68,10 @@
       <Reference Update="..\lib\HOOKS-Assembly-CSharp.dll">
         <SpecificVersion></SpecificVersion>
       </Reference>
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="placedobjects\" />
     </ItemGroup>
     
     <Target Name="GenerateMod" AfterTargets="PostBuildEvent">
