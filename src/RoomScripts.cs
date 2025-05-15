@@ -328,7 +328,7 @@ namespace GravelSlug
                         Debug.Log("Arise, Little one!");
                     }
 
-                    if ((player.mainBodyChunk.pos.y < 500f || tutor) && !story.saveState.deathPersistentSaveData.ArtificerMaulTutorial)
+                    if ((player.mainBodyChunk.pos.y < 500f || tutor) && this.room.game.GetStorySession.saveState.cycleNumber == 0 && !story.saveState.deathPersistentSaveData.ArtificerMaulTutorial)
                     {
                         tutor = true;
                         if (this.room.game.session.Players[0].realizedCreature == null || this.room.game.cameras[0].hud == null || this.room.game.cameras[0].hud.textPrompt == null || this.room.game.cameras[0].hud.textPrompt.messages.Count >= 1)

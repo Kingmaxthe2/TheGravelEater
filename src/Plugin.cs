@@ -17,6 +17,7 @@ using Menu.Remix.MixedUI;
 using RWCustom;
 using Vinki;
 using DevInterface;
+using static MonoMod.InlineRT.MonoModRule;
 
 namespace GravelSlug
 {
@@ -87,6 +88,8 @@ namespace GravelSlug
 
             On.Spear.HitSomething += Spear_HitSomething; //spear resistance and feral armor peircing
             On.Weapon.Thrown += Weapon_Thrown; //boosts thrown velocity for gravelslug
+            On.Spear.Update += Spear_Update;
+            On.Weapon.HitAnotherThrownWeapon += Weapon_HitAnotherThrownWeapon;
 
             On.Region.GetProperRegionAcronym_Timeline_string += Region_GetProperRegionAcronym; //sets sh as cl
             On.MiscWorldSaveData.ctor += MiscWorldSaveData_ctor; //
@@ -191,6 +194,8 @@ namespace GravelSlug
             new Hook(typeof(SlugcatGhost).GetMethod("get_SecondaryColor"), (Func<SlugcatGhost, Color> orig, SlugcatGhost ghost) => SlugGhostColor(ghost)); // slugcat ghost colors
 
         }
+
+        
 
         private void GhostHunch_Update(On.GhostHunch.orig_Update orig, GhostHunch self, bool eu)
         {
@@ -4317,8 +4322,8 @@ namespace GravelSlug
                     !(ModManager.Expedition && self.room.game.rainWorld.ExpeditionMode) && self.abstractCreature.world.game.StoryCharacter.value == "Gravelslug" && 
                     self.AI == null && self.room.game.session is StoryGameSession && 
                     (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerMaulTutorial && 
-                    !(self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage && 
-                    !self.Malnourished)
+                    !(self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage &&
+                    (self.room.game.session as StoryGameSession).saveState.cycleNumber >= 0 && !self.Malnourished)
                 {
                     (self.room.game.session as StoryGameSession).saveState.deathPersistentSaveData.ArtificerTutorialMessage = true;
                     //self.room.AddObject(new GhostHunch(self.room, null));
@@ -4945,6 +4950,58 @@ namespace GravelSlug
             {
                 spear.spearDamageBonus = 2f;
             }
+        }
+        private void Spear_Update(On.Spear.orig_Update orig, Spear self, bool eu)
+        {
+            orig(self, eu);
+            if (self.mode == Weapon.Mode.StuckInWall && self.vibrate == 10 && self.thrownBy is Player player && IsGravelFeral(player) && self.bugSpear)
+            {
+                IntVector2 firstpos = self.abstractPhysicalObject.pos.Tile;
+                self.stuckInWall = new Vector2?(self.room.MiddleOfTile(self.firstChunk.pos + (self.rotation * 20f)));
+
+                foreach (AbstractWorldEntity abstractWorldEntity in self.room.abstractRoom.entities)
+                {
+                    if (abstractWorldEntity is AbstractSpear stuckspear && stuckspear.realizedObject != null && (stuckspear.realizedObject as Weapon).mode == Weapon.Mode.StuckInWall && (abstractWorldEntity.pos.Tile == self.abstractPhysicalObject.pos.Tile || abstractWorldEntity.pos.Tile == firstpos))
+                    {
+                        self.room.AddObject(new ExplosiveSpear.SpearFragment(stuckspear.realizedObject.firstChunk.pos, Custom.DegToVec(UnityEngine.Random.value * 360f)));
+                        abstractWorldEntity.Destroy();
+                    }
+                }
+
+                self.room.PlaySound(SoundID.Seed_Cob_Open, self.firstChunk);
+                self.room.AddObject(new Smolder(self.room, self.firstChunk.pos, self.firstChunk, null));
+                self.abstractSpear.stuckInWallCycles *= 3;
+            }
+        }
+
+        private void Weapon_HitAnotherThrownWeapon(On.Weapon.orig_HitAnotherThrownWeapon orig, Weapon self, Weapon obj)
+        {
+            if (self is Spear spear && spear.bugSpear && self.thrownBy != null && self.thrownBy is Player player && player.SlugCatClass.value == "Gravelslug")
+            {
+                if (obj.firstChunk.pos.x - obj.firstChunk.lastPos.x < 0f == self.firstChunk.pos.x - self.firstChunk.lastPos.x < 0f)
+                {
+                    return;
+                }
+                if (self.abstractPhysicalObject.world.game.IsArenaSession)
+                {
+                    self.abstractPhysicalObject.world.game.GetArenaGameSession.arenaSitting.players[0].parries++;
+                }
+                Vector2 vector = Vector2.Lerp(obj.firstChunk.lastPos, self.firstChunk.lastPos, 0.5f);
+                int num = 5;
+                if (obj is Spear)
+                {
+                    num += 2;
+                }
+                for (int i = 0; i < num; i++)
+                {
+                    self.room.AddObject(new Spark(vector + Custom.DegToVec(UnityEngine.Random.value * 360f) * 5f * UnityEngine.Random.value, Custom.DegToVec(UnityEngine.Random.value * 360f) * Mathf.Lerp(2f, 7f, UnityEngine.Random.value) * (float)num, new Color(1f, 1f, 1f), null, 10, 170));
+                }
+                Vector2 vector2 = Custom.DegToVec(UnityEngine.Random.value * 360f);
+                obj.WeaponDeflect(vector, -vector2, self.firstChunk.vel.magnitude);
+                self.room.PlaySound(SoundID.Spear_Bounce_Off_Creauture_Shell, vector, self.abstractPhysicalObject);
+                return;
+            }
+            orig(self, obj);
         }
         private bool Spear_HitSomething(On.Spear.orig_HitSomething orig, Spear self, SharedPhysics.CollisionResult result, bool eu)
         {
