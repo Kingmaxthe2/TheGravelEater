@@ -156,15 +156,15 @@ namespace GravelSlug
             On.DaddyGraphics.HunterDummy.ApplyPalette += HunterDummy_ApplyPalette; // Gravel long legs
             On.DaddyGraphics.ApplyPalette += DaddyGraphics_ApplyPalette;
             On.DaddyGraphics.RotBodyColor += DaddyGraphics_RotBodyColor;
-
             On.DaddyGraphics.ctor += DaddyGraphics_ctor; // temp colors override for HR
             On.DaddyCorruption.ctor += DaddyCorruption_ctor;
             On.DaddyCorruption.InitiateSprites += DaddyCorruption_InitiateSprites;
-
             On.DaddyLongLegs.Update += DaddyLongLegs_Update; // GravelEaten teleportation
             On.DaddyLongLegs.Stun += DaddyLongLegs_Stun;
             On.DaddyLongLegs.Die += DaddyLongLegs_Die;
             On.DaddyLongLegs.SpitOutOfShortCut += DaddyLongLegs_SpitOutOfShortCut;
+            On.HUD.Map.Draw += Map_Draw;
+            On.Menu.StoryGameStatisticsScreen.KillsTable.ctor += KillsTable_ctor;
 
             On.MoreSlugcats.CLOracleBehavior.InitateConversation += CLOracleBehavior_InitateConversation; // pebbles stuffs
             On.MoreSlugcats.CLOracleBehavior.InterruptRain += CLOracleBehavior_InterruptRain;
@@ -194,8 +194,6 @@ namespace GravelSlug
             new Hook(typeof(SlugcatGhost).GetMethod("get_SecondaryColor"), (Func<SlugcatGhost, Color> orig, SlugcatGhost ghost) => SlugGhostColor(ghost)); // slugcat ghost colors
 
         }
-
-        
 
         private void GhostHunch_Update(On.GhostHunch.orig_Update orig, GhostHunch self, bool eu)
         {
@@ -489,7 +487,7 @@ namespace GravelSlug
         private void DaddyLongLegs_Stun(On.DaddyLongLegs.orig_Stun orig, DaddyLongLegs self, int st)
         {
             orig(self, st);
-            if (self.room.world.game.GetStorySession.saveState.saveStateNumber.value == "Gravelslug" && self.isHD)
+            if (self.room.world.game.IsStorySession && self.room.world.game.GetStorySession.saveState.saveStateNumber.value == "Gravelslug" && self.isHD)
             {
                 st /= 2;
                 self.stun = st;
@@ -1837,6 +1835,13 @@ namespace GravelSlug
                 {
                     self.daddy.effectColor = Color.cyan;
                     self.daddy.eyeColor = Color.cyan;
+                    /*if (ModManager.Watcher)
+                    {
+                        MaskSource mask = MaskMaker.MakeSource("RippleGrab", "PlayerRippleTrail", false, null, null, null, null);
+                        mask.SetProperty(0, 1f);
+                        mask.SetPos(self.daddy.mainBodyChunk.pos, false);
+                        mask.SetScale(Vector3.one * 7f, false);
+                    }*/
                 }
             }
         }
@@ -3109,6 +3114,42 @@ namespace GravelSlug
                     sLeaser.sprites[self.startSprite + i].color = color;
                 }
                 sLeaser.sprites[self.startSprite + 5].color = Color.cyan;
+            }
+        }
+
+        private void Map_Draw(On.HUD.Map.orig_Draw orig, Map self, float timeStacker)
+        {
+            orig(self, timeStacker);
+            if (self.mapData.world.game.GetStorySession.characterStats.name.value == "Gravelslug")
+            {
+                if ((MMF.cfgCreatureSense.Value || (ModManager.MSC && self.hud.rainWorld.safariMode)) && self.visible && (self.hud.owner as Creature).room != null)
+                {
+                    for (int num2 = 0; num2 < self.creatureSymbols.Count; num2++)
+                    {
+                        CreatureSymbol critSym = self.creatureSymbols[num2];
+                        if (critSym.iconData.critType == MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy)
+                        {
+                            Color color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor(self.mapData.world.game.GetStorySession.characterStats.name), Color.gray, 0.4f);
+                            critSym.myColor = color;
+                        }
+                    }
+                }
+            }
+        }
+
+        private void KillsTable_ctor(On.Menu.StoryGameStatisticsScreen.KillsTable.orig_ctor orig, Menu.StoryGameStatisticsScreen.KillsTable self, Menu.Menu menu, Menu.MenuObject owner, Vector2 pos, List<KeyValuePair<IconSymbol.IconSymbolData, int>> killsData)
+        {
+            orig(self, menu, owner, pos, killsData);
+            if ((menu as Menu.KarmaLadderScreen).saveState.saveStateNumber.value == "Gravelslug")
+            {
+                for (int i = 0; i < self.killCounts.Count; i++)
+                {
+                    if (self.killCounts[i].symbol.iconData.critType == MoreSlugcatsEnums.CreatureTemplateType.HunterDaddy)
+                    {
+                        Color color = Color.Lerp(PlayerGraphics.DefaultSlugcatColor((menu as Menu.KarmaLadderScreen).saveState.saveStateNumber), Color.gray, 0.4f);
+                        self.killCounts[i].symbol.myColor = color;
+                    }
+                }
             }
         }
         private void EggBug_ctor(On.EggBug.orig_ctor orig, EggBug self, AbstractCreature abstractCreature, World world)
@@ -5005,11 +5046,15 @@ namespace GravelSlug
         }
         private bool Spear_HitSomething(On.Spear.orig_HitSomething orig, Spear self, SharedPhysics.CollisionResult result, bool eu)
         {
-            bool result2;
+            bool result2 = orig.Invoke(self, result, eu);
             float num = (self.spearDamageBonus);
             if (result.obj == null)
             {
-                return orig.Invoke(self, result, eu);
+                return result2;
+            }
+            if (result.obj.abstractPhysicalObject.rippleLayer != self.abstractPhysicalObject.rippleLayer && !result.obj.abstractPhysicalObject.rippleBothSides && !self.abstractPhysicalObject.rippleBothSides)
+            {
+                return result2;
             }
             if (result.obj is Player player && (GravelHasAbilities(player)) && !IsGravelFeral(player))
             {
@@ -5023,7 +5068,7 @@ namespace GravelSlug
             }
             if (self.thrownBy is Player player1 && IsGravelFeral(player1) && self.bugSpear)
             {
-                result2 = orig.Invoke(self, result, eu); ;
+                result2 = orig.Invoke(self, result, eu);
                 if (result.obj is Creature crit && (crit).SpearStick(self, Mathf.Lerp(0.55f, 0.62f, UnityEngine.Random.value), result.chunk, result.onAppendagePos, self.firstChunk.vel))
                 {
                     self.room.AddObject(new CreatureSpasmer(crit, false, 100));
@@ -5051,10 +5096,6 @@ namespace GravelSlug
                     result2 = true;
                     Debug.Log("Woah! Secret Message for you! :3");
                 }
-            }
-            else
-            {
-                return orig.Invoke(self, result, eu);
             }
             return result2;
         }

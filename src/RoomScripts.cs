@@ -415,6 +415,10 @@ namespace GravelSlug
                     {
                         Player player = this.room.game.Players[i].realizedCreature as Player;
                         player.allowOutOfBounds = true;
+                        if (this.room.game.rainWorld.processManager.musicPlayer != null)
+                        {
+                            this.room.game.rainWorld.processManager.musicPlayer.FadeOutAllSongs(60f);
+                        }
                         if (player.mainBodyChunk.pos.x < -248f)
                         {
                             player.SuperHardSetPosition(new Vector2(this.room.RoomRect.right + 232f, player.mainBodyChunk.pos.y));
