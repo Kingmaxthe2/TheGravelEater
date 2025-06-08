@@ -424,7 +424,7 @@ namespace GravelSlug
             orig(self, eu);
             if (self.room != null && self.room.game.IsStorySession && self.room.game.GetStorySession.saveStateNumber.value == "Gravelslug")
             {
-                if (!self.isHD || self.room == null || GravelEaten == null || self.room.game.FirstRealizedPlayer == null || self.dead)
+                if (!self.isHD || self.room == null)
                 {
                     return;
                 }
@@ -432,6 +432,11 @@ namespace GravelSlug
                 if (self.room.game.devToolsActive && Input.GetKey(KeyCode.Backspace))
                 {
                     GravelEatenBanish();
+                }
+
+                if (GravelEaten == null || self.dead || self.room.game.FirstRealizedPlayer == null)
+                {
+                    return;
                 }
 
                 if (!self.tentaclesHoldOn && !self.Stunned)
@@ -1850,6 +1855,12 @@ namespace GravelSlug
 
         private void GravelEatenBanish()
         {
+            if(GravelEaten == null) return;
+            Debug.Log("Banishing Gravel Long Legs");
+            if (GravelEaten.dead)
+            {
+                GravelEaten.dead = false;
+            }
             (GravelEaten as DaddyLongLegs).eatObjects.Add(new DaddyLongLegs.EatObject(GravelEaten.mainBodyChunk, Vector2.Distance((GravelEaten as DaddyLongLegs).MiddleOfBody, GravelEaten.mainBodyChunk.pos)));
             (GravelEaten as DaddyLongLegs).room.PlaySound(SoundID.Daddy_Digestion_LOOP, (GravelEaten as DaddyLongLegs).mainBodyChunk, false, 1f, 2f);
         }
@@ -3267,17 +3278,13 @@ namespace GravelSlug
 
             orig(self);
 
-            if (!wasDead && GravelHasAbilities(self))
+            if (!wasDead)
             {
-                /*if(self.abstractCreature != null)
+                if (GravelHasAbilities(self))
                 {
-                    self.abstractCreature.tentacleImmune = false;
-                }*/
-                StartCoroutine(VoidFireSpasm(self, true, false));
-                if (GravelEaten != null && !GravelEaten.dead)
-                {
-                    GravelEatenBanish();
+                    StartCoroutine(VoidFireSpasm(self, true, false));
                 }
+                GravelEatenBanish();
             }
         }
         private void Player_SwallowObject(On.Player.orig_SwallowObject orig, Player self, int grasp)
@@ -4067,10 +4074,7 @@ namespace GravelSlug
             if (self.SlugCatClass.value == "Gravelslug" && GravelHasAbilities(self))
             {
                 GravelKaboom(self, true);
-                if (GravelEaten != null && !GravelEaten.dead)
-                {
-                    GravelEatenBanish();
-                }
+                GravelEatenBanish();
             }
             
         }
@@ -4697,35 +4701,42 @@ namespace GravelSlug
         }
         private IEnumerator VoidFireSpasm(Player player, bool ded, bool boom)
         {
-            if ((ded || !player.dead) && (!boom || !(player.input[0].pckp && player.input[0].y > 0)) && player.airInLungs != 0 && !player.slatedForDeletetion)
+            if(player != null)
             {
-                int numFlames = UnityEngine.Random.Range(2, 5);
-                for (int i = 0; i < numFlames; i++)
+                if ((ded || !player.dead) && (!boom || !(player.input[0].pckp && player.input[0].y > 0)) && player.airInLungs != 0 && !player.slatedForDeletetion)
                 {
-                    float delay = UnityEngine.Random.Range(0.4f, 1.2f);
-                    if (player != null)
+                    int numFlames = UnityEngine.Random.Range(2, 5);
+                    for (int i = 0; i < numFlames; i++)
                     {
-                        GravelCough(player, false);
+                        float delay = UnityEngine.Random.Range(0.4f, 1.2f);
+                        if (GravelEaten != null)
+                        {
+                            GravelCough(GravelEaten, false);
+                        }
+                        if (player != null)
+                        {
+                            GravelCough(player, false);
+                        }
+                        else
+                        {
+                            yield return null;
+                        }
+                        if (ded)
+                        {
+                            player.room.AddObject(new CreatureSpasmer(player, true, 100));
+                            player.firstChunk.vel += new Vector2(UnityEngine.Random.Range(-3f, 3f), 5f);
+                        }
+                        else
+                        {
+                            player.room.AddObject(new CreatureSpasmer(player, false, 75));
+                        }
+                        yield return new WaitForSeconds(delay);
                     }
-                    if (GravelEaten != null)
-                    {
-                        GravelCough(GravelEaten, false);
-                    }
-                    if (ded)
-                    {
-                        player.room.AddObject(new CreatureSpasmer(player, true, 100));
-                        player.firstChunk.vel += new Vector2(UnityEngine.Random.Range(-3f, 3f), 5f);
-                    }
-                    else
-                    {
-                        player.room.AddObject(new CreatureSpasmer(player, false, 75));
-                    }
-                    yield return new WaitForSeconds(delay);
                 }
-            }
-            if (ded)
-            {
-                GravelKaboom(player, false);
+                if (ded)
+                {
+                    GravelKaboom(player, false);
+                }
             }
         }
 
@@ -4765,6 +4776,10 @@ namespace GravelSlug
         }
         private void GravelKaboom(Player player, bool destroyed)
         {
+            if (player == null)
+            {
+                return;
+            }
             var room = player.room;
             var pos = player.mainBodyChunk.pos;
             var color = GravelFireColor(player);
